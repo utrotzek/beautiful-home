@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+export UID=${UID}
+
+docker-compose up --build -d
+
+docker-compose run build yarn build
