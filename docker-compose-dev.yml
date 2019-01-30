@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  web:
+    image: nginx:latest
+    ports:
+    - "8080:80"
+    volumes:
+    - ./app:/app
+    - ./docker/web/resources/site.conf:/etc/nginx/conf.d/site.conf
+    links:
+    - php
+  php:
+    image: php:7-fpm
+    volumes:
+      - ./app:/app
+  build:
+    build:
+      context: docker/build
+      args:
+        - UID=${UID}
+    volumes:
+    - ./app:/app
+    command: yarn webpack-watch

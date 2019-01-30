@@ -1,7 +1,47 @@
 #!/usr/bin/env bash
 
-export UID=${UID}
+function initializeEnvironment {
+    export UID=${UID}
+}
 
-docker-compose up --build -d
+function initializeParameters {
 
-docker-compose run build yarn build
+
+    while [ ! $# -eq 0 ]
+    do
+        case "$1" in
+            --start=* | -te)
+                echo "--test was given"
+                echo  ${1#*=}
+                ;;
+        esac
+        shift
+    done
+}
+
+function initializeCommands {
+    case "$1" in
+        start)
+            start
+            ;;
+        stop)
+            stop
+            ;;
+    esac
+}
+
+function start {
+    docker-compose -f docker-compose-dev.yml up --build -d
+}
+
+function stop {
+    docker-compose stop
+}
+
+function main {
+    initializeEnvironment
+    initializeParameters $@
+    initializeCommands $@
+}
+
+main $@
