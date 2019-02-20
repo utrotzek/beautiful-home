@@ -4,15 +4,23 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 
 import App from '../views/App'
-import Welcome from '../views/Welcome'
+import Home from '../views/Home'
+import Recipe from '../views/Recipe'
 
 const router = new VueRouter({
     mode: 'history',
+    linkActiveClass: "active",
+    linkExactActiveClass: "exact-active",
     routes: [
         {
             path: '/',
             name: 'home',
-            component: Welcome
+            component: Home
+        },
+        {
+            path: '/recipe',
+            name: 'recipe',
+            component: Recipe,
         },
     ],
 });
