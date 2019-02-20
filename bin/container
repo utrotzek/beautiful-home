@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function initializeEnvironment {
-    export UID=${UID}
+    export UID=${UID} 2>/dev/null
 }
 
 function initializeParameters {
