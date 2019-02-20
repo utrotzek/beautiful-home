@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+function initializeEnvironment {
+    export UID=${UID} 2>/dev/null
+}
+
+
+function composer {
+    docker-compose exec build composer $@
+}
+function main {
+    initializeEnvironment
+    composer $@
+}
+
+main $@

@@ -18,4 +18,4 @@ RUN apk add yarn
 
 USER $USERNAME
 
-WORKDIR /app
+WORKDIR /app/
