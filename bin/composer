@@ -6,7 +6,7 @@ function initializeEnvironment {
 
 
 function composer {
-    docker-compose exec build composer $@
+    docker-compose run build composer $@
 }
 function main {
     initializeEnvironment
