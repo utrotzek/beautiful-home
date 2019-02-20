@@ -1,4 +1,4 @@
 /app/node_modules
-/app/dist/*.js
+/app/dist
 /app/yarn-error.log
 /.idea

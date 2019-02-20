@@ -21,4 +21,4 @@ services:
         - UID=${UID}
     volumes:
     - ./app:/app
-    command: yarn webpack-watch
+    command: yarn webpack:watch
