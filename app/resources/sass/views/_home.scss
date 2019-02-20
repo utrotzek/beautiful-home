@@ -1,0 +1,36 @@
+.description {
+  margin-top:40px;
+}
+
+hr.star-dark,hr.star-light {
+  max-width:15rem;
+  padding:0;
+  text-align:center;
+  border:none;
+  border-top:solid .25rem;
+  margin: 2.5rem auto;
+}
+hr.star-dark:after,hr.star-light:after {
+  position:relative;
+  top:-.8em;
+  display:inline-block;
+  padding:0 .25em;
+  content:'\f005';
+  font-family:"Font Awesome 5 Free";
+  font-weight:900;
+  font-size:2em
+}
+hr.star-light {
+  border-color:$gray-600
+}
+hr.star-light:after {
+  color:#fff;
+  background-color: $gray-600;
+}
+hr.star-dark {
+  border-color:#2c3e50
+}
+hr.star-dark:after {
+  color:#2c3e50;
+  background-color:#fff
+}
