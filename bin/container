@@ -27,6 +27,9 @@ function initializeCommands {
         stop)
             stop
             ;;
+        restart)
+            restart
+            ;;
     esac
 }
 
@@ -36,6 +39,11 @@ function start {
 
 function stop {
     docker-compose stop
+}
+
+function restart {
+    stop
+    start
 }
 
 function main {
