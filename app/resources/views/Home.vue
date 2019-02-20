@@ -1,6 +1,6 @@
 <template>
     <div class="col-md-12">
-        I'm the home
+        Hier ist die Heimat
     </div>
 </template>
 <script>
