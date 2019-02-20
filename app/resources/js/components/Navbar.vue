@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
-        <a class="navbar-brand mr-1" href="index.html">Beautiful home</a>
+        <router-link class="navbar-brand mr-1" to="/">Beautiful home</router-link>
         <button class="btn btn-link btn-sm text-white order-1 order-sm-0" v-on:click="sidebarToggle" href="#">
             <i class="fas fa-bars"></i>
         </button>
