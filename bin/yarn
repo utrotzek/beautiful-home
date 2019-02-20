@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+function initializeEnvironment {
+    export UID=${UID} 2>/dev/null
+}
+
+
+function yarn {
+    docker-compose exec build yarn $@
+}
+function main {
+    initializeEnvironment
+    yarn $@
+}
+
+main $@
