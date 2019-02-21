@@ -12,7 +12,6 @@
             </div>
         </div>
 
-        <Footer></Footer>
         <LogoutModal></LogoutModal>
         <ScrollToTop></ScrollToTop>
     </div>
@@ -22,7 +21,6 @@
     import Navbar from '../js/components/Navbar'
     import LogoutModal from '../js/components/LogoutModal'
     import Sidebar from '../js/components/Sidebar'
-    import Footer from '../js/components/Footer'
     import ScrollToTop from '../js/components/ScrollToTop'
 
     export default {
@@ -31,7 +29,6 @@
             Navbar,
             LogoutModal,
             Sidebar,
-            Footer,
             ScrollToTop
         }
     }
