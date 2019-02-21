@@ -1,12 +1,12 @@
 <template>
     <div>
         <Navbar></Navbar>
-
         <div id="wrapper">
             <Sidebar></Sidebar>
 
             <div id="content-wrapper">
                 <div class="container-fluid">
+                    <Breadcrumb></Breadcrumb>
                     <router-view></router-view>
                 </div>
             </div>
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+    import Breadcrumb from '../js/components/Breadcrumb'
     import Navbar from '../js/components/Navbar'
     import LogoutModal from '../js/components/LogoutModal'
     import Sidebar from '../js/components/Sidebar'
@@ -29,7 +30,8 @@
             Navbar,
             LogoutModal,
             Sidebar,
-            ScrollToTop
+            ScrollToTop,
+            Breadcrumb
         }
     }
 </script>

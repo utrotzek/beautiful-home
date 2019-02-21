@@ -20,27 +20,55 @@ const router = new VueRouter({
         {
             path: '/',
             name: 'home',
-            component: Home
+            component: Home,
+            meta: {
+                breadcrumb: [
+                    { name: 'home' }
+                ]
+            }
         },
         {
             path: '/recipe',
             name: 'recipe',
             component: Recipe,
+            meta: {
+                breadcrumb: [
+                    { name: 'recipe' }
+                ]
+            }
         },
         {
             path: '/recipe/search',
             name: 'recipeSearch',
             component: RecipeSearch,
+            meta: {
+                breadcrumb: [
+                    { name: 'recipe', link: '/recipe' },
+                    { name: 'search' }
+                ]
+            }
         },
         {
             path: '/recipe/edit',
             name: 'recipeEdit',
             component: RecipeEdit,
+            meta: {
+                breadcrumb: [
+                    { name: 'recipe', link: '/recipe' },
+                    { name: 'edit' }
+                ]
+            }
         },
         {
             path: '/recipe/rate',
             name: 'recipeRate',
             component: RecipeRate,
+            meta: {
+                breadcrumb: [
+                    { name: 'recipe', link: '/recipe' },
+                    { name: 'rate' }
+                ]
+            }
         },
     ],
 });
