@@ -7,6 +7,8 @@ import App from '../views/App'
 import Home from '../views/Home'
 import Recipe from '../views/Recipe'
 
+Vue.config.devtools = true;
+
 const router = new VueRouter({
     mode: 'history',
     linkActiveClass: "active",
