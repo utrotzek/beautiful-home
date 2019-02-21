@@ -1,8 +1,38 @@
 <template>
-    <div class="col-md-12">
-        Hier gibt es Rezepte
+    <div>
+        <div class="row text-center">
+            <div class="col">
+                <h1>Was möchtest Du tun?</h1>
+            </div>
+        </div>
+
+        <div id="button-menu">
+            <div class="row justify-content-md-center">
+                <div class="col-md-6 col-lg-4">
+                    <router-link to="/recipe/search" tag="button" class="btn btn-primary btn-block text-left">
+                        <span class="fa fa-search"></span>
+                        <span class="left-spacing">Rezepte suchen</span>
+                    </router-link>
+                    <router-link to="/recipe/edit" tag="button" class="btn btn-default btn-block text-left">
+                        <span class="fa fa-edit"></span>
+                        <span class="left-spacing">Ein neues Rezept eingeben</span>
+                    </router-link>
+                    <router-link to="/recipe/rate" tag="button" class="btn btn-default btn-block text-left">
+                        <i class="fa fa-bell"></i>
+                        <span class="badge badge-danger">{{ recipeRatingsCount }}</span>
+                        <span class="left-spacing">Gerichte bewerten</span>
+                    </router-link>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
-    export default {}
+    export default {
+        data: function(){
+            return {
+                recipeRatingsCount: 10
+            }
+        }
+    }
 </script>
