@@ -1,5 +1,5 @@
 <template>
     <div>
-        Hello from the rate
+        <Headline text="Gerichte bewerten"></Headline>
     </div>
 </template>

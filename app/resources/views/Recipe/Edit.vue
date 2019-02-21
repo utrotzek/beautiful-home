@@ -1,5 +1,5 @@
 <template>
     <div>
-        Hello from the edit
+        <Headline text="Ein neues Gericht eingeben"></Headline>
     </div>
 </template>

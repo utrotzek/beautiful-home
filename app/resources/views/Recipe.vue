@@ -1,10 +1,6 @@
 <template>
     <div>
-        <div class="row text-center">
-            <div class="col">
-                <h1>Was möchtest Du tun?</h1>
-            </div>
-        </div>
+        <Headline text="Was möchtest Du tun?"></Headline>
 
         <div id="button-menu">
             <div class="row justify-content-md-center">

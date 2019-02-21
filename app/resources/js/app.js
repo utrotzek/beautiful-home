@@ -73,8 +73,15 @@ const router = new VueRouter({
     ],
 });
 
+
+//add global components
+import Headline from './components/Headline'
+Vue.component('Headline', Headline);
+
 const app = new Vue({
     el: '#app',
-    components: { App },
+    components: {
+        App
+    },
     router,
 });

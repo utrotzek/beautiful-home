@@ -1,5 +1,5 @@
 <template>
     <div>
-        Hello from the search
+        <Headline text="Rezepte suchen"></Headline>
     </div>
 </template>
