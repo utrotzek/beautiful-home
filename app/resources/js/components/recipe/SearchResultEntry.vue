@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-3">
+        <div class="row mt-3" v-if="enableButtons">
             <div class="col">
                 <div class="btn-group d-flex" role="group" aria-label="Basic example">
                     <button @click="addToCart" type="button" class="btn btn-light">
@@ -53,6 +53,10 @@
             recipe: {
                 type: Object,
                 required: true
+            },
+            enableButtons: {
+                default: true,
+                type: Boolean
             }
         },
         methods: {
