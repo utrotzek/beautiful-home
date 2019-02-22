@@ -13,4 +13,14 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/bootstrap.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .options({
+        processCssUrls: false,
+        uglify: {
+            parallel: 8, // Use multithreading for the processing
+            uglifyOptions: {
+                mangle: true,
+                compress: false, // The slow bit
+            }
+        }
+    });
