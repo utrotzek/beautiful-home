@@ -15,39 +15,88 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col">
-                                <ul
-                                        v-if="shoppingCart.length > 0"
-                                        class="list-group">
-                                    <li
-                                        class="list-group-item"
-                                        v-for="entry in shoppingCart">
 
-                                        <div class="row">
-                                            <div class="col-md-3 col-sm-12">
-                                                <div>
-                                                    <span>{{ entry.count }} Portionen</span>
-                                                    <button @click="increaseCount(entry)" class="btn btn-light btn-sm d-inline-block">
-                                                        <i class="fas fa-plus-circle"></i>
-                                                    </button>
-                                                    <button @click="decreaseCount(entry)" class="btn btn-light btn-sm d-inline-block">
-                                                        <i class="fas fa-minus-circle"></i>
-                                                    </button>
+                    <div v-if="step === 1" class="step1">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col">
+                                    <ul
+                                            v-if="shoppingCart.length > 0"
+                                            class="list-group">
+                                        <li
+                                                class="list-group-item"
+                                                v-for="entry in shoppingCart">
+
+                                            <div class="row">
+                                                <div class="col-md-3 col-sm-12">
+                                                    <div>
+                                                        <span>{{ entry.count }} Portionen</span>
+                                                        <button @click="increaseCount(entry)" class="btn btn-light btn-sm d-inline-block">
+                                                            <i class="fas fa-plus-circle"></i>
+                                                        </button>
+                                                        <button @click="decreaseCount(entry)" class="btn btn-light btn-sm d-inline-block">
+                                                            <i class="fas fa-minus-circle"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <SearchResultEntry :recipe="entry.recipe" :enableButtons="false" :enableDeleteButton="true" @remove="removeRecipeFromCart(item)"></SearchResultEntry>
                                                 </div>
                                             </div>
-                                            <div class="col">
-                                                <SearchResultEntry :recipe="entry.recipe" :enableButtons="false" :enableDeleteButton="true" @remove="removeRecipeFromCart(item)"></SearchResultEntry>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <p v-else>
-                                    Ihr Einskaufwagen ist leer
-                                </p>
+                                        </li>
+                                    </ul>
+                                    <p v-else>
+                                        Ihr Einskaufwagen ist leer
+                                    </p>
+                                </div>
                             </div>
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button
+                                    class="btn btn-primary"
+                                    :class="{ disabled: !hasEntries}"
+                                    @click="nextStep"
+                            >
+                                Einkaufsliste erstellen
+                            </button>
+                        </div>
+                    </div>
+                    <div v-if="step === 2" class="step2">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col">
+                                    Zutatenliste
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" @click="previousStep">Zurück</button>
+                            <button
+                                    class="btn btn-primary"
+                                    :class="{ disabled: !hasEntries}"
+                                    @click="nextStep"
+                            >
+                                Drucken
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="step === 2" class="modal fade" id="ingredientsModal" tabindex="-1" role="dialog" aria-labelledby="ingredientsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ingredientsModalLabel">Einkaufwagen</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Hi there
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -56,7 +105,7 @@
                                 class="btn btn-primary"
                                 :class="{ disabled: !hasEntries}"
                         >
-                            Einkaufsliste erstellen
+                            Drucken
                         </button>
                     </div>
                 </div>
@@ -114,13 +163,20 @@
                 console.log('do it');
                 console.log(recipe);
                 this.shoppingCart.splice(this.shoppingCart.indexOf(recipe));
+            },
+            nextStep (){
+                this.step++;
+            },
+            previousStep (){
+                this.step--;
             }
         },
         data () {
             return {
                 scrolled: false,
                 cartOriginalTop: 0,
-                hasEntries: true
+                hasEntries: true,
+                step: 1
             };
         },
         computed: {
