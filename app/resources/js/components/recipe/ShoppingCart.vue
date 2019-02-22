@@ -3,11 +3,11 @@
         <div id="cart" class="d-flex justify-content-end" ref="cartElement" >
             <a class="btn btn-light" data-toggle="modal" data-target="#shoppingCartModal" href="#" >
                 <i class="fas fa-shopping-cart"></i>
-                <span class="badge badge-info">{{ shoppingCart.length }}</span>
+                <span class="badge badge-info">{{ shoppingCartCount }}</span>
             </a>
         </div>
         <div class="modal fade" id="shoppingCartModal" tabindex="-1" role="dialog" aria-labelledby="shoppingCartModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="shoppingCartModalLabel">Einkaufwagen</h5>
@@ -18,27 +18,25 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col">
-                                <h5>Gerichte</h5>
                                 <ul class="list-group">
                                     <li
                                         class="list-group-item"
-                                        v-for="recipe in shoppingCart">
+                                        v-for="entry in shoppingCart">
 
                                         <div class="row">
                                             <div class="col-md-3 col-sm-12">
                                                 <div>
-                                                    <span>2 Portionen</span>
-
-                                                    <button class="btn btn-light d-inline-block">
-                                                        <i class="fas fa-minus-circle"></i>
-                                                    </button>
-                                                    <button class="btn btn-light d-inline-block">
+                                                    <span>{{ entry.count }} Portionen</span>
+                                                    <button class="btn btn-light btn-sm d-inline-block">
                                                         <i class="fas fa-plus-circle"></i>
+                                                    </button>
+                                                    <button class="btn btn-light btn-sm d-inline-block">
+                                                        <i class="fas fa-minus-circle"></i>
                                                     </button>
                                                 </div>
                                             </div>
                                             <div class="col">
-                                                <SearchResultEntry :recipe="recipe" :enableButtons="false"></SearchResultEntry>
+                                                <SearchResultEntry :recipe="entry.recipe" :enableButtons="false"></SearchResultEntry>
                                             </div>
                                         </div>
                                     </li>
@@ -94,6 +92,15 @@
                 cartOriginalTop: 0
 
             };
+        },
+        computed: {
+            shoppingCartCount: function () {
+                let totalCount = 0;
+                for (let i = 0; i < this.shoppingCart.length; i++){
+                    totalCount += this.shoppingCart[i].count;
+                }
+                return totalCount;
+            }
         },
         mounted() {
             this.cartOriginalTop = this.$refs.cartElement.offsetTop;

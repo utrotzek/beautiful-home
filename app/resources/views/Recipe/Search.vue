@@ -136,6 +136,7 @@
             return {
                 recipies: [
                     {
+                        id: 1,
                         title: "Gulasch Eintopf",
                         rating: 4,
                         image_src: '/storage/testimages/recipe_1.jpg',
@@ -148,6 +149,7 @@
                         }
                     },
                     {
+                        id: 2,
                         title: "Putengeschnetzeltes mit Reis",
                         rating: 5,
                         image_src: '/storage/testimages/recipe_2.jpg',
@@ -160,6 +162,7 @@
                         }
                     },
                     {
+                        id: 3,
                         title: "Kartoffeln ala Mama",
                         rating: 2,
                         image_src: '/storage/testimages/recipe_3.jpg',
@@ -172,6 +175,7 @@
                         }
                     },
                     {
+                        id: 4,
                         title: "Zucchini-Lasange",
                         rating: 4,
                         image_src: '/storage/testimages/recipe_4.jpg',
@@ -184,6 +188,7 @@
                         }
                     },
                     {
+                        id: 5,
                         title: "Leckere Hackfleichsagne",
                         rating: 4,
                         image_src: '/storage/testimages/recipe_5.jpg',
@@ -196,14 +201,41 @@
                         }
                     }
                 ],
-                shoppingCart: []
+                shoppingCart: [
+                    {
+                        count: 3,
+                        recipe: {
+                            id: 1,
+                            title: "Gulasch Eintopf",
+                            rating: 4,
+                            image_src: '/storage/testimages/recipe_1.jpg',
+                            preparationTime: '20 Minuten',
+                            calorie: 200,
+                            nutrient: {
+                                fat: 10,
+                                protein: 30,
+                                carbohydrates: 40
+                            }
+                        }
+                    }
+                ]
             }
         },
         computed: {
         },
         methods: {
             addRecipeToCart(recipe) {
-                this.shoppingCart.push(recipe);
+                for (let i= 0; i < this.shoppingCart.length; i++){
+                    console.log(recipe.id + '==' + this.shoppingCart[i].recipe.id);
+                    if (recipe.id === this.shoppingCart[i].recipe.id){
+                        this.shoppingCart[i].count++;
+                        return;
+                    }
+                }
+                this.shoppingCart.push({
+                    count: 1,
+                    recipe: recipe
+                });
             }
         }
     }
