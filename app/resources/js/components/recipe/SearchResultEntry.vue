@@ -32,7 +32,7 @@
         <div class="row mt-3">
             <div class="col">
                 <div class="btn-group d-flex" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-light">
+                    <button @click="addToCart" type="button" class="btn btn-light">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="d-none d-sm-inline">In den Einkaufswagen</span>
                     </button>
@@ -53,6 +53,11 @@
             recipe: {
                 type: Object,
                 required: true
+            }
+        },
+        methods: {
+            addToCart () {
+                this.$emit('add-to-cart')
             }
         },
         data () {

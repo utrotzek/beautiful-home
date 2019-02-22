@@ -1,12 +1,8 @@
 <template>
     <div>
         <Headline text="Rezepte suchen"></Headline>
-        <div id="cart" class="d-flex justify-content-end">
-            <a class="btn btn-light" data-toggle="modal" data-target="#exampleModal" href="#" >
-                <i class="fas fa-shopping-cart"></i>
-                <span class="badge badge-info">{{ shoppingCart.length }}</span>
-            </a>
-        </div>
+        <ShoppingCart :shopping-cart="shoppingCart"></ShoppingCart>
+
         <div class="main-content">
             <div id="searchForm">
                 <div class="row justify-content-md-center">
@@ -107,7 +103,7 @@
                         class="col-md-4"
                         v-for="item in recipies"
                     >
-                        <SearchResultEntry :recipe="item"></SearchResultEntry>
+                        <SearchResultEntry :recipe="item" @add-to-cart="addRecipeToCart(item)"></SearchResultEntry>
                     </div>
                 </div>
             </div>
@@ -123,10 +119,6 @@
                     </ul>
                 </nav>
             </div>
-        </div>
-
-        <div class="modals">
-            <ShoppingCart></ShoppingCart>
         </div>
     </div>
 </template>
@@ -204,11 +196,14 @@
                         }
                     }
                 ],
+                shoppingCart: []
             }
         },
         computed: {
-            shoppingCart () {
-                return this.recipies
+        },
+        methods: {
+            addRecipeToCart(recipe) {
+                this.shoppingCart.push(recipe);
             }
         }
     }

@@ -1,0 +1,10 @@
+#cart.cartAnimation .fa-shopping-cart {
+  font-size: 100%;
+  animation: cartAnimation 500ms ease forwards;
+}
+
+@keyframes cartAnimation {
+  0% { font-size: 100%}
+  20% { font-size: 150%}
+  100% { font-size: 100%}
+}
