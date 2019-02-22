@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="cart" class="d-flex justify-content-end" ref="cartElement" >
-            <a class="btn btn-light" data-toggle="modal" data-target="#shoppingCartModal" href="#" >
+            <a class="btn btn-light" data-toggle="modal" data-target="#shoppingCartModal" href="#">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="badge badge-info">{{ shoppingCartCount }}</span>
             </a>
@@ -38,7 +38,7 @@
                                                 </div>
                                             </div>
                                             <div class="col">
-                                                <SearchResultEntry :recipe="entry.recipe" :enableButtons="false"></SearchResultEntry>
+                                                <SearchResultEntry :recipe="entry.recipe" :enableButtons="false" :enableDeleteButton="true" @remove="removeRecipeFromCart(item)"></SearchResultEntry>
                                             </div>
                                         </div>
                                     </li>
@@ -109,6 +109,11 @@
                 if (entry.count <= 0){
                     this.shoppingCart.splice(this.shoppingCart.indexOf(entry), 1);
                 }
+            },
+            removeRecipeFromCart(recipe){
+                console.log('do it');
+                console.log(recipe);
+                this.shoppingCart.splice(this.shoppingCart.indexOf(recipe));
             }
         },
         data () {

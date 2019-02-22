@@ -1,4 +1,13 @@
 .searchResultItem{
   border: solid $gray-300 1px;
   padding: 1rem;
+
+  .delete {
+    position: absolute;
+    top:0;
+    right:0;
+    margin-right: 1rem;
+    margin-top:0.1rem;
+    z-index: 99;
+  }
 }

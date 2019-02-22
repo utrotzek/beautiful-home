@@ -1,6 +1,9 @@
 <template>
     <div class="searchResultItem">
         <div class="row">
+            <button class="btn btn-light delete" @click="removeItem" v-if="enableDeleteButton">
+                <i class="fas fa-trash"></i>
+            </button>
             <div class="col-4">
                 <img :src="recipe.image_src" class="img-fluid img-thumbnail rounded-circle"/>
             </div>
@@ -57,11 +60,18 @@
             enableButtons: {
                 default: true,
                 type: Boolean
+            },
+            enableDeleteButton: {
+                default: false,
+                type: Boolean
             }
         },
         methods: {
             addToCart () {
                 this.$emit('add-to-cart')
+            },
+            removeItem () {
+                this.$emit('remove', this)
             }
         },
         data () {
