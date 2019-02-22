@@ -7,9 +7,8 @@
 <script>
     export default {
         methods: {
-            displayScrollToTop: function(event){
-                var scrollDistance = $(window).scrollTop();
-                console.log(scrollDistance);
+            displayScrollToTop: function(){
+                const scrollDistance = $(window).scrollTop();
                 if (scrollDistance > 300) {
                     $('.scroll-to-top').fadeIn();
                 } else {
