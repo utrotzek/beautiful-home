@@ -7,7 +7,7 @@
 <script>
     export default {
         methods: {
-            displayScrollToTop: function(){
+            handleStickyCart: function(){
                 const scrollDistance = $(window).scrollTop();
                 if (scrollDistance > 300) {
                     $('.scroll-to-top').fadeIn();
@@ -22,10 +22,10 @@
             };
         },
         beforeMount () {
-            window.addEventListener('scroll', this.displayScrollToTop);
+            window.addEventListener('scroll', this.handleStickyCart);
         },
         beforeDestroy () {
-            window.removeEventListener('scroll', this.displayScrollToTop);
+            window.removeEventListener('scroll', this.handleStickyCart);
         }
     }
 </script>

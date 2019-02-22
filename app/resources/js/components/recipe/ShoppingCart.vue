@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="cart" class="d-flex justify-content-end" >
+        <div id="cart" class="d-flex justify-content-end" ref="cartElement" >
             <a class="btn btn-light" data-toggle="modal" data-target="#exampleModal" href="#" >
                 <i class="fas fa-shopping-cart"></i>
                 <span class="badge badge-info">{{ shoppingCart.length }}</span>
@@ -44,6 +44,32 @@
                     cart.removeClass('cartAnimation');
                 }, 500);
             }
+        },
+        methods: {
+            handleStickyCart: function(){
+                const scrollDistance = $(window).scrollTop();
+                if (scrollDistance >= this.cartOriginalTop) {
+                    $(this.$refs.cartElement).addClass('fixed');
+                } else {
+                    $(this.$refs.cartElement).removeClass('fixed');
+                }
+            }
+        },
+        data () {
+            return {
+                scrolled: false,
+                cartOriginalTop: 0
+
+            };
+        },
+        mounted() {
+            this.cartOriginalTop = this.$refs.cartElement.offsetTop;
+        },
+        beforeMount () {
+            window.addEventListener('scroll', this.handleStickyCart);
+        },
+        beforeDestroy () {
+            window.removeEventListener('scroll', this.handleStickyCart);
         }
     }
 </script>
