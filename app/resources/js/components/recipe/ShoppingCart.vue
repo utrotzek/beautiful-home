@@ -18,7 +18,9 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col">
-                                <ul class="list-group">
+                                <ul
+                                        v-if="shoppingCart.length > 0"
+                                        class="list-group">
                                     <li
                                         class="list-group-item"
                                         v-for="entry in shoppingCart">
@@ -27,10 +29,10 @@
                                             <div class="col-md-3 col-sm-12">
                                                 <div>
                                                     <span>{{ entry.count }} Portionen</span>
-                                                    <button class="btn btn-light btn-sm d-inline-block">
+                                                    <button @click="increaseCount(entry)" class="btn btn-light btn-sm d-inline-block">
                                                         <i class="fas fa-plus-circle"></i>
                                                     </button>
-                                                    <button class="btn btn-light btn-sm d-inline-block">
+                                                    <button @click="decreaseCount(entry)" class="btn btn-light btn-sm d-inline-block">
                                                         <i class="fas fa-minus-circle"></i>
                                                     </button>
                                                 </div>
@@ -41,12 +43,21 @@
                                         </div>
                                     </li>
                                 </ul>
+                                <p v-else>
+                                    Ihr Einskaufwagen ist leer
+                                </p>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Einkaufsliste erstellen</button>
+                        <button
+                                type="button"
+                                class="btn btn-primary"
+                                :class="{ disabled: !hasEntries}"
+                        >
+                            Einkaufsliste erstellen
+                        </button>
                     </div>
                 </div>
             </div>
@@ -74,6 +85,9 @@
                 setTimeout(function(){
                     cart.removeClass('cartAnimation');
                 }, 500);
+
+
+                this.hasEntries = this.shoppingCart.length > 0;
             }
         },
         methods: {
@@ -84,13 +98,24 @@
                 } else {
                     $(this.$refs.cartElement).removeClass('fixed');
                 }
+            },
+            increaseCount: function(entry){
+                entry.count++;
+            },
+            decreaseCount: function(entry){
+                entry.count--;
+
+
+                if (entry.count <= 0){
+                    this.shoppingCart.splice(this.shoppingCart.indexOf(entry), 1);
+                }
             }
         },
         data () {
             return {
                 scrolled: false,
-                cartOriginalTop: 0
-
+                cartOriginalTop: 0,
+                hasEntries: true
             };
         },
         computed: {
@@ -100,7 +125,7 @@
                     totalCount += this.shoppingCart[i].count;
                 }
                 return totalCount;
-            }
+            },
         },
         mounted() {
             this.cartOriginalTop = this.$refs.cartElement.offsetTop;
