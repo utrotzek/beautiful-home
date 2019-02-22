@@ -1,0 +1,8 @@
+.btn-add-to-cart {
+  @include media-breakpoint-up(lg) {
+    color: $gray-300;
+  }
+  :hover {
+    color: $gray-800;
+  }
+}

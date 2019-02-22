@@ -65,7 +65,9 @@ body.fixed-nav {
 }
 
 .main-content {
-  height: 100%;
+  @media(min-width: 768px) {
+    margin-top: ($spacer * 3);
+  }
 }
 
 .top-spacing {
