@@ -9,6 +9,7 @@ import Recipe from '../views/Recipe'
 import RecipeEdit from '../views/Recipe/Edit'
 import RecipeSearch from '../views/Recipe/Search'
 import RecipeRate from '../views/Recipe/Rate'
+import ShoppingList from '../views/Recipe/ShoppingList'
 
 Vue.config.devtools = true;
 
@@ -20,12 +21,7 @@ const router = new VueRouter({
         {
             path: '/',
             name: 'home',
-            component: Home,
-            meta: {
-                breadcrumb: [
-                    { name: 'home' }
-                ]
-            }
+            component: Home
         },
         {
             path: '/recipe',
@@ -33,7 +29,7 @@ const router = new VueRouter({
             component: Recipe,
             meta: {
                 breadcrumb: [
-                    { name: 'recipe' }
+                    { name: 'Rezepte' }
                 ]
             }
         },
@@ -43,8 +39,8 @@ const router = new VueRouter({
             component: RecipeSearch,
             meta: {
                 breadcrumb: [
-                    { name: 'recipe', link: '/recipe' },
-                    { name: 'search' }
+                    { name: 'Rezepte', link: '/recipe' },
+                    { name: 'Suche' }
                 ]
             }
         },
@@ -54,8 +50,8 @@ const router = new VueRouter({
             component: RecipeEdit,
             meta: {
                 breadcrumb: [
-                    { name: 'recipe', link: '/recipe' },
-                    { name: 'edit' }
+                    { name: 'Rezepte', link: '/recipe' },
+                    { name: 'Eingabe' }
                 ]
             }
         },
@@ -65,8 +61,19 @@ const router = new VueRouter({
             component: RecipeRate,
             meta: {
                 breadcrumb: [
-                    { name: 'recipe', link: '/recipe' },
-                    { name: 'rate' }
+                    { name: 'Rezepte', link: '/recipe' },
+                    { name: 'Bewertung' }
+                ]
+            }
+        },
+        {
+            path: '/recipe/shoppingList',
+            name: 'recipeShoppingList',
+            component: ShoppingList,
+            meta: {
+                breadcrumb: [
+                    { name: 'Rezepte', link: '/recipe' },
+                    { name: 'Einkaufsliste' }
                 ]
             }
         },

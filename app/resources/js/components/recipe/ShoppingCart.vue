@@ -16,7 +16,7 @@
                         </button>
                     </div>
 
-                    <div v-if="step === 1" class="step1">
+                    <div class="step1">
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col">
@@ -40,7 +40,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col">
-                                                    <SearchResultEntry :recipe="entry.recipe" :enableButtons="false" :enableDeleteButton="true" @remove="removeRecipeFromCart(item)"></SearchResultEntry>
+                                                    <RecipeThumbnail :recipe="entry.recipe" :enableButtons="false" :enableDeleteButton="true" @remove="removeRecipeFromCart(item)"></RecipeThumbnail>
                                                 </div>
                                             </div>
                                         </li>
@@ -56,57 +56,12 @@
                             <button
                                     class="btn btn-primary"
                                     :class="{ disabled: !hasEntries}"
-                                    @click="nextStep"
+                                    @click="createShoppingList"
+                                    data-dismiss="modal"
                             >
                                 Einkaufsliste erstellen
                             </button>
                         </div>
-                    </div>
-                    <div v-if="step === 2" class="step2">
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col">
-                                    Zutatenliste
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-secondary" @click="previousStep">Zurück</button>
-                            <button
-                                    class="btn btn-primary"
-                                    :class="{ disabled: !hasEntries}"
-                                    @click="nextStep"
-                            >
-                                Drucken
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div v-if="step === 2" class="modal fade" id="ingredientsModal" tabindex="-1" role="dialog" aria-labelledby="ingredientsModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="ingredientsModalLabel">Einkaufwagen</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Hi there
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button
-                                type="button"
-                                class="btn btn-primary"
-                                :class="{ disabled: !hasEntries}"
-                        >
-                            Drucken
-                        </button>
                     </div>
                 </div>
             </div>
@@ -114,11 +69,11 @@
     </div>
 </template>
 <script>
-    import SearchResultEntry from './RecipeThumbnail';
+    import RecipeThumbnail from './RecipeThumbnail';
 
     export default {
         components: {
-            SearchResultEntry
+            RecipeThumbnail: RecipeThumbnail
         },
         props: {
             shoppingCart:  {
@@ -164,11 +119,8 @@
                 console.log(recipe);
                 this.shoppingCart.splice(this.shoppingCart.indexOf(recipe));
             },
-            nextStep (){
-                this.step++;
-            },
-            previousStep (){
-                this.step--;
+            createShoppingList() {
+                this.$emit('createShoppingList')
             }
         },
         data () {

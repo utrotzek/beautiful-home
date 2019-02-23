@@ -1,7 +1,7 @@
 <template>
     <div>
         <Headline text="Rezepte suchen"></Headline>
-        <ShoppingCart :shopping-cart="shoppingCart"></ShoppingCart>
+        <ShoppingCart :shopping-cart="shoppingCart" @createShoppingList="handleCreateShoppingList()"></ShoppingCart>
 
         <div class="main-content">
             <div id="searchForm">
@@ -416,6 +416,17 @@
                     count: 1,
                     recipe: recipe
                 });
+            },
+            handleCreateShoppingList() {
+                let ingredientsList = [];
+
+                for (let i=0; i < this.shoppingCart.length; i++){
+                    ingredientsList.push(this.shoppingCart[i].ingredients)
+                }
+
+                //todo: store to api
+
+                this.$router.push('/recipe/shoppingList')
             }
         }
     }
