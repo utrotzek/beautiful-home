@@ -9,7 +9,7 @@
     <link href=" {{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 
-<body id="page-top">
+<body id="page-top" class="sidebar-toggled">
     <div id="app">
         <app></app>
     </div>

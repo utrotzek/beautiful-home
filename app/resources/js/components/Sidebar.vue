@@ -1,5 +1,5 @@
 <template>
-    <ul class="sidebar navbar-nav">
+    <ul class="sidebar navbar-nav toggled">
         <li class="nav-item">
             <router-link to="/recipe" class="nav-link">
                 <i class="fas fa-fw fa-hamburger"></i>
