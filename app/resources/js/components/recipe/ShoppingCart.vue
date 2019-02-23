@@ -114,7 +114,7 @@
     </div>
 </template>
 <script>
-    import SearchResultEntry from './SearchResultEntry';
+    import SearchResultEntry from './RecipeThumbnail';
 
     export default {
         components: {

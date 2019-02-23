@@ -124,7 +124,7 @@
 </template>
 
 <script>
-    import SearchResultEntry from '../../js/components/recipe/SearchResultEntry';
+    import SearchResultEntry from '../../js/components/recipe/RecipeThumbnail';
     import ShoppingCart from '../../js/components/recipe/ShoppingCart';
 
     export default {
