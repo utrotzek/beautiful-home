@@ -3,13 +3,11 @@
         <Headline text="Einkaufsliste"></Headline>
 
         <div class="row">
-            <div v-for="(group,index) in groupedIngredients" class="col-md-4">
+            <div v-for="(group,index) in groupedShoppingList" class="col-md-4">
                 <h5>{{ index }}</h5>
 
                 <ul class="list-group">
-                    <li v-for="ingredient in group" class="list-group-item">
-                        {{ingredient.ingredient.count + 'x ' + ingredient.ingredient.unit.abbreviation + ' ' + ingredient.ingredient.title}}
-                    </li>
+                    <ShoppingLisEntry v-for="shoppingListItem in group" class="list-group-item" :shoppingListItem="shoppingListItem"></ShoppingLisEntry>
                 </ul>
             </div>
         </div>
@@ -17,13 +15,15 @@
 </template>
 
 <script>
+    import ShoppingLisEntry from '../../js/components/recipe/ShoppingListEntry'
     export default {
         data () {
             return {
-                ingredientsList: [
+                shoppingList: [
                     {
+                        id: 1,
                         count: 1,
-                        ingredient: {
+                        item: {
                             id: 1,
                             title: "Mehl",
                             group: {
@@ -39,8 +39,9 @@
                         }
                     },
                     {
+                        id: 2,
                         count: 1,
-                        ingredient: {
+                        item: {
                             id: 1,
                             title: "Passierte Tomaten",
                             group: {
@@ -48,16 +49,17 @@
                                 title: 'Tomatenprodukte'
                             },
                             unit: {
-                                id: 1,
+                                id: 2,
                                 title: 'Gramm',
                                 abbreviation: 'g'
                             },
                             count: 500
-                        },
+                        }
                     },
                     {
+                        id: 3,
                         count: 1,
-                        ingredient: {
+                        item: {
                             id: 1,
                             title: "Grieß",
                             group: {
@@ -65,7 +67,7 @@
                                 title: 'Getreideprodukte'
                             },
                             unit: {
-                                id: 1,
+                                id: 3,
                                 title: 'Esslöffel',
                                 abbreviation: 'EL '
                             },
@@ -77,34 +79,13 @@
             }
         },
         computed: {
-            groupedIngredients () {
-                return _.groupBy(this.ingredientsList, 'ingredient.group.title')
+            groupedShoppingList () {
+                return _.groupBy(this.shoppingList, 'item.group.title')
             }
         },
-        mounted() {
-            this.refreshGroupList()
-        },
-        watch: {
-            'ingredientsList' () {
-                this.refreshGroupList()
-            }
-        },
-        methods: {
-            containsGroup: function(groupId) {
-                let length = this.groups.length;
-                for(let i = 0; i < length; i++) {
-                    if(this.groups[i].id === groupId) return true;
-                }
-                return false;
-            },
-            refreshGroupList() {
-                for (let i=0;  i < this.ingredientsList.length; i++){
-                    let groupObject = this.ingredientsList[i].ingredient.group;
-                    if (!this.containsGroup(groupObject.id)){
-                        this.groups.push(groupObject)
-                    }
-                }
-            }
+        components: {
+            ShoppingLisEntry
         }
+
     }
 </script>
