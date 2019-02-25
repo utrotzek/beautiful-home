@@ -7,7 +7,7 @@
                 <h5>{{ index }}</h5>
 
                 <ul class="list-group">
-                    <ShoppingLisEntry v-for="shoppingListItem in group" class="list-group-item" :shoppingListItem="shoppingListItem"></ShoppingLisEntry>
+                    <ShoppingListEntry v-for="shoppingListItem in group" class="list-group-item" :shoppingListItem="shoppingListItem"></ShoppingListEntry>
                 </ul>
             </div>
         </div>
@@ -22,7 +22,7 @@
 <script>
     import ShoppingListData from '../../js/data/ShoppingList'
 
-    import ShoppingLisEntry from '../../js/components/recipe/ShoppingListEntry'
+    import ShoppingListEntry from '../../js/components/recipe/ShoppingListEntry'
     export default {
         data () {
             return {
@@ -36,7 +36,7 @@
             }
         },
         components: {
-            ShoppingLisEntry
+            ShoppingListEntry
         }
 
     }
