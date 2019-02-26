@@ -11,4 +11,8 @@ export default [
         id: 3,
         title: 'Tomatenprodukte'
     },
+    {
+        id: 4,
+        title: 'Backwaren'
+    },
 ]
