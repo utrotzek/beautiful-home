@@ -23,6 +23,7 @@
                                 :preselected-value="currentUnit ? currentUnit.id : ''"
                                 :items="allUnits"
                                 :show-all-items-on-empty-query="true"
+                                @create="createNewUnit"
                                 @selected="unitChanged"
                         ></AutoCompleter>
                     </div>
@@ -35,7 +36,7 @@
                                 search-key="title"
                                 :preselected-value="currentArticle ? currentArticle.id : ''"
                                 :items="allArticles"
-                                @create="createNewItem"
+                                @create="createNewArticle"
                                 :show-all-items-on-empty-query="true"
                                 @selected="articleChanged"
                         ></AutoCompleter>
@@ -61,7 +62,7 @@
         </div>
 
         <!-- Create new Article modal -->
-        <div v-if="showModal">
+        <div v-if="showNewArticleModal">
             <transition name="modal">
                 <div class="modal-mask">
                     <div class="modal-wrapper">
@@ -70,7 +71,7 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title">Neuen Artikel '{{ newArticleName }}' anlegen</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true" @click="showModal = false">&times;</span>
+                                        <span aria-hidden="true" @click="showNewArticleModal = false">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
@@ -81,14 +82,15 @@
                                             :items="allGroups"
                                             placeholder="Bitte auswählen"
                                             search-key="title"
-                                            show-all-items-on-empty-query="true"
+                                            :show-all-items-on-empty-query="true"
+                                            @selected="changeNewArticleGroup"
                                     >
                                     </AutoCompleter>
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" @click="showModal = false">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    <button type="button" class="btn btn-secondary" @click="toggleNewArticleModal">Close</button>
+                                    <button type="button" class="btn btn-primary" @click="saveNewArticle">Save changes</button>
                                 </div>
                             </div>
                         </div>
@@ -111,8 +113,9 @@
         props: [ 'unit', 'article', 'count'],
         data () {
             return {
-                showModal: false,
+                showNewArticleModal: false,
                 newArticleName: '',
+                newArticleGroup: null,
                 allUnits: UnitsData,
                 allGroups: GroupData,
                 allArticles: ArticlesData,
@@ -122,9 +125,28 @@
             }
         },
         methods: {
-            createNewItem(itemName){
-                this.showModal = true;
-                this.newArticleName = itemName;
+            changeNewArticleGroup(articleGroup){
+                this.newArticleGroup = articleGroup;
+            },
+            toggleNewArticleModal() {
+                this.showNewArticleModal = !this.showNewArticleModal;
+            },
+            saveNewArticle() {
+                //CITEQ_TODO: save to api
+                this.currentArticle = {
+                    title: this.newArticleName,
+                    group: this.newArticleGroup
+                };
+
+                this.addEntry();
+                this.toggleNewArticleModal();
+            },
+            createNewArticle(newArticleName){
+                this.toggleNewArticleModal();
+                this.newArticleName = newArticleName;
+            },
+            createNewUnit(newUnitName){
+                this.showNewArticleModal = true;
             },
             addEntry() {
                 let newItem = {

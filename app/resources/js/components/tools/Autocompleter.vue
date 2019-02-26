@@ -65,8 +65,8 @@
                 default: 'id'
             },
             preselectedValue: {
-                type: Number,
-                required: false
+                required: false,
+                default: ''
             },
             queryShouldBeReset: {
                 type: Boolean,
