@@ -3,7 +3,9 @@
         <Headline text="Einkaufsliste"></Headline>
         <div class="d-none d-print-block mt-2">&nbsp;</div>
         <div class="row">
+            <p class="col text-center" v-if="shoppingList.length === 0">Es befinden sich keine Einträge auf der Einkaufsliste!</p>
             <div
+                    v-else
                     v-for="(group,index) in groupedShoppingList"
                     class="col-md-6 mt-1"
                     :key="group.id"
@@ -54,7 +56,7 @@
                         <i class="fas fa-print"></i>
                         <span class="d-none d-md-inline">Drucken</span>
                     </button>
-                    <button class="btn btn-secondary ml-1">
+                    <button class="btn btn-secondary ml-1" @click="deleteShoppingList">
                         <i class="fas fa-trash-alt"></i>
                         <span class="d-none d-md-inline">Alle Einträge löschen</span>
                     </button>
@@ -105,6 +107,9 @@
             },
             print(){
                 window.print();
+            },
+            deleteShoppingList() {
+                this.shoppingList = [];
             }
         }
 
