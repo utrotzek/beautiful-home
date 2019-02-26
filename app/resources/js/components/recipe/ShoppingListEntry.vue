@@ -59,24 +59,24 @@
         </div>
 
         <div class="editor d-inline" v-if="editMode">
-            <ShoppingListItemCreator
+            <ShoppingListItemControl
                     :article="shoppingListItem.item.article"
                     :count="shoppingListItem.item.count"
                     :unit="shoppingListItem.item.unit"
                     @selected="updateItem"
                     @cancel="toggleEditMode"
             >
-            </ShoppingListItemCreator>
+            </ShoppingListItemControl>
         </div>
     </li>
 </template>
 <script>
     import Units from '../../../js/data/Units';
-    import ShoppingListItemCreator from '../recipe/ShoppingListEntryCreator';
+    import ShoppingListItemControl from './ShoppingListEntryControl';
 
     export default {
         components: {
-            ShoppingListItemCreator
+            ShoppingListItemControl
         },
         props: {
             shoppingListItem: {

@@ -31,7 +31,7 @@
         <div class="row d-flex justify-content-md-center d-print-none" v-if="addMode">
             <div class="col-md-4 col-sm-12">
                 <h2>Eintrag hinzufügen</h2>
-                <ShoppingListEntryCreator @selected="addNewItem" @cancel="toggleAddMode"></ShoppingListEntryCreator>
+                <ShoppingListEntryControl @selected="addNewItem" @cancel="toggleAddMode"></ShoppingListEntryControl>
             </div>
         </div>
         <hr class="d-print-none" />
@@ -65,7 +65,7 @@
     import ShoppingListData from '../../js/data/ShoppingList'
 
     import ShoppingListEntry from '../../js/components/recipe/ShoppingListEntry'
-    import ShoppingListEntryCreator from '../../js/components/recipe/ShoppingListEntryCreator'
+    import ShoppingListEntryControl from '../../js/components/recipe/ShoppingListEntryControl'
     export default {
         data () {
             return {
@@ -81,7 +81,7 @@
         },
         components: {
             ShoppingListEntry,
-            ShoppingListEntryCreator
+            ShoppingListEntryControl
         },
         methods: {
             toggleAddMode() {
