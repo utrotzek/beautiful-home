@@ -64,7 +64,7 @@
                 require: false,
                 default: 'id'
             },
-            selectedValue: {
+            preselectedValue: {
                 type: Number,
                 required: false
             },
@@ -89,7 +89,7 @@
         mounted() {
             for (let i = 0; i < this.items.length; i++){
                 let currentItem = this.items[i];
-                if (currentItem[this.valueKey] === this.selectedValue){
+                if (currentItem[this.valueKey] === this.preselectedValue){
                     this.selected = i;
                     this.selectItem();
                     return;
