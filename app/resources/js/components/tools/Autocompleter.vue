@@ -1,8 +1,9 @@
 <template>
     <div class="autoCompleter">
         <div
-                class="form-control"
-                @focus="toggleEditMode()"
+                class="form-control preview"
+                @keyup.tab="enableEditMode"
+                @click="toggleEditMode"
                 tabindex="0"
                 v-text="selectedItem ? selectedItem[searchKey] : placeholder"
         >
@@ -16,14 +17,14 @@
                     @keydown.up="keyUp"
                     @keydown.down="keyDown"
                     @keydown.enter="selectItem"
-                    @keydown.esc="toggleEditMode"
+                    @keydown.tab="disableEditMode"
                     @change='evt=>query=evt.target.value'
                     v-model="query"
                     v-focus>
             <div class="result">
                 <ul ref="resultList">
                     <li
-                            ref="resultListItem"
+                        ref="resultListItem"
                         v-for="(item, index) in matchedItems"
                         :key="item[searchKey]"
                         :class="{'selected': (selected === index)}"
@@ -101,7 +102,15 @@
             }
         },
         methods: {
+            enableEditMode() {
+                console.log('enable');
+                this.editMode = true;
+            },
+            disableEditMode() {
+                this.editMode = false;
+            },
             toggleEditMode() {
+                console.log('togle');
                 this.resetQuery();
                 this.editMode = !this.editMode
             },
@@ -176,6 +185,10 @@
 </script>
 
 <style scoped>
+    .preview {
+        outline: none;
+    }
+
     .input {
         border: solid lightgrey 1px;
         z-index: 100;
