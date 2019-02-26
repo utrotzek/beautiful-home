@@ -76,22 +76,35 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>
-                                        Bitte wählen Sie eine Warengruppe für den neuen Artikel aus.
-                                    </p>
-                                    <AutoCompleter
-                                            :items="allGroups"
-                                            placeholder="Bitte auswählen"
-                                            search-key="title"
-                                            :show-all-items-on-empty-query="true"
-                                            @selected="changeNewArticleGroup"
-                                    >
-                                    </AutoCompleter>
-
+                                    <div class="row">
+                                        <div class="col">
+                                            <p>
+                                                Bitte wählen Sie eine Warengruppe für den neuen Artikel aus.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <AutoCompleter
+                                                    :items="allGroups"
+                                                    placeholder="Bitte auswählen"
+                                                    search-key="title"
+                                                    :show-all-items-on-empty-query="true"
+                                                    @selected="changeNewArticleGroup"
+                                            >
+                                            </AutoCompleter>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" @click="toggleNewArticleModal">Close</button>
-                                    <button type="button" class="btn btn-primary" @click="saveNewArticle">Save changes</button>
+                                    <button type="button" class="btn btn-secondary" @click="toggleNewArticleModal">
+                                        <i class="fas fa-ban"></i>
+                                        Abbrechen
+                                    </button>
+                                    <button type="button" class="btn btn-primary" @click="saveNewArticle">
+                                        <i class="fas fa-plus-circle"></i>
+                                        Artikel anlegen
+                                    </button>
                                 </div>
                             </div>
                         </div>

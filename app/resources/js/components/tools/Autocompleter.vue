@@ -185,10 +185,6 @@
 </script>
 
 <style scoped>
-    .preview {
-        outline: none;
-    }
-
     .input {
         border: solid lightgrey 1px;
         z-index: 100;
@@ -196,7 +192,6 @@
         top: 0;
         right: 0;
         left: 0;
-        width: 33rem;
         background-color: white;
         margin-top: 2rem;
     }
