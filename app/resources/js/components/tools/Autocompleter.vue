@@ -9,6 +9,7 @@
         </div>
 
         <div v-if="editMode" class="input">
+            <!--suppress JSUndeclaredVariable -->
             <input
                     class="form-control"
                     type="text"
@@ -16,6 +17,7 @@
                     @keydown.down="keyDown"
                     @keydown.enter="selectItem"
                     @keydown.esc="toggleEditMode"
+                    @change='evt=>query=evt.target.value'
                     v-model="query"
                     v-focus>
             <div class="result">
@@ -164,6 +166,7 @@
         overflow-y: scroll;
         min-height: 50px;
         max-height: 150px;
+        z-index: 100;
     }
 
     .result ul li.notSelectable {
