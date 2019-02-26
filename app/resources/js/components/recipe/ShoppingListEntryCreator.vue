@@ -10,7 +10,7 @@
                                 class="form-control"
                                 id="count"
                                 placeholder=""
-                                v-model="count"
+                                v-model="currentCount"
                                 v-focus>
                     </div>
 
@@ -106,16 +106,17 @@
     import AutoCompleter from '../tools/Autocompleter'
 
     export default {
+        props: [ 'unit', 'article', 'count'],
         data () {
             return {
                 showModal: false,
                 newArticleName: '',
-                selectedUnit: null,
-                selectedArticle: null,
-                count: '',
                 allUnits: UnitsData,
                 allGroups: GroupData,
-                allArticles: ArticlesData
+                allArticles: ArticlesData,
+                currentCount: this.count,
+                currentUnit: this.unit,
+                currentArticle: this.article
             }
         },
         methods: {
@@ -125,9 +126,9 @@
             },
             addEntry() {
                 let newItem = {
-                    article: this.selectedArticle,
-                    unit: this.selectedUnit,
-                    count: this.count
+                    article: this.currentArticle,
+                    unit: this.currentUnit,
+                    count: this.currentCount
                 };
 
                 newItem = JSON.parse(JSON.stringify(newItem));
@@ -137,10 +138,10 @@
                 this.$emit('cancel');
             },
             unitChanged(newUnit) {
-                this.selectedUnit = newUnit;
+                this.currentUnit = newUnit;
             },
             articleChanged(newArticle){
-                this.selectedArticle = newArticle;
+                this.currentArticle = newArticle;
             }
         },
         components: {
