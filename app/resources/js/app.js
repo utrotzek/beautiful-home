@@ -80,6 +80,12 @@ const router = new VueRouter({
     ],
 });
 
+Vue.directive('focus', {
+    inserted: function (el) {
+        //focus element which was inserted into the DOM
+        el.focus()
+    }
+});
 
 //add global components
 import Headline from './components/Headline'
