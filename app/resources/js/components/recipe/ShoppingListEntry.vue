@@ -63,7 +63,7 @@
             },
             updateItem(updatedItem) {
                 this.shoppingListItem.item = updatedItem;
-                this.toggleEditMode;
+                this.toggleEditMode();
                 console.log(updatedItem);
             }
         }

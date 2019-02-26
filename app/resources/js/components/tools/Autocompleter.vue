@@ -59,6 +59,15 @@
                 type: String,
                 required: true
             },
+            valueKey: {
+                type: String,
+                require: false,
+                default: 'id'
+            },
+            selectedValue: {
+                type: Number,
+                required: false
+            },
             queryShouldBeReset: {
                 type: Boolean,
                 default: true
@@ -75,6 +84,16 @@
                 editMode: false,
                 emptySearchResult: false,
                 query: ''
+            }
+        },
+        mounted() {
+            for (let i = 0; i < this.items.length; i++){
+                let currentItem = this.items[i];
+                if (currentItem[this.valueKey] === this.selectedValue){
+                    this.selected = i;
+                    this.selectItem();
+                    return;
+                }
             }
         },
         methods: {
