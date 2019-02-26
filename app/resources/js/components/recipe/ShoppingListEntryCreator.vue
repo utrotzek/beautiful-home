@@ -1,40 +1,52 @@
 <template>
     <div class="shoppingListEntryCreator">
-        <div class="form-group">
-            <label for="count">Anzahl</label>
-            <input type="text" class="form-control" id="count" placeholder="Anzahl" v-model="shoppingListEntry.count">
+        <div class="row">
+            <div class="col-9 col-md-11 ">
+                <div class="row">
+                    <div class="col-4 col-md-1 pr-0">
+                        <label for="count" class="sr-only">Anzahl</label>
+                        <input type="text" class="form-control" id="count" placeholder="" v-model="shoppingListEntry.count" v-focus>
+                    </div>
+
+                    <div class="col-8 col-md-3 pr-0 pl-1">
+                        <label for="unit" class="sr-only">Einheit</label>
+                        <select
+                                id="unit"
+                                title="Einheit auswählen"
+                                class="form-control"
+                                v-model="selectedUnit"
+                        >
+                            <option v-for="unit in allUnits" v-bind:value="unit.id">
+                                {{unit.abbreviation + ' (' + unit.title + ')'}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-8 mt-1 mt-md-0 pr-0 pl-md-1">
+                        <label for="title" class="sr-only">Name</label>
+                        <AutoCompleter
+                                id="title"
+                                placeholder="Produkt auswählen..."
+                                search-key="title"
+                                :items="allArticles"
+                                @create="createNewItem"
+                        ></AutoCompleter>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 col-md-1 m-md-0 p-md-0 pl-md-1">
+                <button type="submit" class="btn btn-primary" @click="addEntry">
+                    <i class="fas fa-plus"></i>
+                    <span class="sr-only">Hinzufügen</span>
+                </button>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="title">Name</label>
-            <AutoCompleter
-                    id="title"
-                    placeholder="Produkt auswählen..."
-                    search-key="title"
-                    :items="allArticles"
-                    @create="createNewItem"
-            ></AutoCompleter>
-        </div>
-        <div class="form-group">
-            <label for="unit">Einheit</label>
-            <select
-                    id="unit"
-                    title="Einheit auswählen"
-                    class="form-control"
-                    v-model="selectedUnit"
-            >
-                <option v-for="unit in allUnits" v-bind:value="unit.id">
-                    {{unit.title + ' (' + unit.abbreviation + ')'}}
-                </option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
 
         <!-- Create new Article modal -->
         <div v-if="showModal">
             <transition name="modal">
                 <div class="modal-mask">
                     <div class="modal-wrapper">
-
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -81,7 +93,7 @@
         data () {
             return {
                 showModal: false,
-                selectedUnit: 0,
+                selectedUnit: 1,
                 newArticleName: '',
                 shoppingListEntry: {
                     item: {
@@ -106,6 +118,9 @@
             createNewItem(itemName){
                 this.showModal = true;
                 this.newArticleName = itemName;
+            },
+            addEntry() {
+                this.$emit('addEntry', this.shoppingListEntry);
             }
         },
         components: {

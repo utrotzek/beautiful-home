@@ -114,9 +114,3 @@
         },
     }
 </script>
-
-<style scoped>
-    .shoppingItem .countInput {
-        width: 3em;
-    }
-</style>
