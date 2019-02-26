@@ -50,7 +50,7 @@
                         <i class="fas fa-ban"></i>
                         <span class="d-none d-md-inline">Abbrechen</span>
                     </button>
-                    <button class="btn btn-secondary ml-1" @click="print()">
+                    <button class="btn btn-secondary ml-1" @click="print()" v-if="!mobileDevice">
                         <i class="fas fa-print"></i>
                         <span class="d-none d-md-inline">Drucken</span>
                     </button>
@@ -81,6 +81,9 @@
         computed: {
             groupedShoppingList () {
                 return _.groupBy(this.shoppingList, 'item.article.group.title')
+            },
+            mobileDevice() {
+                return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
             }
         },
         components: {
