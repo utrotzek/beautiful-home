@@ -47,7 +47,7 @@
                 v-model="shoppingListItem.item.title"
         />
         <span v-else>
-            {{shoppingListItem.item.title}}
+            {{shoppingListItem.item.article.title}}
         </span>
 
         <button

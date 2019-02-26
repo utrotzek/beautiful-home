@@ -29,8 +29,8 @@
         </div>
         <div class="row d-flex justify-content-md-center" v-if="addMode">
             <div class="col-md-4 col-sm-12">
-                <h5>Eintrag hinzufügen</h5>
-                <ShoppingListEntryCreator @addEntry="addNewItem"></ShoppingListEntryCreator>
+                <h2>Eintrag hinzufügen</h2>
+                <ShoppingListEntryCreator @selected="addNewItem" @cancel="toggleAddMode"></ShoppingListEntryCreator>
             </div>
         </div>
         <hr />
@@ -75,7 +75,7 @@
         },
         computed: {
             groupedShoppingList () {
-                return _.groupBy(this.shoppingList, 'item.group.title')
+                return _.groupBy(this.shoppingList, 'item.article.group.title')
             }
         },
         components: {
@@ -86,8 +86,14 @@
             toggleAddMode() {
                 this.addMode = !this.addMode;
             },
-            addNewItem() {
+            addNewItem(article) {
                 this.toggleAddMode();
+
+                //CITEQ_TODO: add to api and use real ID
+                this.shoppingList.push({
+                    id: Math.random(),
+                    item: article
+                });
             }
         }
 

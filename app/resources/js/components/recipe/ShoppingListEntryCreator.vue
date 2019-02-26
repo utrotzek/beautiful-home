@@ -1,28 +1,32 @@
 <template>
-    <div class="shoppingListEntryCreator">
+    <div class="shoppingListEntryCreator" @keydown.esc="cancel">
         <div class="row">
-            <div class="col-9 col-md-11 ">
+            <div class="col-9 col-md-10 ">
                 <div class="row">
-                    <div class="col-4 col-md-1 pr-0">
+                    <div class="col-4 col-md-2 pr-0">
                         <label for="count" class="sr-only">Anzahl</label>
-                        <input type="text" class="form-control" id="count" placeholder="" v-model="shoppingListEntry.count" v-focus>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="count"
+                                placeholder=""
+                                v-model="count"
+                                v-focus>
                     </div>
 
                     <div class="col-8 col-md-3 pr-0 pl-1">
                         <label for="unit" class="sr-only">Einheit</label>
-                        <select
+                        <AutoCompleter
                                 id="unit"
-                                title="Einheit auswählen"
-                                class="form-control"
-                                v-model="selectedUnit"
-                        >
-                            <option v-for="unit in allUnits" v-bind:value="unit.id">
-                                {{unit.abbreviation + ' (' + unit.title + ')'}}
-                            </option>
-                        </select>
+                                placeholder="Einheit..."
+                                search-key="title"
+                                :items="allUnits"
+                                :show-all-items-on-empty-query="true"
+                                @selected="unitChanged"
+                        ></AutoCompleter>
                     </div>
 
-                    <div class="col-12 col-md-8 mt-1 mt-md-0 pr-0 pl-md-1">
+                    <div class="col-12 col-md-7 mt-1 mt-md-0 pr-0 pl-md-1">
                         <label for="title" class="sr-only">Name</label>
                         <AutoCompleter
                                 id="title"
@@ -30,14 +34,20 @@
                                 search-key="title"
                                 :items="allArticles"
                                 @create="createNewItem"
+                                :show-all-items-on-empty-query="true"
+                                @selected="articleChanged"
                         ></AutoCompleter>
                     </div>
                 </div>
             </div>
-            <div class="col-3 col-md-1 m-md-0 p-md-0 pl-md-1">
-                <button type="submit" class="btn btn-primary" @click="addEntry">
+            <div class="col-3 col-md-2 m-md-0 p-md-0 pl-md-1">
+                <button class="btn btn-primary" @click="addEntry" @keydown.enter="addEntry">
                     <i class="fas fa-plus"></i>
                     <span class="sr-only">Hinzufügen</span>
+                </button>
+                <button class="btn btn-secondary" @click="cancel">
+                    <i class="fas fa-ban"></i>
+                    <span class="sr-only">Abbrechen</span>
                 </button>
             </div>
         </div>
@@ -93,22 +103,10 @@
         data () {
             return {
                 showModal: false,
-                selectedUnit: 1,
                 newArticleName: '',
-                shoppingListEntry: {
-                    item: {
-                        title: "Mehl",
-                        group: {
-                            id: 1,
-                            title: 'Getreideprodukte'
-                        },
-                        unit: {
-                            id: 1,
-                            title: 'Messerspitze',
-                            abbreviation: 'Msp.'
-                        }
-                    }
-                },
+                selectedUnit: null,
+                selectedArticle: null,
+                count: '',
                 allUnits: UnitsData,
                 allGroups: GroupData,
                 allArticles: ArticlesData
@@ -120,7 +118,23 @@
                 this.newArticleName = itemName;
             },
             addEntry() {
-                this.$emit('addEntry', this.shoppingListEntry);
+                let newItem = {
+                    article: this.selectedArticle,
+                    unit: this.selectedUnit,
+                    count: this.count
+                };
+
+                newItem = JSON.parse(JSON.stringify(newItem));
+                this.$emit('selected', newItem);
+            },
+            cancel(){
+                this.$emit('cancel');
+            },
+            unitChanged(newUnit) {
+                this.selectedUnit = newUnit;
+            },
+            articleChanged(newArticle){
+                this.selectedArticle = newArticle;
             }
         },
         components: {

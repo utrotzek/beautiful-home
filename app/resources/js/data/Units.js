@@ -16,7 +16,7 @@ export default [
     },
     {
         id: 4,
-        title: 'Sack',
-        abbreviation: 'S '
+        title: 'Stück',
+        abbreviation: 'Stck. '
     }
 ]

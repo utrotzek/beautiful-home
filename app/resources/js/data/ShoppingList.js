@@ -1,7 +1,6 @@
 export default [
     {
         id: 1,
-        count: 1,
         item: {
             article: {
                 id: 1,
@@ -21,7 +20,6 @@ export default [
     },
     {
         id: 2,
-        count: 1,
         item: {
             article: {
                 id: 1,
@@ -41,7 +39,6 @@ export default [
     },
     {
         id: 3,
-        count: 1,
         item: {
             article: {
                 id: 1,

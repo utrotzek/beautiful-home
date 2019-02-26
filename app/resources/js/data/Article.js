@@ -62,5 +62,13 @@ export default [
             id: 1,
             title: 'Getreideprodukte'
         }
+    },
+    {
+        id: 11,
+        title: "Snickers",
+        group: {
+            id: 2,
+            title: 'Süßwaren'
+        }
     }
 ];

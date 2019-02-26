@@ -2,8 +2,8 @@
     <div class="autoCompleter">
         <div
                 class="form-control"
-                @click="toggleEditMode()"
-                @blur="toggleEditMode()"
+                @focus="toggleEditMode()"
+                tabindex="0"
                 v-text="selectedItem ? selectedItem[searchKey] : placeholder"
         >
         </div>
@@ -155,8 +155,14 @@
 <style scoped>
     .input {
         border: solid lightgrey 1px;
-        padding: 1rem;
-        z-index: 20;
+        z-index: 100;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        width: 33rem;
+        background-color: white;
+        margin-top: 2rem;
     }
 
     .result ul {
