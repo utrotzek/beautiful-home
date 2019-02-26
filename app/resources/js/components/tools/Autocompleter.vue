@@ -1,7 +1,6 @@
 <template>
     <div class="autoCompleter">
         <div
-                v-if="!editMode"
                 class="form-control"
                 @click="toggleEditMode()"
                 @blur="toggleEditMode()"
@@ -78,6 +77,7 @@
         },
         methods: {
             toggleEditMode() {
+                this.resetQuery();
                 this.editMode = !this.editMode
             },
             itemClicked(index) {
@@ -151,6 +151,12 @@
 </script>
 
 <style scoped>
+    .input {
+        border: solid lightgrey 1px;
+        padding: 1rem;
+        z-index: 20;
+    }
+
     .result ul {
         list-style: none;
         padding: 0;
