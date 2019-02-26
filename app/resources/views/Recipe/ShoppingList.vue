@@ -46,7 +46,7 @@
                         <i class="fas fa-ban"></i>
                         <span class="d-none d-md-inline">Abbrechen</span>
                     </button>
-                    <button class="btn btn-secondary ml-1">
+                    <button class="btn btn-secondary ml-1" @click="print()">
                         <i class="fas fa-print"></i>
                         <span class="d-none d-md-inline">Drucken</span>
                     </button>
@@ -95,6 +95,9 @@
                     id: Math.random(),
                     item: article
                 });
+            },
+            print(){
+                window.print();
             }
         }
 
