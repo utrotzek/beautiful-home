@@ -22,7 +22,7 @@ export default [
         id: 2,
         item: {
             article: {
-                id: 1,
+                id: 2,
                 title: "Passierte Tomaten",
                 group: {
                     id: 3,
@@ -41,7 +41,7 @@ export default [
         id: 3,
         item: {
             article: {
-                id: 1,
+                id: 10,
                 title: "Grieß",
                 group: {
                     id: 1,
