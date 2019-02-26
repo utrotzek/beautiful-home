@@ -190,10 +190,16 @@
         z-index: 100;
         position: absolute;
         top: 0;
-        right: 0;
         left: 0;
+        width: 100%;
         background-color: white;
         margin-top: 2rem;
+    }
+
+    .preview {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .result ul {
