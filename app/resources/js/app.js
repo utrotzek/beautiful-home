@@ -9,7 +9,7 @@ import Recipe from '../views/Recipe'
 import RecipeEdit from '../views/Recipe/Edit'
 import RecipeSearch from '../views/Recipe/Search'
 import RecipeRate from '../views/Recipe/Rate'
-import ShoppingList from '../views/Recipe/ShoppingList'
+import ShoppingList from '../views/ShoppingList'
 
 Vue.config.devtools = true;
 
@@ -67,12 +67,11 @@ const router = new VueRouter({
             }
         },
         {
-            path: '/recipe/shoppingList',
-            name: 'recipeShoppingList',
+            path: '/shoppingList',
+            name: 'shoppingList',
             component: ShoppingList,
             meta: {
                 breadcrumb: [
-                    { name: 'Rezepte', link: '/recipe' },
                     { name: 'Einkaufsliste' }
                 ]
             }

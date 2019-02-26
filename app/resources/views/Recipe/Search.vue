@@ -163,7 +163,7 @@
                 }
 
                 //CITEQ_TODO: store to api
-                this.$router.push('/recipe/shoppingList')
+                this.$router.push('/shoppingList')
             }
         }
     }

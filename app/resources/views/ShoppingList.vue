@@ -68,10 +68,10 @@
 </template>
 
 <script>
-    import ShoppingListData from '../../js/data/ShoppingList'
+    import ShoppingListData from '../js/data/ShoppingList'
 
-    import ShoppingListEntry from '../../js/components/recipe/ShoppingListEntry'
-    import ShoppingListEntryControl from '../../js/components/recipe/ShoppingListEntryControl'
+    import ShoppingListEntry from '../js/components/recipe/ShoppingListEntry'
+    import ShoppingListEntryControl from '../js/components/recipe/ShoppingListEntryControl'
     export default {
         data () {
             return {
