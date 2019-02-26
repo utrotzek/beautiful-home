@@ -41,14 +41,20 @@
                 </div>
             </div>
             <div class="col-3 col-md-2 m-md-0 p-md-0 pl-md-1">
-                <button class="btn btn-primary" @click="addEntry" @keydown.enter="addEntry">
-                    <i class="fas fa-plus"></i>
-                    <span class="sr-only">Hinzufügen</span>
-                </button>
-                <button class="btn btn-secondary" @click="cancel">
-                    <i class="fas fa-ban"></i>
-                    <span class="sr-only">Abbrechen</span>
-                </button>
+                <div class="row m-0 p-0">
+                    <div class="col-12 col-md-6">
+                        <button class="btn btn-primary" @click="addEntry" @keydown.enter="addEntry">
+                            <i class="fas fa-plus"></i>
+                            <span class="sr-only">Hinzufügen</span>
+                        </button>
+                    </div>
+                    <div class="col-12 col-md-6 pt-1 pt-md-0">
+                        <button class="btn btn-secondary" @click="cancel">
+                            <i class="fas fa-ban"></i>
+                            <span class="sr-only">Abbrechen</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 

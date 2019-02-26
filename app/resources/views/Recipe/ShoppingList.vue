@@ -1,10 +1,11 @@
 <template>
     <div>
         <Headline text="Einkaufsliste"></Headline>
+        <div class="d-none d-print-block mt-2">&nbsp;</div>
         <div class="row">
             <div
                     v-for="(group,index) in groupedShoppingList"
-                    class="col-md-6"
+                    class="col-md-6 mt-1"
                     :key="group.id"
             >
                 <h5>{{ index }}</h5>
@@ -19,7 +20,7 @@
                 </ul>
             </div>
         </div>
-        <div class="row d-flex justify-content-md-center mt-3">
+        <div class="row d-flex justify-content-md-center mt-3 d-print-none">
             <div class="col-md-3 col-sm-12">
                 <button class="btn btn-primary btn-block" @click="toggleAddMode" v-if="!addMode">
                     <i class="fas fa-plus-circle"></i>
@@ -27,14 +28,14 @@
                 </button>
             </div>
         </div>
-        <div class="row d-flex justify-content-md-center" v-if="addMode">
+        <div class="row d-flex justify-content-md-center d-print-none" v-if="addMode">
             <div class="col-md-4 col-sm-12">
                 <h2>Eintrag hinzufügen</h2>
                 <ShoppingListEntryCreator @selected="addNewItem" @cancel="toggleAddMode"></ShoppingListEntryCreator>
             </div>
         </div>
-        <hr />
-        <div class="row mt-4 d-flex justify-content-center">
+        <hr class="d-print-none" />
+        <div class="row mt-4 d-flex justify-content-center d-print-none">
             <div class="col-sm-12 col-md-6">
                 <div class="btn-group d-flex" role="group" aria-label="Basic example">
                     <button class="btn btn-primary">

@@ -2,7 +2,7 @@
     <li class="shoppingItem">
         <!-- count inline edit -->
         <button
-            class="btn btn-link"
+            class="btn btn-link d-print-none"
             @keyup.enter = "activateEditMode"
             @click = "activateEditMode"
             v-if="!editMode"

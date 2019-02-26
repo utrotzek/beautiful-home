@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="d-print-none">
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li
