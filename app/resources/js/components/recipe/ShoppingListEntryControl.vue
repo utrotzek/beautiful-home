@@ -36,8 +36,9 @@
                                 search-key="title"
                                 :preselected-value="currentArticle ? currentArticle.id : ''"
                                 :items="allArticles"
-                                @create="createNewArticle"
                                 :show-all-items-on-empty-query="true"
+                                :enable-inline-creation="true"
+                                @create="createNewArticle"
                                 @selected="articleChanged"
                         ></AutoCompleter>
                     </div>
@@ -47,7 +48,7 @@
                 <div class="row m-0 p-0">
                     <div class="col-12 col-md-6">
                         <button class="btn btn-primary" @click="addEntry" @keydown.enter="addEntry">
-                            <i class="fas fa-plus"></i>
+                            <i class="fas fa-save"></i>
                             <span class="sr-only">Hinzufügen</span>
                         </button>
                     </div>

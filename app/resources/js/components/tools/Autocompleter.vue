@@ -33,7 +33,7 @@
                     <li class="notSelectable" v-if="emptySearchResult">Keinen Artikel gefunden</li>
                 </ul>
             </div>
-            <div class="newItem" v-if="emptySearchResult">
+            <div class="newItem" v-if="emptySearchResult && enableInlineCreation">
                 <button
                         class="btn btn-secondary"
                         @click="createItem"
@@ -73,6 +73,10 @@
                 default: true
             },
             showAllItemsOnEmptyQuery: {
+                type: Boolean,
+                default: false
+            },
+            enableInlineCreation: {
                 type: Boolean,
                 default: false
             }

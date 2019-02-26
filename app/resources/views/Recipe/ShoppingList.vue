@@ -31,7 +31,11 @@
         <div class="row d-flex justify-content-md-center d-print-none" v-if="addMode">
             <div class="col-md-4 col-sm-12">
                 <h2>Eintrag hinzufügen</h2>
-                <ShoppingListEntryControl @selected="addNewItem" @cancel="toggleAddMode"></ShoppingListEntryControl>
+                <ShoppingListEntryControl
+                        @selected="addNewItem"
+                        @cancel="toggleAddMode"
+                        :enable-inline-creation="true">
+                </ShoppingListEntryControl>
             </div>
         </div>
         <hr class="d-print-none" />
