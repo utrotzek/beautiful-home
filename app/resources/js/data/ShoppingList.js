@@ -3,11 +3,13 @@ export default [
         id: 1,
         count: 1,
         item: {
-            id: 1,
-            title: "Mehl",
-            group: {
+            article: {
                 id: 1,
-                title: 'Getreideprodukte'
+                title: "Mehl",
+                group: {
+                    id: 1,
+                    title: 'Getreideprodukte'
+                },
             },
             unit: {
                 id: 1,
@@ -21,11 +23,13 @@ export default [
         id: 2,
         count: 1,
         item: {
-            id: 1,
-            title: "Passierte Tomaten",
-            group: {
-                id: 3,
-                title: 'Tomatenprodukte'
+            article: {
+                id: 1,
+                title: "Passierte Tomaten",
+                group: {
+                    id: 3,
+                    title: 'Tomatenprodukte'
+                },
             },
             unit: {
                 id: 2,
@@ -39,11 +43,13 @@ export default [
         id: 3,
         count: 1,
         item: {
-            id: 1,
-            title: "Grieß",
-            group: {
+            article: {
                 id: 1,
-                title: 'Getreideprodukte'
+                title: "Grieß",
+                group: {
+                    id: 1,
+                    title: 'Getreideprodukte'
+                },
             },
             unit: {
                 id: 3,

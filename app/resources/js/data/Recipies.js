@@ -13,11 +13,13 @@ export default [
         },
         ingredients: [
             {
-                id: 1,
-                title: "Mehl",
-                group: {
+                article: {
                     id: 1,
-                    title: 'Getreideprodukte'
+                    title: "Mehl",
+                    group: {
+                        id: 1,
+                        title: 'Getreideprodukte'
+                    },
                 },
                 unit: {
                     id: 1,
@@ -27,11 +29,13 @@ export default [
                 count: 1.5
             },
             {
-                id: 1,
-                title: "Passierte Tomaten",
-                group: {
-                    id: 3,
-                    title: 'Tomatenprodukte'
+                article: {
+                    id: 1,
+                    title: "Passierte Tomaten",
+                    group: {
+                        id: 3,
+                        title: 'Tomatenprodukte'
+                    },
                 },
                 unit: {
                     id: 1,
@@ -56,11 +60,13 @@ export default [
         },
         ingredients: [
             {
-                id: 1,
-                title: "Mehl",
-                group: {
+                article: {
                     id: 1,
-                    title: 'Getreideprodukte'
+                    title: "Mehl",
+                    group: {
+                        id: 1,
+                        title: 'Getreideprodukte'
+                    },
                 },
                 unit: {
                     id: 1,
@@ -70,11 +76,13 @@ export default [
                 count: 1.5
             },
             {
-                id: 1,
-                title: "Passierte Tomaten",
-                group: {
-                    id: 3,
-                    title: 'Tomatenprodukte'
+                article: {
+                    id: 1,
+                    title: "Passierte Tomaten",
+                    group: {
+                        id: 3,
+                        title: 'Tomatenprodukte'
+                    },
                 },
                 unit: {
                     id: 1,
@@ -99,11 +107,13 @@ export default [
         },
         ingredients: [
             {
-                id: 1,
-                title: "Mehl",
-                group: {
+                article: {
                     id: 1,
-                    title: 'Getreideprodukte'
+                    title: "Mehl",
+                    group: {
+                        id: 1,
+                        title: 'Getreideprodukte'
+                    },
                 },
                 unit: {
                     id: 1,
@@ -113,11 +123,13 @@ export default [
                 count: 1.5
             },
             {
-                id: 1,
-                title: "Passierte Tomaten",
-                group: {
-                    id: 3,
-                    title: 'Tomatenprodukte'
+                article: {
+                    id: 1,
+                    title: "Passierte Tomaten",
+                    group: {
+                        id: 3,
+                        title: 'Tomatenprodukte'
+                    },
                 },
                 unit: {
                     id: 1,
@@ -142,11 +154,13 @@ export default [
         },
         ingredients: [
             {
-                id: 1,
-                title: "Mehl",
-                group: {
+                article: {
                     id: 1,
-                    title: 'Getreideprodukte'
+                    title: "Mehl",
+                    group: {
+                        id: 1,
+                        title: 'Getreideprodukte'
+                    },
                 },
                 unit: {
                     id: 1,
@@ -156,11 +170,13 @@ export default [
                 count: 1.5
             },
             {
-                id: 1,
-                title: "Passierte Tomaten",
-                group: {
-                    id: 3,
-                    title: 'Tomatenprodukte'
+                article: {
+                    id: 1,
+                    title: "Passierte Tomaten",
+                    group: {
+                        id: 3,
+                        title: 'Tomatenprodukte'
+                    },
                 },
                 unit: {
                     id: 1,
@@ -185,11 +201,13 @@ export default [
         },
         ingredients: [
             {
-                id: 1,
-                title: "Mehl",
-                group: {
+                article: {
                     id: 1,
-                    title: 'Getreideprodukte'
+                    title: "Mehl",
+                    group: {
+                        id: 1,
+                        title: 'Getreideprodukte'
+                    },
                 },
                 unit: {
                     id: 1,
@@ -199,11 +217,13 @@ export default [
                 count: 1.5
             },
             {
-                id: 1,
-                title: "Passierte Tomaten",
-                group: {
-                    id: 3,
-                    title: 'Tomatenprodukte'
+                article: {
+                    id: 1,
+                    title: "Passierte Tomaten",
+                    group: {
+                        id: 3,
+                        title: 'Tomatenprodukte'
+                    },
                 },
                 unit: {
                     id: 1,
