@@ -32,7 +32,7 @@
                         v-text="item[searchKey]"
                         @mousedown.prevent="itemClicked(index)"
                     ></li>
-                    <li class="notSelectable" v-if="emptySearchResult">Keinen Artikel gefunden</li>
+                    <li class="notSelectable" v-if="emptySearchResult">{{ noObjectsFound }}</li>
                 </ul>
             </div>
             <div class="newItem" v-if="emptySearchResult && enableInlineCreation">
@@ -40,7 +40,7 @@
                         class="btn btn-secondary"
                         @click="createItem"
                 >
-                    Neuen Artikel "{{ query }}" anlegen
+                    Neuen Eintrag "{{ query }}" anlegen
                 </button>
             </div>
         </div>
@@ -56,6 +56,10 @@
             items: {
                 type: Array,
                 required: true
+            },
+            noObjectsFound: {
+                type: String,
+                default: 'Keine Einträge gefunden'
             },
             searchKey: {
                 type: String,
@@ -89,7 +93,8 @@
                 selectedItem: null,
                 editMode: false,
                 emptySearchResult: false,
-                query: ''
+                query: '',
+
             }
         },
         mounted() {
