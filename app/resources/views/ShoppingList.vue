@@ -80,7 +80,9 @@
                 originalShoppingList: null,
                 groups: [],
                 addMode: false,
-                unchanged: true
+                unchanged: true,
+                canceled: false,
+                cleared: false,
             }
         },
         computed: {
@@ -125,6 +127,7 @@
             },
             deleteShoppingList() {
                 this.shoppingList = [];
+                this.cleared = true;
             },
             cancel(){
                 this.shoppingList =  this.originalShoppingList;
@@ -142,10 +145,11 @@
             'shoppingList': {
                 deep: true,
                 handler (){
-                    if (!this.canceled){
+                    if (!this.canceled && !this.cleared){
                         this.unchanged = false;
                     }
                     this.canceled = false;
+                    this.cleared = false;
                 }
             }
         }
