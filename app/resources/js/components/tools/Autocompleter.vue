@@ -19,17 +19,18 @@
                     @keydown.enter="selectItem"
                     @keydown.tab="disableEditMode"
                     @change='evt=>query=evt.target.value'
+                    @blur="disableEditMode"
                     v-model="query"
                     v-focus>
             <div class="result">
-                <ul ref="resultList">
+                <ul ref="resultList" >
                     <li
                         ref="resultListItem"
                         v-for="(item, index) in matchedItems"
                         :key="item[searchKey]"
                         :class="{'selected': (selected === index)}"
                         v-text="item[searchKey]"
-                        @click="itemClicked(index)"
+                        @mousedown.prevent="itemClicked(index)"
                     ></li>
                     <li class="notSelectable" v-if="emptySearchResult">Keinen Artikel gefunden</li>
                 </ul>
@@ -110,7 +111,6 @@
                 this.editMode = false;
             },
             toggleEditMode() {
-                console.log('togle');
                 this.resetQuery();
                 this.editMode = !this.editMode
             },
