@@ -165,6 +165,7 @@
         computed: {
             matchedItems() {
                 let filteredItems = [];
+                this.emptySearchResult = false;
 
                 this.$emit('change', this.query);
 
@@ -182,7 +183,7 @@
                         item[this.searchKey].toLowerCase().includes(this.query.toLowerCase())
                     );
 
-                this.emptySearchResult = (filteredItems.length === 0);
+                this.emptySearchResult = (filteredItems.length === 0 && this.query.trim() !== "");
                 return filteredItems;
             }
         }
