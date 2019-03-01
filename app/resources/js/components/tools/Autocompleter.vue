@@ -38,7 +38,7 @@
             <div class="newItem" v-if="emptySearchResult && enableInlineCreation">
                 <button
                         class="btn btn-secondary"
-                        @click="createItem"
+                        @mousedown.prevent="createItem"
                 >
                     Neuen Eintrag "{{ query }}" anlegen
                 </button>
