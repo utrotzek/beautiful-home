@@ -62,9 +62,9 @@
                 this.editMode = !this.editMode;
             },
             updateItem(updatedItem) {
-                this.shoppingListItem.item = updatedItem;
                 this.toggleEditMode();
-                console.log(updatedItem);
+                let entry = JSON.parse(JSON.stringify(updatedItem));
+                this.$emit('update', entry)
             }
         }
     }

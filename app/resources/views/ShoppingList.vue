@@ -14,10 +14,11 @@
 
                 <ul class="list-group">
                     <ShoppingListEntry
-                            v-for="shoppingListItem in group"
+                            v-for="(shoppingListItem) in group"
                             class="list-group-item"
+                            :key="shoppingListItem.id"
+                            @update="updateEntry(shoppingListItem.id, $event)"
                             :shoppingListItem="shoppingListItem">
-                        :key="shoppingListItem.id"
                     </ShoppingListEntry>
                 </ul>
             </div>
@@ -44,11 +45,11 @@
         <div class="row mt-4 d-flex justify-content-center d-print-none">
             <div class="col-sm-12 col-md-6">
                 <div class="btn-group d-flex" role="group" aria-label="Basic example">
-                    <button class="btn btn-primary">
+                    <button class="btn btn-primary" :disabled="unchanged">
                         <i class="fas fa-save"></i>
-                        <span class="d-none d-md-inline">Speichern</span>
+                        <span class="d-none d-md-inline" >Speichern</span>
                     </button>
-                    <button class="btn btn-secondary ml-1">
+                    <button class="btn btn-secondary ml-1" :disabled="unchanged" @click="cancel">
                         <i class="fas fa-ban"></i>
                         <span class="d-none d-md-inline">Abbrechen</span>
                     </button>
@@ -76,8 +77,10 @@
         data () {
             return {
                 shoppingList: ShoppingListData,
+                originalShoppingList: null,
                 groups: [],
-                addMode: false
+                addMode: false,
+                unchanged: true
             }
         },
         computed: {
@@ -99,17 +102,51 @@
             addNewItem(article) {
                 this.toggleAddMode();
 
+                this.cacheShoppingList();
+
                 //CITEQ_TODO: add to api and use real ID
                 this.shoppingList.push({
                     id: Math.random(),
                     item: article
                 });
             },
+            updateEntry(updatedId, article){
+                this.cacheShoppingList();
+
+                for (let i = 0; i < this.shoppingList.length; i++){
+                    if (this.shoppingList[i].id === updatedId){
+                        this.shoppingList[i].item = article;
+                    }
+                }
+            },
+
             print(){
                 window.print();
             },
             deleteShoppingList() {
                 this.shoppingList = [];
+            },
+            cancel(){
+                this.shoppingList =  this.originalShoppingList;
+                this.originalShoppingList = null;
+                this.unchanged = true;
+                this.canceled = true;
+            },
+            cacheShoppingList(){
+                if (this.originalShoppingList === null){
+                    this.originalShoppingList = JSON.parse(JSON.stringify(this.shoppingList));
+                }
+            }
+        },
+        watch: {
+            'shoppingList': {
+                deep: true,
+                handler (){
+                    if (!this.canceled){
+                        this.unchanged = false;
+                    }
+                    this.canceled = false;
+                }
             }
         }
 
