@@ -13,11 +13,4 @@ services:
   php:
     image: php:7-fpm
     volumes:
-      - ./app:/app
-  build:
-    build:
-      context: docker/build
-      args:
-        - UID=${UID}
-    volumes:
     - ./app:/app

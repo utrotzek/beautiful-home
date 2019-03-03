@@ -6,7 +6,7 @@ function initializeEnvironment {
 
 
 function artisan {
-    docker-compose run build ./artisan $@
+    docker-compose -f docker-compose-dev.yml run build ./artisan $@
 }
 function main {
     initializeEnvironment

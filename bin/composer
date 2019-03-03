@@ -4,10 +4,10 @@ function initializeEnvironment {
     export UID=${UID} 2>/dev/null
 }
 
-
 function composer {
-    docker-compose run build composer $@
+    docker-compose -f docker-compose-dev.yml run build composer $@
 }
+
 function main {
     initializeEnvironment
     composer $@
