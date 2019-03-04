@@ -1,8 +1,8 @@
 <template>
     <div>
-        <Navbar></Navbar>
+        <Navbar @sidebarToggle="toggleSidebar"></Navbar>
         <div id="wrapper">
-            <Sidebar></Sidebar>
+            <Sidebar :isToggled="sidebarIsToggled"></Sidebar>
 
             <div id="content-wrapper">
                 <div class="container-fluid">
@@ -32,6 +32,16 @@
             Sidebar,
             ScrollToTop,
             Breadcrumb
+        },
+        data () {
+            return {
+                sidebarIsToggled: true
+            }
+        },
+        methods: {
+            toggleSidebar() {
+                this.sidebarIsToggled = !this.sidebarIsToggled;
+            }
         }
     }
 </script>

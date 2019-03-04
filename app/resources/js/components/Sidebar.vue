@@ -1,5 +1,5 @@
 <template>
-    <ul class="sidebar navbar-nav toggled d-print-none">
+    <ul dusk="sidebar" id="sidebar" class="sidebar navbar-nav d-print-none" :class="{toggled: isToggled}">
         <li class="nav-item">
             <router-link to="/recipe" class="nav-link">
                 <i class="fas fa-fw fa-hamburger"></i>
@@ -14,5 +14,6 @@
 </template>
 <script>
     export default {
+        props: ['isToggled']
     }
 </script>
