@@ -11,7 +11,7 @@ import RecipeSearch from '../views/Recipe/Search'
 import RecipeRate from '../views/Recipe/Rate'
 import ShoppingList from '../views/ShoppingList'
 
-Vue.config.devtools = true;
+Vue.config.devtools = process.env.MIX_USE_DEV_TOOLS;
 
 const router = new VueRouter({
     mode: 'history',
