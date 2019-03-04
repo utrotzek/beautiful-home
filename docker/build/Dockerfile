@@ -17,6 +17,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 RUN apk add \
     yarn \
     zip \
+    chromium \
     libzip-dev && \
     docker-php-ext-install zip
 

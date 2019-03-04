@@ -21,3 +21,9 @@ services:
       - UID=${UID}
     volumes:
     - ./app:/app
+  selenium:
+    image: selenium/standalone-chrome:3.141.59-antimony
+    depends_on:
+    - web
+    volumes:
+    - /dev/shm:/dev/shm
