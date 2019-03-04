@@ -6,7 +6,7 @@ function initializeEnvironment {
 
 
 function yarn {
-    docker-compose run build yarn $@
+    docker-compose -f docker-compose-dev.yml run build yarn $@
 }
 function main {
     initializeEnvironment
