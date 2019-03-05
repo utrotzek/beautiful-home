@@ -14,6 +14,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     php -r "unlink('composer-setup.php');"
 
 RUN apk add \
+    nodejs \
+    nodejs-npm \
     yarn \
     zip \
     chromium \
