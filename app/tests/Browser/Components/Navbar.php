@@ -32,9 +32,7 @@ class Navbar extends BaseComponent
      * @param Browser $browser
      */
     public function toggleSidebar(Browser $browser) {
-        $browser->within($this->selector(), function (Browser $browser) {
-            $browser->click('@toggler');
-        });
+        $browser->click('@toggler');
     }
 
     /**
