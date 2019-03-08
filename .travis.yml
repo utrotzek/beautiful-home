@@ -4,7 +4,7 @@ services:
 - docker
 
 env:
-  - UID=1000
+  - UID=1000 GID=1000
 
 before_install:
 - docker-compose -f docker-compose-dev.yml build

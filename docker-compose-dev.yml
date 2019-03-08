@@ -14,11 +14,13 @@ services:
     image: php:7-fpm
     volumes:
     - ./app:/app
+    user: "${UID}:${GID}"
   build:
     build:
       context: docker/build
       args:
-      - UID=${UID}
+        UID: ${UID}
+        GID: ${GID}
     volumes:
     - ./app:/app
   selenium:
