@@ -9,7 +9,7 @@ env:
 before_install:
 - docker-compose -f docker-compose-dev.yml build
 - cp app/.env.testing app/.env
-- docker-compose -f docker-compose-dev.yml up -d build
+- docker-compose -f docker-compose-dev.yml up -d --build
 - docker ps -a
 - docker-compose -f docker-compose-dev.yml run -e APP_ENV=testing build composer install
 - docker-compose -f docker-compose-dev.yml run -e APP_ENV=testing build yarn install
