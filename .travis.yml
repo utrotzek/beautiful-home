@@ -17,3 +17,4 @@ before_install:
 
 script:
 - docker-compose -f docker-compose-dev.yml run build ./artisan dusk --env=testing
+- docker-compose -f docker-compose-dev.yml run build yarn test-vue
