@@ -1,6 +1,7 @@
 <template>
     <div class="autoCompleter">
         <div
+                data-vue-test="autocompleter"
                 class="form-control preview"
                 @keyup.tab="enableEditMode"
                 @click="toggleEditMode"
