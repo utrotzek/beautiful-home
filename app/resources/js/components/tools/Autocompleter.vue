@@ -18,7 +18,7 @@
                     @keydown.down="keyDown"
                     @keydown.enter="selectItem"
                     @keydown.tab="disableEditMode"
-                    @change='evt=>query=evt.target.value'
+                    @input='evt=>query=evt.target.value'
                     @blur="disableEditMode"
                     v-model="query"
                     v-focus>
