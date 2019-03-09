@@ -29,8 +29,8 @@ class AppTest extends DuskTestCase {
             $siteBar->assertToggleState($browser, true);
             $navBar->toggleSidebar($browser);
             $siteBar->assertToggleState($browser, false);
-            $siteBar->assertToggleState($browser, true);
             $navBar->toggleSidebar($browser);
+            $siteBar->assertToggleState($browser, true);
         });
     }
 }
