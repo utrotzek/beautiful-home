@@ -1,4 +1,3 @@
-import { mount } from '@vue/test-utils';
 import { shallowMount } from '@vue/test-utils'
 import Autocompleter from '../../../../resources/js/components/tools/Autocompleter';
 
@@ -21,20 +20,18 @@ describe('Autocompleter', () => {
                 {id: 4,title: "d_item"},
                 {id: 5,title: "c_item2"},
             ],
-            searchKey: 'title',
-            placeholder: 'Insert title...'
+            searchKey: 'title'
         }
     });
 
-    test('The placeholder ist displayed correctly', () => {
+    it('The placeholder ist displayed correctly', () => {
+        wrapper.setProps({placeholder: 'Insert title...'});
         expect(wrapper.find('[data-vue-test="autocompleter"]').text()).toEqual(
             'Insert title...'
         );
     });
-    test('Items can be filtered', () =>{
-        wrapper.setData({
-            query: 'd_'
-        });
+    it('Items can be filtered', () =>{
+        wrapper.setData({query: 'd_'});
 
         expect(wrapper.vm.matchedItems).toEqual(
             [
@@ -53,7 +50,7 @@ describe('Autocompleter', () => {
             ]
         );
     });
-    test('New items can be created when no items are found for certain query string', () => {
+    it('New items can be created when no items are found for certain query string', () => {
         const newItemName = 'MyUnknownQueryString';
         wrapper.setProps({enableInlineCreation: true});
         //invoke empty search result
