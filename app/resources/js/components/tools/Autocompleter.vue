@@ -38,6 +38,7 @@
             </div>
             <div class="newItem" v-if="emptySearchResult && enableInlineCreation">
                 <button
+                        data-vue-test="create-new-item-button"
                         class="btn btn-secondary"
                         @mousedown.prevent="createItem"
                 >

@@ -1,8 +1,18 @@
 import { mount } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils'
 import Autocompleter from '../../../../resources/js/components/tools/Autocompleter';
 
 describe('Autocompleter', () => {
-    const wrapper = mount(Autocompleter,{
+    const mockedDirective = {
+        inserted(el, binding) {
+            //do nothing
+        }
+    };
+
+    const wrapper = shallowMount(Autocompleter,{
+        directives: {
+            focus: mockedDirective
+        },
         propsData: {
             items: [
                 {id: 1,title: "a_item"},
@@ -42,5 +52,16 @@ describe('Autocompleter', () => {
                 {id: 5,title: "c_item2"},
             ]
         );
-    })
+    });
+    test('New items can be created when no items are found for certain query string', () => {
+        const newItemName = 'MyUnknownQueryString';
+        wrapper.setProps({enableInlineCreation: true});
+        //invoke empty search result
+        wrapper.find('[data-vue-test="autocompleter"]').trigger('click');
+        wrapper.setData({ query: newItemName});
+        //click on create button
+        wrapper.find('[data-vue-test="create-new-item-button"]').trigger('mousedown');
+
+        expect(wrapper.emitted('create')[0]).toEqual([newItemName]);
+    });
 });
