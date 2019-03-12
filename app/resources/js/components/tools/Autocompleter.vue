@@ -13,6 +13,7 @@
         <div v-if="editMode" class="input">
             <!--suppress JSUndeclaredVariable -->
             <input
+                    data-vue-test="autocompleter-input"
                     class="form-control"
                     type="text"
                     @keydown.up="keyUp"
@@ -24,7 +25,7 @@
                     v-model="query"
                     v-focus>
             <div class="result">
-                <ul ref="resultList" >
+                <ul ref="resultList" data-vue-test="resultList">
                     <li
                         ref="resultListItem"
                         v-for="(item, index) in matchedItems"

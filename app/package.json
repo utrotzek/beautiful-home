@@ -47,6 +47,11 @@
         "transform": {
             "^.+\\.js$": "babel-jest",
             ".*\\.(vue)$": "vue-jest"
-        }
+        },
+        "collectCoverageFrom": [
+            "**/js/components/**/*.vue",
+            "!**/node_modules/**",
+            "!**/vendor/**"
+        ]
     }
 }
