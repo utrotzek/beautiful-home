@@ -20,3 +20,13 @@ rules:
   quotes:
     - "error"
     - "double"
+  indent:
+    - error
+    - 4
+  vue/html-indent:
+    - error
+    - 4
+  vue/html-self-closing:
+    - error
+    - html:
+        normal: any
