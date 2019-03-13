@@ -10,6 +10,10 @@ describe('Autocompleter', () => {
 
     let wrapper = null;
 
+    function enableAutoCompleter(){
+        wrapper.find('[data-vue-test="autocompleter"]').trigger('click');
+    }
+
     beforeEach(() =>{
         wrapper = shallowMount(Autocompleter,{
             directives: {
@@ -98,5 +102,52 @@ describe('Autocompleter', () => {
         //event selected is emitted and selected item will be given as argument
         expect(wrapper.emitted().selected[0]).toEqual([{id: 1,title: "a_item"}])
 
+    });
+
+    it('can select items using arrow down key', () => {
+        wrapper.setProps({showAllItemsOnEmptyQuery: true});
+        enableAutoCompleter();
+
+        expect(wrapper.vm.selected).toBe(0);
+        wrapper.find('[data-vue-test="autocompleter-input"]').trigger('keydown.down');
+        expect(wrapper.vm.selected).toBe(1);
+        wrapper.find('[data-vue-test="autocompleter-input"]').trigger('keydown.down');
+        expect(wrapper.vm.selected).toBe(2);
+    });
+
+    it('will not select items out of bounds when pressing the array down key more often than available items', () => {
+        wrapper.setProps({showAllItemsOnEmptyQuery: true});
+        enableAutoCompleter();
+
+        const maxSelectedIndex = wrapper.vm.matchedItems.length -1;
+        for (let i=0; i < maxSelectedIndex + 10;i++){
+            wrapper.find('[data-vue-test="autocompleter-input"]').trigger('keydown.down');
+        }
+        expect(wrapper.vm.selected).toBe(maxSelectedIndex);
+    });
+
+    it('can select items using arrow up keys', () => {
+        const maxSelectedIndex = wrapper.vm.matchedItems.length -1;
+
+        wrapper.setProps({showAllItemsOnEmptyQuery: true});
+        wrapper.setData({selected: maxSelectedIndex});
+        enableAutoCompleter();
+
+        expect(wrapper.vm.selected).toBe(maxSelectedIndex);
+        wrapper.find('[data-vue-test="autocompleter-input"]').trigger('keydown.up');
+        expect(wrapper.vm.selected).toBe(maxSelectedIndex-1);
+        wrapper.find('[data-vue-test="autocompleter-input"]').trigger('keydown.up');
+        expect(wrapper.vm.selected).toBe(maxSelectedIndex-2);
+    });
+
+    it('will not select items out of bounds when pressing the array up key more often than available items', () => {
+        wrapper.setProps({showAllItemsOnEmptyQuery: true});
+        enableAutoCompleter();
+
+        const maxSelectedIndex = wrapper.vm.matchedItems.length -1;
+        for (let i=0; i < maxSelectedIndex + 10;i++){
+            wrapper.find('[data-vue-test="autocompleter-input"]').trigger('keydown.up');
+        }
+        expect(wrapper.vm.selected).toBe(0);
     });
 });
