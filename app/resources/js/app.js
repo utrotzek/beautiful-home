@@ -88,6 +88,7 @@ Vue.directive('focus', {
 import Headline from './components/Headline'
 Vue.component('Headline', Headline);
 
+/* eslint-disable no-unused-vars */
 const app = new Vue({
     el: '#app',
     components: {
@@ -95,3 +96,4 @@ const app = new Vue({
     },
     router,
 });
+/* eslint-enable no-unused-vars */
