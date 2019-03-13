@@ -12,5 +12,11 @@ parserOptions:
   sourceType: module
 plugins:
   - vue
-rules: {
-}
+rules:
+  semi:
+    - error
+    - always
+    - omitLastInOneLineBlock: false
+  quotes:
+    - "error"
+    - "double"

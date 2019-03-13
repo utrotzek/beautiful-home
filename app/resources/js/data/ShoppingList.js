@@ -7,13 +7,13 @@ export default [
                 title: "Mehl",
                 group: {
                     id: 1,
-                    title: 'Getreideprodukte'
+                    title: "Getreideprodukte"
                 },
             },
             unit: {
                 id: 1,
-                title: 'Messerspitze',
-                abbreviation: 'Msp.'
+                title: "Messerspitze",
+                abbreviation: "Msp."
             },
             count: 1.5
         }
@@ -26,13 +26,13 @@ export default [
                 title: "Passierte Tomaten",
                 group: {
                     id: 3,
-                    title: 'Tomatenprodukte'
+                    title: "Tomatenprodukte"
                 },
             },
             unit: {
                 id: 2,
-                title: 'Gramm',
-                abbreviation: 'g'
+                title: "Gramm",
+                abbreviation: "g"
             },
             count: 500
         }
@@ -45,13 +45,13 @@ export default [
                 title: "Grieß",
                 group: {
                     id: 1,
-                    title: 'Getreideprodukte'
+                    title: "Getreideprodukte"
                 },
             },
             unit: {
                 id: 3,
-                title: 'Esslöffel',
-                abbreviation: 'EL '
+                title: "Esslöffel",
+                abbreviation: "EL "
             },
             count: 1.5
         }

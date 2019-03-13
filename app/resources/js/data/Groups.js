@@ -1,18 +1,18 @@
 export default [
     {
         id: 1,
-        title: 'Getreideprodukte'
+        title: "Getreideprodukte"
     },
     {
         id: 2,
-        title: 'Süßwaren'
+        title: "Süßwaren"
     },
     {
         id: 3,
-        title: 'Tomatenprodukte'
+        title: "Tomatenprodukte"
     },
     {
         id: 4,
-        title: 'Backwaren'
+        title: "Backwaren"
     },
-]
+];

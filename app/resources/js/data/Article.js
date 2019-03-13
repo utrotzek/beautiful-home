@@ -4,7 +4,7 @@ export default [
         title: "Mehl",
         group: {
             id: 1,
-            title: 'Getreideprodukte'
+            title: "Getreideprodukte"
         }
     },
     {
@@ -12,7 +12,7 @@ export default [
         title: "Passierte Tomaten",
         group: {
             id: 3,
-            title: 'Tomatenprodukte'
+            title: "Tomatenprodukte"
         }
     },
     {
@@ -20,7 +20,7 @@ export default [
         title: "Stückige Tomaten",
         group: {
             id: 3,
-            title: 'Tomatenprodukte'
+            title: "Tomatenprodukte"
         }
     },
     {
@@ -28,7 +28,7 @@ export default [
         title: "Tomatenmark",
         group: {
             id: 3,
-            title: 'Tomatenprodukte'
+            title: "Tomatenprodukte"
         }
     },
     {
@@ -36,7 +36,7 @@ export default [
         title: "Miracoli Tomatensauce mit Knoblauch",
         group: {
             id: 3,
-            title: 'Tomatenprodukte'
+            title: "Tomatenprodukte"
         }
     },
     {
@@ -44,7 +44,7 @@ export default [
         title: "Miracoli Tomatensauce mit Kräuter",
         group: {
             id: 3,
-            title: 'Tomatenprodukte'
+            title: "Tomatenprodukte"
         }
     },
     {
@@ -52,7 +52,7 @@ export default [
         title: "Miracoli Tomatensauce mit Basilukum",
         group: {
             id: 3,
-            title: 'Tomatenprodukte'
+            title: "Tomatenprodukte"
         }
     },
     {
@@ -60,7 +60,7 @@ export default [
         title: "Grieß",
         group: {
             id: 1,
-            title: 'Getreideprodukte'
+            title: "Getreideprodukte"
         }
     },
     {
@@ -68,7 +68,7 @@ export default [
         title: "Snickers",
         group: {
             id: 2,
-            title: 'Süßwaren'
+            title: "Süßwaren"
         }
     }
 ];
