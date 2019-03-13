@@ -2,70 +2,75 @@
     <li class="shoppingItem">
         <!-- count inline edit -->
         <button
-            class="btn btn-link d-print-none"
-            @click = "toggleEditMode"
             v-if="!editMode"
+            class="btn btn-link d-print-none"
+            @click="toggleEditMode"
         >
             <i class="fas fa-edit"></i>
         </button>
 
-        <div class="preview d-inline" v-if="!editMode">
+        <div
+            v-if="!editMode"
+            class="preview d-inline"
+        >
             <span>
-                {{shoppingListItem.item.count}}
+                {{ shoppingListItem.item.count }}
             </span>
 
             <!-- unit inline edit -->
-            <span>{{shoppingListItem.item.unit.abbreviation}}</span>
-            <span>{{shoppingListItem.item.article.title}}</span>
+            <span>{{ shoppingListItem.item.unit.abbreviation }}</span>
+            <span>{{ shoppingListItem.item.article.title }}</span>
         </div>
 
-        <div class="editor d-inline" v-if="editMode">
+        <div
+            v-if="editMode"
+            class="editor d-inline"
+        >
             <ShoppingListItemControl
-                    :article="shoppingListItem.item.article"
-                    :count="shoppingListItem.item.count"
-                    :unit="shoppingListItem.item.unit"
-                    @selected="updateItem"
-                    @cancel="toggleEditMode"
-            >
-            </ShoppingListItemControl>
+                :article="shoppingListItem.item.article"
+                :count="shoppingListItem.item.count"
+                :unit="shoppingListItem.item.unit"
+                @selected="updateItem"
+                @cancel="toggleEditMode"
+            />
         </div>
     </li>
 </template>
 <script>
-    import Units from '../../../js/data/Units';
-    import ShoppingListItemControl from './ShoppingListEntryControl';
+import Units from "../../../js/data/Units";
+import ShoppingListItemControl from "./ShoppingListEntryControl";
 
-    export default {
-        components: {
-            ShoppingListItemControl
-        },
-        props: {
-            shoppingListItem: {
-                type: Object,
-                require: true
-            }
-        },
-        data () {
-            return {
-                editMode: false,
-            }
-        },
-        directives: {
-            focus: {
-                inserted (el) {
-                    el.focus()
-                }
-            }
-        },
-        methods: {
-            toggleEditMode() {
-                this.editMode = !this.editMode;
-            },
-            updateItem(updatedItem) {
-                this.toggleEditMode();
-                let entry = JSON.parse(JSON.stringify(updatedItem));
-                this.$emit('update', entry)
+export default {
+    components: {
+        ShoppingListItemControl
+    },
+    directives: {
+        focus: {
+            inserted (el) {
+                el.focus();
             }
         }
+    },
+    props: {
+        shoppingListItem: {
+            type: Object,
+            require: true
+        }
+    },
+    data () {
+        return {
+            editMode: false,
+        };
+    },
+    methods: {
+        toggleEditMode() {
+            this.editMode = !this.editMode;
+        },
+        updateItem(updatedItem) {
+            this.toggleEditMode();
+            let entry = JSON.parse(JSON.stringify(updatedItem));
+            this.$emit("update", entry);
+        }
     }
+};
 </script>

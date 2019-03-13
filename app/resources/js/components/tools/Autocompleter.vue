@@ -1,47 +1,62 @@
 <template>
     <div class="autoCompleter">
         <div
-                data-vue-test="autocompleter"
-                class="form-control preview"
-                @keyup.tab="enableEditMode"
-                @click="toggleEditMode"
-                tabindex="0"
-                v-text="selectedItem ? selectedItem[searchKey] : placeholder"
+            data-vue-test="autocompleter"
+            class="form-control preview"
+            tabindex="0"
+            @keyup.tab="enableEditMode"
+            @click="toggleEditMode"
+            v-text="selectedItem ? selectedItem[searchKey] : placeholder"
         >
         </div>
 
-        <div v-if="editMode" class="input">
+        <div
+            v-if="editMode"
+            class="input"
+        >
             <!--suppress JSUndeclaredVariable -->
             <input
-                    data-vue-test="autocompleter-input"
-                    class="form-control"
-                    type="text"
-                    @keydown.up="keyUp"
-                    @keydown.down="keyDown"
-                    @keydown.enter="selectItem"
-                    @keydown.tab="disableEditMode"
-                    @input='evt=>query=evt.target.value'
-                    @blur="disableEditMode"
-                    v-model="query"
-                    v-focus>
+                v-model="query"
+                v-focus
+                data-vue-test="autocompleter-input"
+                class="form-control"
+                type="text"
+                @keydown.up="keyUp"
+                @keydown.down="keyDown"
+                @keydown.enter="selectItem"
+                @keydown.tab="disableEditMode"
+                @input="evt=>query=evt.target.value"
+                @blur="disableEditMode"
+            >
             <div class="result">
-                <ul ref="resultList" data-vue-test="resultList">
+                <ul
+                    ref="resultList"
+                    data-vue-test="resultList"
+                >
                     <li
-                        ref="resultListItem"
                         v-for="(item, index) in matchedItems"
+                        ref="resultListItem"
                         :key="item[searchKey]"
                         :class="{'selected': (selected === index)}"
-                        v-text="item[searchKey]"
                         @mousedown.prevent="itemClicked(index)"
+                        v-text="item[searchKey]"
                     ></li>
-                    <li class="notSelectable" v-if="emptySearchResult">{{ noObjectsFound }}</li>
+                    <li
+                        v-if="emptySearchResult"
+                        class="notSelectable"
+                    >
+                        {{ noObjectsFound }}
+                    </li>
                 </ul>
             </div>
-            <div class="newItem" v-if="emptySearchResult && enableInlineCreation">
+            <div
+                v-if="emptySearchResult && enableInlineCreation"
+                class="newItem"
+            >
                 <button
-                        data-vue-test="create-new-item-button"
-                        class="btn btn-secondary"
-                        @mousedown.prevent="createItem"
+                    data-vue-test="create-new-item-button"
+                    class="btn btn-secondary"
+                    @mousedown.prevent="createItem"
                 >
                     Neuen Eintrag "{{ query }}" anlegen
                 </button>
@@ -51,154 +66,154 @@
 </template>
 
 <script>
-    export default {
-        props: {
-            placeholder: {
-                type: String
-            },
-            items: {
-                type: Array,
-                required: true
-            },
-            noObjectsFound: {
-                type: String,
-                default: 'Keine Einträge gefunden'
-            },
-            searchKey: {
-                type: String,
-                required: true
-            },
-            valueKey: {
-                type: String,
-                require: false,
-                default: 'id'
-            },
-            preselectedValue: {
-                required: false,
-                default: null,
-            },
-            queryShouldBeReset: {
-                type: Boolean,
-                default: true
-            },
-            showAllItemsOnEmptyQuery: {
-                type: Boolean,
-                default: false
-            },
-            enableInlineCreation: {
-                type: Boolean,
-                default: false
-            }
+export default {
+    props: {
+        placeholder: {
+            type: String
         },
-        data () {
-            return {
-                selected: 0,
-                selectedItem: null,
-                editMode: false,
-                emptySearchResult: false,
-                query: '',
-
-            }
+        items: {
+            type: Array,
+            required: true
         },
-        mounted() {
-            if (this.preselectedValue !== null){
-                this.preselectConfiguredItem();
-            }
+        noObjectsFound: {
+            type: String,
+            default: "Keine Einträge gefunden"
         },
-        methods: {
-            preselectConfiguredItem(){
-                for (let i = 0; i < this.items.length; i++){
-                    let currentItem = this.items[i];
+        searchKey: {
+            type: String,
+            required: true
+        },
+        valueKey: {
+            type: String,
+            require: false,
+            default: "id"
+        },
+        preselectedValue: {
+            required: false,
+            default: null,
+        },
+        queryShouldBeReset: {
+            type: Boolean,
+            default: true
+        },
+        showAllItemsOnEmptyQuery: {
+            type: Boolean,
+            default: false
+        },
+        enableInlineCreation: {
+            type: Boolean,
+            default: false
+        }
+    },
+    data () {
+        return {
+            selected: 0,
+            selectedItem: null,
+            editMode: false,
+            emptySearchResult: false,
+            query: "",
 
-                    if (currentItem[this.valueKey] === this.preselectedValue){
-                        this.selected = i;
-                        this.selectedItem = currentItem;
-                        return;
-                    }
-                }
+        };
+    },
+    computed: {
+        matchedItems() {
+            let filteredItems = [];
+            this.emptySearchResult = false;
 
-            },
-            enableEditMode() {
-                this.editMode = true;
-            },
-            disableEditMode() {
-                this.editMode = false;
-            },
-            toggleEditMode() {
-                this.resetQuery();
-                this.editMode = !this.editMode
-            },
-            itemClicked(index) {
-                this.selected = index;
-                this.selectItem();
-            },
-            selectItem() {
-                this.selectedItem = this.matchedItems[this.selected];
-                this.editMode = false;
-                this.resetQuery();
+            this.$emit("change", this.query);
 
-                if (this.selectedItem !== undefined){
-                    this.$emit('selected', JSON.parse(JSON.stringify(this.selectedItem)));
+            if (this.query === ""){
+                if (this.showAllItemsOnEmptyQuery){
+                    return this.items;
+                }else{
+                    return filteredItems;
                 }
-            },
-            resetQuery() {
-                if (this.queryShouldBeReset){
-                    this.query = '';
-                }
-            },
-            keyUp(){
-                if (this.selected === 0){
+            }
+
+            filteredItems= this.items.filter(
+                (item) =>
+                //find items which matches the current query string
+                    item[this.searchKey].toLowerCase().includes(this.query.toLowerCase())
+            );
+
+            this.emptySearchResult = (filteredItems.length === 0 && this.query.trim() !== "");
+            return filteredItems;
+        }
+    },
+    mounted() {
+        if (this.preselectedValue !== null){
+            this.preselectConfiguredItem();
+        }
+    },
+    methods: {
+        preselectConfiguredItem(){
+            for (let i = 0; i < this.items.length; i++){
+                let currentItem = this.items[i];
+
+                if (currentItem[this.valueKey] === this.preselectedValue){
+                    this.selected = i;
+                    this.selectedItem = currentItem;
                     return;
                 }
+            }
 
-                this.selected -=1;
-                this.scrollToItem();
-            },
-            keyDown(){
-                if (this.selected >= this.matchedItems.length -1){
-                    return;
-                }
+        },
+        enableEditMode() {
+            this.editMode = true;
+        },
+        disableEditMode() {
+            this.editMode = false;
+        },
+        toggleEditMode() {
+            this.resetQuery();
+            this.editMode = !this.editMode;
+        },
+        itemClicked(index) {
+            this.selected = index;
+            this.selectItem();
+        },
+        selectItem() {
+            this.selectedItem = this.matchedItems[this.selected];
+            this.editMode = false;
+            this.resetQuery();
 
-                this.selected +=1;
-                this.scrollToItem();
-            },
-            scrollToItem(){
-                let itemHeight = this.$refs.resultListItem[0].offsetHeight;
-                this.$refs.resultList.scrollTop = this.selected * itemHeight;
-            },
-            createItem() {
-                this.$emit('create', this.query);
-                this.resetQuery();
-                this.emptySearchResult=false;
-                this.toggleEditMode();
+            if (this.selectedItem !== undefined){
+                this.$emit("selected", JSON.parse(JSON.stringify(this.selectedItem)));
             }
         },
-        computed: {
-            matchedItems() {
-                let filteredItems = [];
-                this.emptySearchResult = false;
-
-                this.$emit('change', this.query);
-
-                if (this.query === ''){
-                    if (this.showAllItemsOnEmptyQuery){
-                        return this.items;
-                    }else{
-                        return filteredItems;
-                    }
-                }
-
-                filteredItems= this.items.filter(
-                    (item) =>
-                        //find items which matches the current query string
-                        item[this.searchKey].toLowerCase().includes(this.query.toLowerCase())
-                    );
-
-                this.emptySearchResult = (filteredItems.length === 0 && this.query.trim() !== "");
-                return filteredItems;
+        resetQuery() {
+            if (this.queryShouldBeReset){
+                this.query = "";
             }
+        },
+        keyUp(){
+            if (this.selected === 0){
+                return;
+            }
+
+            this.selected -=1;
+            this.scrollToItem();
+        },
+        keyDown(){
+            if (this.selected >= this.matchedItems.length -1){
+                return;
+            }
+
+            this.selected +=1;
+            this.scrollToItem();
+        },
+        scrollToItem(){
+            let itemHeight = this.$refs.resultListItem[0].offsetHeight;
+            this.$refs.resultList.scrollTop = this.selected * itemHeight;
+        },
+        createItem() {
+            this.$emit("create", this.query);
+            this.resetQuery();
+            this.emptySearchResult=false;
+            this.toggleEditMode();
         }
     }
+};
 </script>
 
 <style scoped>

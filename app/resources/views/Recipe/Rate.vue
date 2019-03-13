@@ -1,5 +1,5 @@
 <template>
     <div>
-        <Headline text="Gerichte bewerten"></Headline>
+        <Headline text="Gerichte bewerten" />
     </div>
 </template>

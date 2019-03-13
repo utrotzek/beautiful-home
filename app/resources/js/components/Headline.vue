@@ -7,7 +7,13 @@
 </template>
 
 <script>
-    export default {
-        props: ['text']
+export default {
+    props: {
+        test: {
+            type: String,
+            default: "Headline undefined"
+        }
+
     }
+};
 </script>

@@ -1,5 +1,5 @@
 <template>
     <div>
-        <Headline text="Ein neues Gericht eingeben"></Headline>
+        <Headline text="Ein neues Gericht eingeben" />
     </div>
 </template>

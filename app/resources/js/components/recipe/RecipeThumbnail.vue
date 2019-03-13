@@ -1,11 +1,18 @@
 <template>
     <div class="searchResultItem">
         <div class="row">
-            <button class="btn btn-light delete" @click="removeItem" v-if="enableDeleteButton">
+            <button
+                v-if="enableDeleteButton"
+                class="btn btn-light delete"
+                @click="removeItem"
+            >
                 <i class="fas fa-trash"></i>
             </button>
             <div class="col-4">
-                <img :src="recipe.image_src" class="img-fluid img-thumbnail rounded-circle"/>
+                <img
+                    :src="recipe.image_src"
+                    class="img-fluid img-thumbnail rounded-circle"
+                >
             </div>
             <div class="col">
                 <a href="#"> {{ recipe.title }}</a>
@@ -13,16 +20,19 @@
                 <div class="rating">
                     <i
                         v-for="n in recipe.rating"
-                        class="fas fa-star">
+                        class="fas fa-star"
+                    >
                     </i>
 
-                    <i v-for="n in 5 - recipe.rating"
-                       class="fas fa-star-half-alt">
+                    <i
+                        v-for="n in 5 - recipe.rating"
+                        class="fas fa-star-half-alt"
+                    >
                     </i>
                 </div>
                 <div class="prepTime">
                     <i class="fas fa-clock"></i>
-                    {{ recipe.preparationTime}}
+                    {{ recipe.preparationTime }}
                 </div>
                 <div class="calorie">
                     {{ recipe.calorie }} kcal ( {{ recipe.calorie * 4.2 }} kJ)
@@ -32,14 +42,28 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-3" v-if="enableButtons">
+        <div
+            v-if="enableButtons"
+            class="row mt-3"
+        >
             <div class="col">
-                <div class="btn-group d-flex" role="group" aria-label="Basic example">
-                    <button @click="addToCart" type="button" class="btn btn-light">
+                <div
+                    class="btn-group d-flex"
+                    role="group"
+                    aria-label="Basic example"
+                >
+                    <button
+                        type="button"
+                        class="btn btn-light"
+                        @click="addToCart"
+                    >
                         <i class="fas fa-shopping-cart"></i>
                         <span class="d-none d-sm-inline">In den Einkaufswagen</span>
                     </button>
-                    <button type="button" class="btn btn-light">
+                    <button
+                        type="button"
+                        class="btn btn-light"
+                    >
                         <i class="fas fa-edit"></i>
                         <span class="d-none d-sm-inline">Bearbeiten</span>
                     </button>
@@ -47,36 +71,35 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
-    export default {
-        props: {
-            recipe: {
-                type: Object,
-                required: true
-            },
-            enableButtons: {
-                default: true,
-                type: Boolean
-            },
-            enableDeleteButton: {
-                default: false,
-                type: Boolean
-            }
+export default {
+    props: {
+        recipe: {
+            type: Object,
+            required: true
         },
-        methods: {
-            addToCart () {
-                this.$emit('add-to-cart')
-            },
-            removeItem () {
-                this.$emit('remove', this)
-            }
+        enableButtons: {
+            default: true,
+            type: Boolean
         },
-        data () {
-            return {
-            }
+        enableDeleteButton: {
+            default: false,
+            type: Boolean
+        }
+    },
+    data () {
+        return {
+        };
+    },
+    methods: {
+        addToCart () {
+            this.$emit("add-to-cart");
+        },
+        removeItem () {
+            this.$emit("remove", this);
         }
     }
+};
 </script>
