@@ -1,4 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import Autocompleter from '../../../../resources/js/components/tools/Autocompleter';
 
 describe('Autocompleter', () => {
@@ -149,5 +150,24 @@ describe('Autocompleter', () => {
             wrapper.find('[data-vue-test="autocompleter-input"]').trigger('keydown.up');
         }
         expect(wrapper.vm.selected).toBe(0);
+    });
+
+    it('can preselect items', () => {
+        let localWrapper = mount(Autocompleter,{
+            directives: {
+                focus: mockedDirective
+            },
+            propsData: {
+                valueKey: "id",
+                searchKey: 'title',
+                preselectedValue: 2,
+                items: [
+                    {id: 1,title: "a_item"},
+                    {id: 2,title: "b_item"},
+                ]
+            }
+        });
+
+        expect(localWrapper.vm.selectedItem).toEqual({id: 2,title: "b_item"})
     });
 });
