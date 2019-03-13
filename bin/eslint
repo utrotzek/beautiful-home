@@ -6,7 +6,7 @@ function initializeEnvironment {
 
 
 function eslint {
-    docker-compose -f docker-compose-dev.yml run build ./node_modules/.bin/eslint $@
+    docker-compose -f docker-compose-dev.yml run build ./node_modules/.bin/eslint resources --ext .js,.vue $@
 }
 function main {
     initializeEnvironment
