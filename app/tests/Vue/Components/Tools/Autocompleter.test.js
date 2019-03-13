@@ -15,6 +15,10 @@ describe('Autocompleter', () => {
         wrapper.find('[data-vue-test="autocompleter"]').trigger('click');
     }
 
+    function selectFirstItem(){
+        wrapper.setData({editMode: true});
+        wrapper.find('[data-vue-test="resultList"] li:first-child').trigger('mousedown.prevent');
+    }
     beforeEach(() =>{
         wrapper = shallowMount(Autocompleter,{
             directives: {
@@ -80,6 +84,9 @@ describe('Autocompleter', () => {
         wrapper.find('[data-vue-test="autocompleter"]').trigger('click');
         wrapper.find('[data-vue-test="autocompleter-input"]').trigger('keydown.tab');
         expect(wrapper.vm.editMode).toBeFalsy();
+
+        wrapper.find('[data-vue-test="autocompleter"]').trigger('keyup.tab');
+        expect(wrapper.vm.editMode).toBeTruthy();
     });
     it('All items will be list if so configured', () => {
         wrapper.setProps({showAllItemsOnEmptyQuery: true});
@@ -96,10 +103,7 @@ describe('Autocompleter', () => {
     });
     it('select an item if the users clicks on an item', () => {
         wrapper.setProps({showAllItemsOnEmptyQuery: true});
-        //open autocompleter and select first item
-        wrapper.find('[data-vue-test="autocompleter"]').trigger('click');
-        wrapper.find('[data-vue-test="resultList"] li:first-child').trigger('mousedown.prevent');
-
+        selectFirstItem();
         //event selected is emitted and selected item will be given as argument
         expect(wrapper.emitted().selected[0]).toEqual([{id: 1,title: "a_item"}])
 
@@ -169,5 +173,26 @@ describe('Autocompleter', () => {
         });
 
         expect(localWrapper.vm.selectedItem).toEqual({id: 2,title: "b_item"})
+    });
+
+    it('can be configured whether to reset query after item selection', () => {
+        const queryFixture = 'a_';
+
+        //case do not reset
+        wrapper.setProps({queryShouldBeReset: false});
+
+        wrapper.setData({query: queryFixture});
+
+        expect(wrapper.vm.query).toBe(queryFixture);
+        selectFirstItem();
+        expect(wrapper.vm.query).toBe(queryFixture);
+
+        //case do not reset
+        wrapper.setProps({queryShouldBeReset: true});
+        wrapper.setData({query: queryFixture});
+
+        expect(wrapper.vm.query).toBe(queryFixture);
+        selectFirstItem();
+        expect(wrapper.vm.query).toBe('');
     });
 });
