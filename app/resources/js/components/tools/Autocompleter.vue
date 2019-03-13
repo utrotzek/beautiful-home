@@ -13,6 +13,7 @@
         <div v-if="editMode" class="input">
             <!--suppress JSUndeclaredVariable -->
             <input
+                    data-vue-test="autocompleter-input"
                     class="form-control"
                     type="text"
                     @keydown.up="keyUp"
@@ -24,7 +25,7 @@
                     v-model="query"
                     v-focus>
             <div class="result">
-                <ul ref="resultList" >
+                <ul ref="resultList" data-vue-test="resultList">
                     <li
                         ref="resultListItem"
                         v-for="(item, index) in matchedItems"
@@ -74,7 +75,7 @@
             },
             preselectedValue: {
                 required: false,
-                default: ''
+                default: null,
             },
             queryShouldBeReset: {
                 type: Boolean,
@@ -100,18 +101,24 @@
             }
         },
         mounted() {
-            for (let i = 0; i < this.items.length; i++){
-                let currentItem = this.items[i];
-                if (currentItem[this.valueKey] === this.preselectedValue){
-                    this.selected = i;
-                    this.selectItem();
-                    return;
-                }
+            if (this.preselectedValue !== null){
+                this.preselectConfiguredItem();
             }
         },
         methods: {
+            preselectConfiguredItem(){
+                for (let i = 0; i < this.items.length; i++){
+                    let currentItem = this.items[i];
+
+                    if (currentItem[this.valueKey] === this.preselectedValue){
+                        this.selected = i;
+                        this.selectedItem = currentItem;
+                        return;
+                    }
+                }
+
+            },
             enableEditMode() {
-                console.log('enable');
                 this.editMode = true;
             },
             disableEditMode() {
@@ -130,7 +137,9 @@
                 this.editMode = false;
                 this.resetQuery();
 
-                this.$emit('selected', JSON.parse(JSON.stringify(this.selectedItem)));
+                if (this.selectedItem !== undefined){
+                    this.$emit('selected', JSON.parse(JSON.stringify(this.selectedItem)));
+                }
             },
             resetQuery() {
                 if (this.queryShouldBeReset){
