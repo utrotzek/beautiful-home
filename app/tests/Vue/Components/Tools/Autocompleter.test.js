@@ -37,13 +37,13 @@ describe('Autocompleter', () => {
         });
     });
 
-    it('The placeholder ist displayed correctly', () => {
+    it('can display placeholder text', () => {
         wrapper.setProps({placeholder: 'Insert title...'});
         expect(wrapper.find('[data-vue-test="autocompleter"]').text()).toEqual(
             'Insert title...'
         );
     });
-    it('Items can be filtered', () =>{
+    it('can filter items using a query', () =>{
         wrapper.setData({query: 'd_'});
 
         expect(wrapper.vm.matchedItems).toEqual(
@@ -63,7 +63,7 @@ describe('Autocompleter', () => {
             ]
         );
     });
-    it('New items can be created when no items are found for certain query string', () => {
+    it('can create new items when none were found for query string', () => {
         const newItemName = 'MyUnknownQueryString';
         wrapper.setProps({enableInlineCreation: true});
         //invoke empty search result
@@ -74,7 +74,7 @@ describe('Autocompleter', () => {
 
         expect(wrapper.emitted('create')[0]).toEqual([newItemName]);
     });
-    it('Input box disappears when the focus is lost or the user pressed the tab key', () => {
+    it('can hide select box when user clicks or uses tab key on component', () => {
         wrapper.find('[data-vue-test="autocompleter"]').trigger('click');
         expect(wrapper.vm.editMode).toBeTruthy();
 
@@ -88,7 +88,7 @@ describe('Autocompleter', () => {
         wrapper.find('[data-vue-test="autocompleter"]').trigger('keyup.tab');
         expect(wrapper.vm.editMode).toBeTruthy();
     });
-    it('All items will be list if so configured', () => {
+    it('can list all items if configured so', () => {
         wrapper.setProps({showAllItemsOnEmptyQuery: true});
 
         expect(wrapper.vm.matchedItems).toEqual(
@@ -101,7 +101,7 @@ describe('Autocompleter', () => {
             ]
         );
     });
-    it('select an item if the users clicks on an item', () => {
+    it('selects an item if the users clicks on any', () => {
         wrapper.setProps({showAllItemsOnEmptyQuery: true});
         selectFirstItem();
         //event selected is emitted and selected item will be given as argument
@@ -120,7 +120,7 @@ describe('Autocompleter', () => {
         expect(wrapper.vm.selected).toBe(2);
     });
 
-    it('will not select items out of bounds when pressing the array down key more often than available items', () => {
+    it('will not select items out of bounds when pressing the arrow down key more often than available items', () => {
         wrapper.setProps({showAllItemsOnEmptyQuery: true});
         enableAutoCompleter();
 
@@ -145,7 +145,7 @@ describe('Autocompleter', () => {
         expect(wrapper.vm.selected).toBe(maxSelectedIndex-2);
     });
 
-    it('will not select items out of bounds when pressing the array up key more often than available items', () => {
+    it('will not select items out of bounds when pressing the arrow  up key more often than available items', () => {
         wrapper.setProps({showAllItemsOnEmptyQuery: true});
         enableAutoCompleter();
 
