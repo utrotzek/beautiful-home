@@ -37,7 +37,6 @@
     </li>
 </template>
 <script>
-import Units from "../../../js/data/Units";
 import ShoppingListItemControl from "./ShoppingListEntryControl";
 
 export default {
@@ -54,7 +53,8 @@ export default {
     props: {
         shoppingListItem: {
             type: Object,
-            require: true
+            require: true,
+            default: null
         }
     },
     data () {

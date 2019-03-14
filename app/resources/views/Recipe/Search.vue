@@ -166,6 +166,7 @@
                 <div class="row">
                     <div
                         v-for="item in recipies"
+                        :key="item.id"
                         class="col-md-4"
                     >
                         <SearchResultEntry
@@ -240,7 +241,6 @@ export default {
     methods: {
         addRecipeToCart(recipe) {
             for (let i= 0; i < this.shoppingCart.length; i++){
-                console.log(recipe.id + "==" + this.shoppingCart[i].recipe.id);
                 if (recipe.id === this.shoppingCart[i].recipe.id){
                     this.shoppingCart[i].count++;
                     return;

@@ -122,6 +122,7 @@ export default {
     },
     computed: {
         groupedShoppingList () {
+            
             return _.groupBy(this.shoppingList, "item.article.group.title");
         },
         mobileDevice() {

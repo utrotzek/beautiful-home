@@ -25,6 +25,12 @@
 </template>
 <script>
 export default {
-    props: ["isToggled"]
+    props: {
+        isToggled: {
+            type: Boolean,
+            required: false,
+            default: true
+        }
+    }
 };
 </script>

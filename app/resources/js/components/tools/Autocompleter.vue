@@ -69,7 +69,9 @@
 export default {
     props: {
         placeholder: {
-            type: String
+            type: String,
+            required: false,
+            default: "Eintrag auswählen"
         },
         items: {
             type: Array,
@@ -89,8 +91,9 @@ export default {
             default: "id"
         },
         preselectedValue: {
+            type: Number | String,
             required: false,
-            default: null,
+            default: "",
         },
         queryShouldBeReset: {
             type: Boolean,

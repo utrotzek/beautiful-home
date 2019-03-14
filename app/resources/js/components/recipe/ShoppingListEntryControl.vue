@@ -165,7 +165,23 @@ export default {
     components: {
         AutoCompleter
     },
-    props: [ "unit", "article", "count"],
+    props:{
+        unit: {
+            type: Object,
+            require: true,
+            default: null
+        },
+        article: {
+            type: Object,
+            require: true,
+            default: null
+        },
+        count: {
+            type: Number | String,
+            require: true,
+            default: ""
+        }
+    },
     data () {
         return {
             showNewArticleModal: false,
@@ -200,7 +216,7 @@ export default {
             this.toggleNewArticleModal();
             this.newArticleName = newArticleName;
         },
-        createNewUnit(newUnitName){
+        createNewUnit(){
             this.showNewArticleModal = true;
         },
         addEntry() {

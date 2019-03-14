@@ -1,7 +1,7 @@
 <template>
     <a
         class="scroll-to-top rounded"
-        href="#page-top"
+        href="#"
     >
         <i class="fas fa-angle-up"></i>
     </a>

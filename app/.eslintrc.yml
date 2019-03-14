@@ -7,6 +7,8 @@ extends:
 globals:
   Atomics: 'readonly'
   SharedArrayBuffer: 'readonly'
+  _: true
+  $: true
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
