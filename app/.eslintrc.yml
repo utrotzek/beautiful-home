@@ -30,3 +30,9 @@ rules:
     - error
     - html:
         normal: any
+  no-unused-vars:
+    - error
+    - argsIgnorePattern: "^_"
+      varsIgnorePattern: "^_"
+  vue/no-unused-vars:
+    - off

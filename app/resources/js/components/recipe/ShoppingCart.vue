@@ -4,6 +4,7 @@
             id="cart"
             ref="cartElement"
             class="d-flex justify-content-end"
+            :class="{'fixed': cartFixed, 'cartAnimation': cartAnimation}"
         >
             <a
                 class="btn btn-light"
@@ -54,7 +55,8 @@
                                         class="list-group"
                                     >
                                         <li
-                                            v-for="entry in shoppingCart"
+                                            v-for="(entry, key) in shoppingCart"
+                                            :key="key"
                                             class="list-group-item"
                                         >
                                             <div class="row">
@@ -133,7 +135,9 @@ export default {
             scrolled: false,
             cartOriginalTop: 0,
             hasEntries: true,
-            step: 1
+            step: 1,
+            cartFixed: false,
+            cartAnimation: false
         };
     },
     computed: {
@@ -147,14 +151,11 @@ export default {
     },
     watch: {
         "shoppingCart" () {
-            let cart = $("#cart");
-
-            cart.addClass("cartAnimation");
+            this.cartAnimation = true;
+            let self = this;
             setTimeout(function(){
-                cart.removeClass("cartAnimation");
+                self.cartAnimation = false;
             }, 500);
-
-
             this.hasEntries = this.shoppingCart.length > 0;
         }
     },
@@ -169,12 +170,8 @@ export default {
     },
     methods: {
         handleStickyCart: function(){
-            const scrollDistance = $(window).scrollTop();
-            if (scrollDistance >= this.cartOriginalTop) {
-                $(this.$refs.cartElement).addClass("fixed");
-            } else {
-                $(this.$refs.cartElement).removeClass("fixed");
-            }
+            const scrollDistance = window.top.scrollY;
+            this.cartFixed = (scrollDistance >= this.cartOriginalTop);
         },
         increaseCount: function(entry){
             entry.count++;

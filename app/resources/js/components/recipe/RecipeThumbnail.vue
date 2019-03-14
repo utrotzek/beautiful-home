@@ -16,20 +16,20 @@
             </div>
             <div class="col">
                 <a href="#"> {{ recipe.title }}</a>
-
+                <!-- eslint-disable vue/require-v-for-key */ -->
                 <div class="rating">
                     <i
-                        v-for="n in recipe.rating"
+                        v-for="_n in recipe.rating"
                         class="fas fa-star"
                     >
                     </i>
-
                     <i
-                        v-for="n in 5 - recipe.rating"
+                        v-for="_n in 5 - recipe.rating"
                         class="fas fa-star-half-alt"
                     >
                     </i>
                 </div>
+                <!-- eslint-enable vue/require-v-for-key */ -->
                 <div class="prepTime">
                     <i class="fas fa-clock"></i>
                     {{ recipe.preparationTime }}

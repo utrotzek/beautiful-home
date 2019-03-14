@@ -9,7 +9,7 @@
 <script>
 export default {
     props: {
-        test: {
+        text: {
             type: String,
             default: "Headline undefined"
         }
