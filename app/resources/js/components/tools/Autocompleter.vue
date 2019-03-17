@@ -179,9 +179,7 @@ export default {
             this.editMode = false;
             this.resetQuery();
 
-            if (this.selectedItem !== undefined){
-                this.$emit("selected", JSON.parse(JSON.stringify(this.selectedItem)));
-            }
+            this.$emit("selected", JSON.parse(JSON.stringify(this.selectedItem)));
         },
         resetQuery() {
             if (this.queryShouldBeReset){
@@ -211,7 +209,6 @@ export default {
         createItem() {
             this.$emit("create", this.query);
             this.resetQuery();
-            this.emptySearchResult=false;
             this.toggleEditMode();
         }
     }
