@@ -177,7 +177,7 @@ export default {
             default: null
         },
         count: {
-            type: Number | String,
+            type: [Number, String],
             require: true,
             default: ""
         }

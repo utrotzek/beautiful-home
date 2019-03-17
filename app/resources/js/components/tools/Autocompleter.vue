@@ -91,7 +91,7 @@ export default {
             default: "id"
         },
         preselectedValue: {
-            type: Number | String,
+            type: [Number, String],
             required: false,
             default: "",
         },
@@ -113,16 +113,17 @@ export default {
             selected: 0,
             selectedItem: null,
             editMode: false,
-            emptySearchResult: false,
             query: "",
 
         };
     },
     computed: {
+        emptySearchResult() {
+            return (this.matchedItems.length === 0 && this.query.trim() !== "");
+
+        },
         matchedItems() {
             let filteredItems = [];
-            this.emptySearchResult = false;
-
             this.$emit("change", this.query);
 
             if (this.query === ""){
@@ -138,8 +139,6 @@ export default {
                 //find items which matches the current query string
                     item[this.searchKey].toLowerCase().includes(this.query.toLowerCase())
             );
-
-            this.emptySearchResult = (filteredItems.length === 0 && this.query.trim() !== "");
             return filteredItems;
         }
     },
