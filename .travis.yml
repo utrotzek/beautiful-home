@@ -19,3 +19,4 @@ script:
 - docker-compose -f docker-compose-dev.yml run build ./artisan dusk --env=testing
 - docker-compose -f docker-compose-dev.yml run build yarn test-vue --coverage
 - docker-compose -f docker-compose-dev.yml run build ./node_modules/.bin/eslint resources --ext .js,.vue
+- docker-compose -f docker-compose-dev.yml run build bin/php-cs-fixer fix ./app --dry-run --verbose

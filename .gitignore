@@ -1,5 +1,6 @@
 /app/node_modules
 /app/dist
 /app/yarn-error.log
+/app/.php_cs.cache
 /.idea
 .env
