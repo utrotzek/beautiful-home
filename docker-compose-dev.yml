@@ -11,10 +11,25 @@ services:
     links:
     - php
   php:
-    image: php:7-fpm
+    build:
+      context: docker/php
     volumes:
     - ./app:/app
     user: "${UID}:${GID}"
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "beautiful-home"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - "8081:80"
+    environment:
+    - PMA_ARBITRARY=1
+    - PMA_HOST=db
+    - PMA_USER=root
+    - PMA_PASSWORD=root
   build:
     build:
       context: docker/build
