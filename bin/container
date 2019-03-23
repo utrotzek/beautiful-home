@@ -35,6 +35,10 @@ function initializeCommands {
 
 function start {
     docker-compose -f docker-compose-dev.yml up --build -d
+    
+    #Generate ide helper files for auto complete
+    bin/artisan ide-helper:generate
+    bin/artisan ide-helper:models -W
 }
 
 function stop {

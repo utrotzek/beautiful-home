@@ -2,5 +2,6 @@
 /app/dist
 /app/yarn-error.log
 /app/.php_cs.cache
+/app/_ide_helper*.php
 /.idea
 .env
