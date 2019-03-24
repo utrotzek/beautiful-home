@@ -21,5 +21,6 @@ Route::namespace('ShoppingList')->group(function(){
     Route::prefix('shoppingList')->group(function(){
         Route::apiResource('group', "GroupController");
         Route::apiResource('article', "ArticleController");    
+        Route::apiResource('unit', "UnitController");    
     });
 });
