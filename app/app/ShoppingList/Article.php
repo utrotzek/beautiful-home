@@ -26,7 +26,8 @@ class Article extends Model
 {
     //
     
-    public function group(){
+    public function group()
+    {
         return $this->belongsTo(Group::class);
     }
 }
