@@ -5,6 +5,7 @@ Vue.use(VueRouter);
 
 import App from "../views/App";
 import Home from "../views/Home";
+import Finance from "../views/Finance";
 import Recipe from "../views/Recipe";
 import RecipeEdit from "../views/Recipe/Edit";
 import RecipeSearch from "../views/Recipe/Search";
@@ -20,6 +21,16 @@ const router = new VueRouter({
             path: "/",
             name: "home",
             component: Home
+        },
+        {
+            path: "/finance",
+            name: "finance",
+            component: Finance, 
+            meta: {
+                breadcrumb: [
+                    { name: "Finanzen" }
+                ]
+            }
         },
         {
             path: "/recipe",

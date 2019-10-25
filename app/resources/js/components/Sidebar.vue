@@ -7,6 +7,13 @@
     >
         <li class="nav-item">
             <router-link
+                    to="/finance"
+                    class="nav-link"
+            >
+                <i class="fas fa-fw fa-coins"></i>
+                <span>Finanzen</span>
+            </router-link>
+            <router-link
                 to="/recipe"
                 class="nav-link"
             >
