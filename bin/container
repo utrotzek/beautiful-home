@@ -30,11 +30,18 @@ function initializeCommands {
         restart)
             restart
             ;;
+        status)
+            status
+        ;;
     esac
 }
 
 function start {
     docker-compose -f docker-compose-dev.yml up --build -d
+    
+    #Generate ide helper files for auto complete
+    bin/artisan ide-helper:generate
+    bin/artisan ide-helper:models -W
 }
 
 function stop {
@@ -44,6 +51,10 @@ function stop {
 function restart {
     stop
     start
+}
+
+function status {
+    docker-compose -f  docker-compose-dev.yml ps
 }
 
 function main {

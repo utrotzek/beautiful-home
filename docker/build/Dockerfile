@@ -19,7 +19,7 @@ RUN apk add \
     zip \
     chromium \
     libzip-dev && \
-    docker-php-ext-install zip
+    docker-php-ext-install zip pdo pdo_mysql
 
 USER $USERNAME
 
