@@ -13,23 +13,26 @@
 
 
 <script>
-    import YearComponent from '../js/components/financial/year';    
+import YearComponent from "../js/components/Finance/Year";
+
+// eslint-disable-next-line
+let currentYear = 2020; 
     
 export default {
     components: {
         year: YearComponent
     },
+    data: function(){
+        return {
+            year: this.currentYear
+        };
+    },
     mounted() {
         this.year = new Date().getFullYear();
     },
-    data: function(){
-        return {
-            year: 2020
-        };
-    },
     methods: {
         updateYear(newYear) {
-            this.year = newYear
+            this.year = newYear;
         }
     }
 };
