@@ -36,8 +36,17 @@ function initializeCommands {
     esac
 }
 
+function copyEnvExample {
+  [ ! -f app/.env ] && cp app/.env.example app/.env
+  [ ! -f .env ] && cp .env.example .env
+}
+
 function start {
+    copyEnvExample
+
     docker-compose -f docker-compose-dev.yml up --build -d
+
+    bin/composer install
     
     #Generate ide helper files for auto complete
     bin/artisan ide-helper:generate
