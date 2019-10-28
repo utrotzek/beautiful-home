@@ -6,13 +6,29 @@
                 id="accounting-container"
                 class="row"
             >
+                <button
+                    id="planningCollapseButton"
+                    :class="{ planningCollapsed: planningCollapsed}"
+                    @click="collapsePlanning()"
+                >
+                    <span class="fa fa-chevron-left"></span>
+                </button>
                 <div
                     id="planning"
-                    class="col-md-4"
+                    class="col-sm-4 col-12"
+                    :class="{ planningCollapsed: planningCollapsed}"
                     :style="{
                         'max-height': accountingContainerHeight + 'px'
                     }"
                 >
+                    <button
+                        id="planningCloseButton"
+                        :class="{ planningClosed: !planningCollapsed}"
+                        @click="collapsePlanning()"
+                    >
+                        <span class="fa fa-window-close"></span>
+                    </button>
+
                     <PlanningElement />
                     <PlanningElement />
                     <PlanningElement />
@@ -46,10 +62,12 @@
                 </div>
                 <div
                     id="accounting"
-                    class="col-md-8"
+                    class="col-sm-8"
                     :style="{
                         'max-height': accountingContainerHeight + 'px'
                     }"
+                    @click="collapsePlanning(true)"
+                    @focus="collapsePlanning(true)"
                 >
                     <AccountingElement />
                     <AccountingElement />
@@ -97,7 +115,8 @@ export default {
             headline: "Oktober 2019",
             year: 2019,
             month: 10,
-            accountingContainerHeight: 0
+            accountingContainerHeight: 0,
+            planningCollapsed: true
         };
     },
     computed: {
@@ -122,6 +141,14 @@ export default {
         },
         updateYear(newYear) {
             this.year = newYear;
+        },
+        collapsePlanning(collapse) {
+            if (collapse !== undefined){
+                this.planningCollapsed = collapse;
+            }else{
+                //toggle
+                this.planningCollapsed = !this.planningCollapsed;
+            }
         }
     }
 };

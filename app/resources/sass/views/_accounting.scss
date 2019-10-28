@@ -1,15 +1,100 @@
+.breadcrumb {
+  display: none;
+}
+
+#planningCollapseButton {
+  display: none;
+  margin: 0;
+  padding: 0;
+  color: $gray-smooth;
+  border: solid #6c757d 1px;
+  border-radius: 20px 0px 0px 20px;
+  background-color: white;
+  width: 35px;
+
+  &.planningCollapsed {
+    right: 0px;
+    display: block;
+    position: absolute;
+    z-index: 100;
+    font-size: 2rem;
+  }
+
+  &.planningCollapsed:hover {
+    width: 40px;
+    transition: width 0.2s;
+  }
+}
+
 #planning {
   overflow-y: scroll;
+  //display: none;
+  position: absolute;
+  border: solid black 1px;
+  background: $white;
+  width: 70vw;
+  right: 0;
+  z-index: 150;
+  padding-top: 50px;
+
+  &.planningCollapsed {
+    display:none;
+  }
+
+  & #planningCloseButton {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 2rem;
+    background: transparent;
+    border: none;
+    margin: 0;
+    color: $gray-smooth;
+    padding: 0;
+  }
 }
 
 #accounting {
   overflow-y: scroll;
 }
 
+@media (min-width: 576px) {
+  .breadcrumb {
+    display: block;
+  }
+
+  #planningCollapseButton {
+    display: none;
+
+    &.planningCollapsed {
+      display: none;
+    }
+  }
+
+  #planning {
+    display: block;
+    position: relative;
+    width: auto;
+    z-index: auto;
+    right: auto;
+    border: none;
+    padding-top: 0;
+
+    &.planningCollapsed {
+      display: block;
+    }
+
+    & #planningCloseButton {
+      display: none;
+    }
+  }
+}
+
 /* width */
 #accounting::-webkit-scrollbar,
 #planning::-webkit-scrollbar{
-  width: 10px;
+  width: 2px;
+  direction:rtl;
 }
 
 /* Track */
