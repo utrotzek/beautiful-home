@@ -37,20 +37,39 @@ function initializeCommands {
 }
 
 function copyEnvExample {
-  [ ! -f app/.env ] && cp app/.env.example app/.env
-  [ ! -f .env ] && cp .env.example .env
+    [ ! -f app/.env ] && cp app/.env.example app/.env
+    [ ! -f .env ] && cp .env.example .env
 }
 
-function start {
-    copyEnvExample
-
-    docker-compose -f docker-compose-dev.yml up --build -d
-
+function installPackages {
+    #install project packages
     bin/composer install
-    
+    bin/yarn install
+}
+
+function generateIDEHelper {
     #Generate ide helper files for auto complete
     bin/artisan ide-helper:generate
     bin/artisan ide-helper:models -W
+}
+
+function compileTemplates {
+    #compile templates
+    bin/yarn dev
+}
+
+function startContainer {
+    #start container
+    docker-compose -f docker-compose-dev.yml up --build -d
+}
+
+function start {
+    startContainer
+
+    copyEnvExample
+    installPackages
+    generateIDEHelper
+    compileTemplates
 }
 
 function stop {
