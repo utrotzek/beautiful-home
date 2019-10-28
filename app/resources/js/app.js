@@ -6,6 +6,7 @@ Vue.use(VueRouter);
 import App from "../views/App";
 import Home from "../views/Home";
 import Finance from "../views/Finance";
+import Accounting from "../views/Finance/Accounting";
 import Recipe from "../views/Recipe";
 import RecipeEdit from "../views/Recipe/Edit";
 import RecipeSearch from "../views/Recipe/Search";
@@ -29,6 +30,16 @@ const router = new VueRouter({
             meta: {
                 breadcrumb: [
                     { name: "Finanzen" }
+                ]
+            }
+        },
+        {
+            path: "/finance/accounting",
+            name: "accounting",
+            component: Accounting,
+            meta: {
+                breadcrumb: [
+                    { name: "Finanzen / Buchhaltung" }
                 ]
             }
         },

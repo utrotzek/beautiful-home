@@ -1,0 +1,31 @@
+#planning {
+  overflow-y: scroll;
+}
+
+#accounting {
+  overflow-y: scroll;
+}
+
+/* width */
+#accounting::-webkit-scrollbar,
+#planning::-webkit-scrollbar{
+  width: 10px;
+}
+
+/* Track */
+#accounting::-webkit-scrollbar-track,
+#planning::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+#accounting::-webkit-scrollbar-thumb,
+#planning::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+#accounting::-webkit-scrollbar-thumb:hover,
+#planning::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

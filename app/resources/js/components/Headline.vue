@@ -1,5 +1,5 @@
 <template>
-    <div class="row text-center">
+    <div id="headline" class="row text-center">
         <div class="col">
             <h1>{{ text }}</h1>
         </div>
