@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,6 +11,14 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .js('resources/js/bootstrap.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.js("resources/js/app.js", "public/js")
+    .js("resources/js/bootstrap.js", "public/js")
+    .sass("resources/sass/app.scss", "public/css")
+    //accelerate watch by ignoring node_modules:
+    //https://laracasts.com/discuss/channels/elixir/laravel-mix-extremly-slow?page=0#
+    .options({
+        watchOptions: {
+            ignored: /node_modules/
+        }
+    })
+;
