@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\ShoppingList\Article whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\ShoppingList\Article whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\ShoppingList\Article whereUpdatedAt($value)
+ * @property-read \App\ShoppingList\Group $group
  */
 class Article extends Model
 {
