@@ -29,36 +29,25 @@
                         <span class="fa fa-window-close"></span>
                     </button>
 
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
-                    <PlanningElement />
+                    <div
+                        id="planningSearch"
+                        class="mb-3"
+                    >
+                        <Search @searched="planningSearched" />
+                    </div>
+
+                    <div
+                        v-for="item in planningData"
+                        :key="item.id"
+                    >
+                        <PlanningElement
+                            v-if="item.display"
+                            :total-amount="item.totalAmount"
+                            :description="item.description"
+                            :title="item.title"
+                            :date="item.date"
+                        />
+                    </div>
                 </div>
                 <div
                     id="accounting"
@@ -69,30 +58,25 @@
                     @click="collapsePlanning(true)"
                     @focus="collapsePlanning(true)"
                 >
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
-                    <AccountingElement />
+                    <div
+                        id="accountingSearch"
+                        class="mb-3"
+                    >
+                        <Search @searched="accountingSearched" />
+                    </div>
+
+                    <div
+                        v-for="(item) in accountingData"
+                        :key="item.id"
+                    >
+                        <AccountingElement
+                            v-if="item.display"
+                            :accounting-date="item.date"
+                            :accounting-title="item.title"
+                            :total-amount="item.totalAmount"
+                            :remaining-amount="item.remainingAmount"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
@@ -102,13 +86,15 @@
 
 <script>
 
+import Search from "../../js/components/tools/Search";
 import PlanningElement from "../../js/components/Finance/PlanningElement";
 import AccountingElement from "../../js/components/Finance/AccountingElement";
 
 export default {
     components: {
         PlanningElement,
-        AccountingElement
+        AccountingElement,
+        Search
     },
     data: function(){
         return {
@@ -116,7 +102,76 @@ export default {
             year: 2019,
             month: 10,
             accountingContainerHeight: 0,
-            planningCollapsed: true
+            planningCollapsed: true,
+
+            accountingData: [
+                {
+                    id: 1,
+                    title: "Westdeutsche Lotterie GmbH & Co. OHG westlotto.de",
+                    totalAmount: -43,
+                    remainingAmount: -43,
+                    date: "12.10.2019",
+                    display: true
+                },
+                {
+                    id: 2,
+                    title: "REWE SAGT DANKE. 43400225//Muenster-Centrum/DE",
+                    totalAmount: -4.96,
+                    remainingAmount: -4.96,
+                    date: "30.10.2019",
+                    display: true
+                },
+                {
+                    id: 3,
+                    title: "Stadt Münster Stadtkasse",
+                    totalAmount: 3000,
+                    remainingAmount: 3000,
+                    date: "30.10.2019",
+                    display: true
+                },
+                {
+                    id: 4,
+                    title: "Scheffer und Loederbusch//Muenster/DE",
+                    totalAmount: -39.94,
+                    remainingAmount: -39.94,
+                    date: "26.10.2019",
+                    display: true
+                }
+            ],
+            planningData: [
+                {
+                    id: 1,
+                    title: "Einkaufen",
+                    description: "Gesamter Monat",
+                    totalAmount: -100,
+                    date: "25.10.2019",
+                    display: true
+                },
+                {
+                    id: 2,
+                    title: "Elektronik",
+                    description: "Rasierer Amazon",
+                    totalAmount: -200,
+                    date: "25.10.2019",
+                    display: true
+                },
+                {
+                    id: 3,
+                    title: "Elektronik",
+                    description: "PC Festplatte",
+                    totalAmount: -200,
+                    date: "25.10.2019",
+                    display: true
+                },
+                {
+                    id: 4,
+                    title: "Sparbuch",
+                    description: "Urlaub",
+                    totalAmount: -300,
+                    date: "25.10.2019",
+                    display: true
+                }
+            ]
         };
     },
     computed: {
@@ -142,6 +197,46 @@ export default {
         updateYear(newYear) {
             this.year = newYear;
         },
+        accountingSearched(query) {
+            if (query.length === 0){
+                let i, n = this.accountingData.length;
+                for (i = 0; i < n; i++){
+                    this.accountingData[i].display = true;
+                }
+            }else{
+                let i, n = this.accountingData.length -1;
+                for (i = 0; i <= n; i++){
+                    let currentItem = this.accountingData[i];
+                    let display = (currentItem.title.toLowerCase().search(query.toLowerCase()) > -1);
+
+                    if (!display) {
+                        display = (currentItem.date.toLowerCase().search(query.toLowerCase()) > -1);
+                    }
+                    currentItem.display = display;
+                }
+            }
+        },
+        planningSearched(query) {
+            if (query.length === 0){
+                let i, n = this.planningData.length;
+                for (i = 0; i < n; i++){
+                    this.planningData[i].display = true;
+                }
+            }else{
+                let i, n = this.planningData.length -1;
+                for (i = 0; i <= n; i++){
+                    let currentItem = this.planningData[i];
+                    let display = (currentItem.title.toLowerCase().search(query.toLowerCase()) > -1);
+                    if (!display){
+                        display = (currentItem.description.toLowerCase().search(query.toLowerCase()) > -1);
+                    }
+                    if (!display) {
+                        display = (currentItem.date.toLowerCase().search(query.toLowerCase()) > -1);
+                    }
+                    currentItem.display = display;
+                }
+            }
+        },
         collapsePlanning(collapse) {
             if (collapse !== undefined){
                 this.planningCollapsed = collapse;
@@ -153,3 +248,11 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+    @media (min-width: 1200px) {
+        #accounting {
+            width: 70%;
+        }
+    }
+</style>
