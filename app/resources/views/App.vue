@@ -4,7 +4,10 @@
         <div id="wrapper">
             <Sidebar :is-toggled="sidebarIsToggled" />
 
-            <div id="content-wrapper">
+            <div
+                id="content-wrapper"
+                @click="contentClick"
+            >
                 <div class="container-fluid">
                     <Breadcrumb />
                     <router-view />
@@ -39,6 +42,9 @@ export default {
         };
     },
     methods: {
+        contentClick() {
+            this.sidebarIsToggled = true;
+        },
         toggleSidebar() {
             this.sidebarIsToggled = !this.sidebarIsToggled;
         }
