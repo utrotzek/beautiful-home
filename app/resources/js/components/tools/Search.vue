@@ -41,9 +41,7 @@ export default {
             e.preventDefault();
         },
         triggerSearch() {
-            if (this.query.length > 0) {
-                this.displayDelete = true;
-            }
+            this.displayDelete = this.query.length > 0;
             this.$emit("searched", this.query);
         },
         clearQuery() {
@@ -69,6 +67,7 @@ export default {
         top: 7px;
         color: #868e96;
         cursor: pointer;
+        z-index: 100;
     }
 
     .search-icon {
@@ -76,6 +75,5 @@ export default {
         left: 10px;
         top: 7px;
         color: #ced4da;
-
     }
 </style>

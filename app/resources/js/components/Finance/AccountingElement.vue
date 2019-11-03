@@ -1,5 +1,5 @@
 <template>
-    <div class="accounting-element row">
+    <div class="accounting-element row mb-3">
         <div class="col accounting-element-inner">
             <div class="delete-element">
                 <button>
@@ -102,10 +102,6 @@ export default {
 </script>
 
 <style scoped>
-    .accounting-element {
-        padding: 0 40px 15px 15px;
-    }
-
     .accounting-element-inner {
         border: solid #adb5bd 1px;
         padding: 10px 15px 10px 10px;

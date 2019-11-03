@@ -21,12 +21,19 @@
                         'max-height': accountingContainerHeight + 'px'
                     }"
                 >
+                    <h2 class="d-none d-md-block">
+                        Planung
+                    </h2>
                     <button
                         id="planningCloseButton"
+                        type="button"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                        class="close"
                         :class="{ planningClosed: !planningCollapsed}"
                         @click="collapsePlanning()"
                     >
-                        <span class="fa fa-window-close"></span>
+                        <span aria-hidden="true">×</span>
                     </button>
 
                     <div
@@ -58,6 +65,9 @@
                     @click="collapsePlanning(true)"
                     @focus="collapsePlanning(true)"
                 >
+                    <h2 class="d-none d-md-block">
+                        Umsätze
+                    </h2>
                     <div
                         id="accountingSearch"
                         class="mb-3"
@@ -250,9 +260,23 @@ export default {
 </script>
 
 <style scoped>
+    #planning {
+        padding: 40px 10px 40px 10px;
+    }
+
+    @media (min-width: 768px) {
+        #planning {
+            padding: 0 10px 0 10px;
+        }
+    }
+
     @media (min-width: 1200px) {
         #accounting {
             width: 70%;
         }
+    }
+
+    #accounting {
+        padding: 0 48px  0 20px;
     }
 </style>
