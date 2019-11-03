@@ -1,5 +1,9 @@
 <template>
-    <div class="planningElement">
+    <div
+        ref="planningElement"
+        class="planningElement"
+        @click="showOverlay"
+    >
         <div class="date">
             {{ date }}
         </div>
@@ -17,6 +21,38 @@
         <div class="clearfix"></div>
         <div class="description">
             {{ description }}
+        </div>
+
+        <div
+            v-if="displayOverlay"
+            class="overlay"
+        >
+            <div
+                role="group"
+                aria-label="Basic example"
+                class="btn-group d-flex"
+            >
+                <button
+                    type="button"
+                    class="btn btn-light"
+                >
+                    <i class="fas fa-link"></i> <span class="d-none d-sm-inline">Zuordnen</span>
+                </button> <button
+                    type="button"
+                    class="btn btn-light"
+                >
+                    <i class="fas fa-trash"></i> <span class="d-none d-sm-inline">Löschen</span>
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-light"
+                    @click.stop
+                    @click="closeOverlay"
+                >
+                    <i class="fas fa-ban"></i> <span class="d-none d-sm-inline">Schließen</span>
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -44,7 +80,7 @@ export default {
     },
     data() {
         return {
-
+            displayOverlay: false
         };
     },
     computed: {
@@ -53,6 +89,14 @@ export default {
                 "negative": this.totalAmount < 0,
                 "positive": this.totalAmount >= 0
             };
+        }
+    },
+    methods: {
+        showOverlay() {
+            this.displayOverlay = true;
+        },
+        closeOverlay() {
+            this.displayOverlay = false;
         }
     }
 };
