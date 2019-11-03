@@ -27,6 +27,7 @@
             <div class="row relatedElements">
                 <div
                     v-for="(planningElement, key) in planningElements"
+                    :key="planningElement.id"
                     class="col-12 col-md-6"
                 >
                     <PlanningElement
@@ -76,12 +77,14 @@ export default {
         return {
             planningElements: [
                 {
+                    id: 1,
                     totalAmount: -1,
                     title: "Einkaufen",
                     description: "this is my descipriotn",
                     date: "20.10.2019"
                 },
                 {
+                    id: 2,
                     totalAmount: -99,
                     title: "Amazon",
                     description: "Weil das so ist",
