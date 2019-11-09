@@ -27,39 +27,25 @@
             v-if="displayOverlay"
             class="overlay"
         >
-            <div
-                role="group"
-                aria-label="Basic example"
-                class="btn-group d-flex"
-            >
-                <button
-                    type="button"
-                    class="btn btn-light"
-                >
-                    <i class="fas fa-link"></i> <span class="d-none d-sm-inline">Zuordnen</span>
-                </button> <button
-                    type="button"
-                    class="btn btn-light"
-                >
-                    <i class="fas fa-trash"></i> <span class="d-none d-sm-inline">Löschen</span>
-                </button>
-
-                <button
-                    type="button"
-                    class="btn btn-light"
-                    @click.stop
-                    @click="closeOverlay"
-                >
-                    <i class="fas fa-ban"></i> <span class="d-none d-sm-inline">Schließen</span>
-                </button>
-            </div>
+            <ButtonRow
+                show-delete
+                show-edit
+                :show-connect="!isConnected"
+                @close="closeOverlay"
+            />
         </div>
     </div>
 </template>
 
 <script>
+
+import ButtonRow from "../../../js/components/tools/ButtonRow";
+
 export default {
     name: "PlanningElementVue",
+    components: {
+        ButtonRow
+    },
     props: {
         title: {
             type: String,
@@ -76,6 +62,10 @@ export default {
         date: {
             type: String,
             required: true,
+        },
+        isConnected: {
+            type: Boolean,
+            default: false
         }
     },
     data() {

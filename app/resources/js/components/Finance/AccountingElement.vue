@@ -31,6 +31,7 @@
                     class="col-12 col-md-6"
                 >
                     <PlanningElement
+                        is-connected
                         :description="planningElement.description"
                         :title="planningElement.title"
                         :total-amount="planningElement.totalAmount"
