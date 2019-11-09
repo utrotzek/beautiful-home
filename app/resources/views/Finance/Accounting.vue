@@ -118,16 +118,14 @@ export default {
                 {
                     id: 1,
                     title: "Westdeutsche Lotterie GmbH & Co. OHG westlotto.de",
-                    totalAmount: -43,
-                    remainingAmount: -43,
+                    totalAmount: -100,
                     date: "12.10.2019",
                     display: true
                 },
                 {
                     id: 2,
                     title: "REWE SAGT DANKE. 43400225//Muenster-Centrum/DE",
-                    totalAmount: -4.96,
-                    remainingAmount: -4.96,
+                    totalAmount: -400.96,
                     date: "30.10.2019",
                     display: true
                 },
@@ -135,15 +133,13 @@ export default {
                     id: 3,
                     title: "Stadt Münster Stadtkasse",
                     totalAmount: 3000,
-                    remainingAmount: 3000,
                     date: "30.10.2019",
                     display: true
                 },
                 {
                     id: 4,
                     title: "Scheffer und Loederbusch//Muenster/DE",
-                    totalAmount: -39.94,
-                    remainingAmount: -39.94,
+                    totalAmount: -399.94,
                     date: "26.10.2019",
                     display: true
                 }

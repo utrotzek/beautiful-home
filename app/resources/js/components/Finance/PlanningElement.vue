@@ -93,6 +93,9 @@ export default {
 </script>
 
 <style scoped>
+    .planningElement {
+        cursor: pointer;
+    }
     .date {
         font-size: 80%;
     }

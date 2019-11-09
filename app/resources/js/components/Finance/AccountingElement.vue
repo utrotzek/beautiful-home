@@ -14,13 +14,14 @@
             </div>
             <div class="row">
                 <div class="accounting-title col-8">
+                    <span v-if="showCheck" class="fa fa-check-circle check"></span>
                     {{ accountingTitle }}
                 </div>
                 <div
                     class="remaining-amount col-4"
                     :class="classObject"
                 >
-                    {{ remainingAmount }} €
+                    <span v-if="!showCheck">{{ remainingAmount }} €</span>
                 </div>
             </div>
 
@@ -59,11 +60,6 @@ export default {
             required: true
         },
 
-        remainingAmount: {
-            type: Number,
-            required: true
-        },
-
         accountingTitle: {
             type: String,
             required: true
@@ -91,10 +87,22 @@ export default {
                     description: "Weil das so ist",
                     date: "20.10.2019"
                 }
-            ]
+            ],
         };
     },
     computed: {
+        remainingAmount() {
+            let i = 0,
+                remainingAmmount = this.totalAmount;
+
+            for (i  = 0; i < this.planningElements.length; i++){
+                remainingAmmount = remainingAmmount - this.planningElements[i].totalAmount;
+            }
+            return remainingAmmount;
+        },
+        showCheck() {
+            return this.remainingAmount === 0;
+        },
         classObject() {
             return {
                 "negative": this.remainingAmount < 0,
@@ -135,7 +143,8 @@ export default {
         margin-top: 1rem;
     }
 
-    .positive {
+    .positive,
+    .check {
         color: green;
     }
 
