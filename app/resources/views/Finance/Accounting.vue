@@ -44,11 +44,12 @@
                     </div>
 
                     <div
-                        v-for="item in planningData"
+                        v-for="(item, key) in planningData"
                         :key="item.id"
                     >
                         <PlanningElement
                             v-if="item.display"
+                            :id="item.id"
                             :total-amount="item.totalAmount"
                             :description="item.description"
                             :title="item.title"

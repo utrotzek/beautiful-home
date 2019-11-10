@@ -47,6 +47,10 @@ export default {
         ButtonRow
     },
     props: {
+        id: {
+            type: Number,
+            required: true,
+        },
         title: {
             type: String,
             required: true,
@@ -87,6 +91,9 @@ export default {
         },
         closeOverlay() {
             this.displayOverlay = false;
+        },
+        deleteElement() {
+            this.$emit("delete", this.id);
         }
     }
 };

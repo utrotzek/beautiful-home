@@ -14,7 +14,10 @@
             </div>
             <div class="row">
                 <div class="accounting-title col-8">
-                    <span v-if="showCheck" class="fa fa-check-circle check"></span>
+                    <span
+                        v-if="showCheck"
+                        class="fa fa-check-circle check"
+                    ></span>
                     {{ accountingTitle }}
                 </div>
                 <div
@@ -27,16 +30,18 @@
 
             <div class="row relatedElements">
                 <div
-                    v-for="(planningElement, key) in planningElements"
+                    v-for="(planningElement) in planningElements"
                     :key="planningElement.id"
                     class="col-12 col-md-6"
                 >
                     <PlanningElement
+                        :id="planningElement.id"
                         is-connected
                         :description="planningElement.description"
                         :title="planningElement.title"
                         :total-amount="planningElement.totalAmount"
                         :date="planningElement.date"
+                        @delete="deletePlanning"
                     />
                 </div>
             </div>
@@ -108,6 +113,16 @@ export default {
                 "negative": this.remainingAmount < 0,
                 "positive": this.remainingAmount >= 0
             };
+        }
+    },
+    methods: {
+        removeFromArray(arrayList, id){
+            return arrayList.filter(function(ele){
+                return ele.id !== id;
+            });
+        },
+        deletePlanning(id) {
+            this.planningElements = this.removeFromArray(this.planningElements, id);
         }
     }
 };
