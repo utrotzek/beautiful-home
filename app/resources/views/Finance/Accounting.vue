@@ -15,7 +15,7 @@
                 </button>
                 <div
                     id="planning"
-                    class="col-sm-4 col-12"
+                    class="col-sm-4 col-lg-4 col-12"
                     :class="{ planningCollapsed: planningCollapsed}"
                     :style="{
                         'max-height': accountingContainerHeight + 'px'
@@ -59,7 +59,7 @@
                 </div>
                 <div
                     id="accounting"
-                    class="col-sm-8"
+                    class="col-sm-8 col-lg-5"
                     :style="{
                         'max-height': accountingContainerHeight + 'px'
                     }"
