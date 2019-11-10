@@ -32,6 +32,7 @@
                 show-edit
                 :show-connect="!isConnected"
                 @close="closeOverlay"
+                @connect="connectPlanning"
             />
         </div>
     </div>
@@ -74,6 +75,10 @@ export default {
         hasDate: {
             type: Boolean,
             default: true
+        },
+        clickEnabled: {
+            type: Boolean,
+            default: true
         }
     },
     data() {
@@ -91,13 +96,19 @@ export default {
     },
     methods: {
         showOverlay() {
-            this.displayOverlay = true;
+            if (this.clickEnabled){
+                this.displayOverlay = true;
+            }
         },
         closeOverlay() {
             this.displayOverlay = false;
+            this.$emit("close", this.id);
         },
         deleteElement() {
             this.$emit("delete", this.id);
+        },
+        connectPlanning() {
+            this.$emit("connect", this.id);
         }
     }
 };

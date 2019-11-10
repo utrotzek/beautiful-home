@@ -49,11 +49,15 @@
                     >
                         <PlanningElement
                             v-if="item.display"
+                            :class="planningClass(item.id)"
                             :id="item.id"
                             :total-amount="item.totalAmount"
                             :description="item.description"
                             :title="item.title"
                             :date="item.date"
+                            :click-enabled="planningClickEnabled(item.id)"
+                            @connect="connectPlanning(item.id, true)"
+                            @close="connectPlanning(item.id, false)"
                         />
                     </div>
                 </div>
@@ -114,6 +118,8 @@ export default {
             month: 10,
             accountingContainerHeight: 0,
             planningCollapsed: true,
+            connectPlanningMode: false,
+            connectPlanningId: 0,
 
             accountingData: [
                 {
@@ -195,14 +201,32 @@ export default {
         window.removeEventListener("resize", this.handleResize);
     },
     methods: {
+        planningClickEnabled(id) {
+            if (this.connectPlanningMode && this.connectPlanningId !== id) {
+                return false;
+            }else{
+                return true;
+            }
+        },
         handleResize() {
             let element = document.getElementById("accounting-container");
             let boundaries = element.getBoundingClientRect();
 
             this.accountingContainerHeight = window.innerHeight - (boundaries.top) ;
         },
+        planningClass(id) {
+            if (this.connectPlanningMode && this.connectPlanningId !== id){
+                return { "deactivated": true };
+            }else {
+                return { "activated": true };
+            }
+        },
         updateYear(newYear) {
             this.year = newYear;
+        },
+        connectPlanning(id, enabled) {
+            this.connectPlanningId = id;
+            this.connectPlanningMode = enabled;
         },
         accountingSearched(query) {
             if (query.length === 0){
