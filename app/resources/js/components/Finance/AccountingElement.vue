@@ -9,7 +9,7 @@
 
             <div class="row">
                 <div class="date col-12">
-                    {{ accountingDate }}
+                    {{ accountingDataLocal.date }}
                 </div>
             </div>
             <div class="row">
@@ -18,19 +18,24 @@
                         v-if="showCheck"
                         class="fa fa-check-circle check"
                     ></span>
-                    {{ accountingTitle }}
+                    <span
+                        v-else
+                        class="fa fa-exclamation-circle todo"
+                    >
+                    </span>
+                    {{ accountingDataLocal.title }}
                 </div>
                 <div
                     class="remaining-amount col-4"
                     :class="classObject"
                 >
-                    <span v-if="!showCheck">{{ remainingAmount }} €</span>
+                    <span v-if="!showCheck">{{ accountingDataLocal.remainingAmount }} €</span>
                 </div>
             </div>
 
             <div class="row relatedElements">
                 <div
-                    v-for="(planningElement) in planningElements"
+                    v-for="(planningElement) in accountingDataLocal.connectedPlanning"
                     :key="planningElement.id"
                     class="col-12 col-md-6"
                 >
@@ -41,9 +46,19 @@
                         :description="planningElement.description"
                         :title="planningElement.title"
                         :total-amount="planningElement.totalAmount"
-                        :date="planningElement.date"
                         @delete="deletePlanning"
                     />
+                </div>
+                <div
+                    v-if="showConnectTarget"
+                    class="col-12 col-md-6"
+                >
+                    <div
+                        class="connectTarget"
+                        @click="doConnection"
+                    >
+                        <span class="fa fa-plus-circle align-middle"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,62 +76,60 @@ export default {
         PlanningElement
     },
     props: {
-        totalAmount: {
-            type: Number,
-            required: true
+        showConnectTarget: {
+            type: Boolean,
+            require: false,
+            default: false
         },
-
-        accountingTitle: {
-            type: String,
-            required: true
-        },
-
-        accountingDate: {
-            type: String,
-            required: true
-        },
+        accountingData: {
+            type: Object,
+            require: true,
+            default() {
+                return {
+                    id: 1,
+                    title: "Westdeutsche Lotterie GmbH & Co. OHG westlotto.de",
+                    totalAmount: -100,
+                    remainingAmount: 0,
+                    date: "12.10.2019",
+                    display: true,
+                    connectedPlanning: [
+                        {
+                            id: 1,
+                            totalAmount: -1,
+                            title: "Einkaufen",
+                            description: "this is my descipriotn",
+                        },
+                        {
+                            id: 2,
+                            totalAmount: -99,
+                            title: "Amazon",
+                            description: "Weil das so ist",
+                        }
+                    ],
+                };
+            }
+        }
     },
     data() {
         return {
-            planningElements: [
-                {
-                    id: 1,
-                    totalAmount: -1,
-                    title: "Einkaufen",
-                    description: "this is my descipriotn",
-                    date: "20.10.2019"
-                },
-                {
-                    id: 2,
-                    totalAmount: -99,
-                    title: "Amazon",
-                    description: "Weil das so ist",
-                    date: "20.10.2019"
-                }
-            ],
+            accountingDataLocal: this.accountingData
         };
     },
     computed: {
-        remainingAmount() {
-            let i = 0,
-                remainingAmmount = this.totalAmount;
-
-            for (i  = 0; i < this.planningElements.length; i++){
-                remainingAmmount = remainingAmmount - this.planningElements[i].totalAmount;
-            }
-            return remainingAmmount;
-        },
         showCheck() {
-            return this.remainingAmount === 0;
+            return this.accountingDataLocal.remainingAmount === 0;
         },
         classObject() {
             return {
-                "negative": this.remainingAmount < 0,
-                "positive": this.remainingAmount >= 0
+                "negative": this.accountingDataLocal.remainingAmount < 0,
+                "positive": this.accountingDataLocal.remainingAmount >= 0
             };
-        }
+        },
     },
     methods: {
+        doConnection(){
+            this.$emit("doConnection", this.accountingDataLocal.id);
+        },
         removeFromArray(arrayList, id){
             return arrayList.filter(function(ele){
                 return ele.id !== id;
@@ -130,6 +143,20 @@ export default {
 </script>
 
 <style scoped>
+    .connectTarget {
+        text-align: center;
+        vertical-align: middle;
+        border: dashed #adb5bd 2px;
+        padding: 8px;
+        margin: 0 0 1em 0;
+        height: 3rem;
+        cursor: pointer;
+    }
+
+    .connectTarget:hover{
+        background-color: #dee2e6;
+    }
+
     .accounting-element-inner {
         border: solid #adb5bd 1px;
         padding: 10px 15px 10px 10px;
@@ -159,11 +186,17 @@ export default {
         margin-top: 1rem;
     }
 
+    /*noinspection CssUnusedSymbol*/
     .positive,
     .check {
         color: green;
     }
 
+    .todo {
+        color: orange;
+    }
+
+    /*noinspection ALL*/
     .negative {
         color: red;
     }

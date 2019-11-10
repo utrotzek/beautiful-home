@@ -115,11 +115,18 @@
 }
 
 
-#planning .deactivated {
+#planning .deactivated,
+#accounting .deactivated,
+#accounting .accounting-element.deactivated .planningElement
+{
     background-color: $gray-300;
     cursor: not-allowed;
 }
+
 #planning .deactivated .title .negative,
-#planning .deactivated .title .positive {
+#planning .deactivated .title .positive,
+#accounting .deactivated .title .positive,
+#accounting .deactivated .title .negative
+{
     color: $gray-600 !important;
 }

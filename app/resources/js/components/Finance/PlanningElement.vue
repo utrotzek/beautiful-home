@@ -33,6 +33,7 @@
                 :show-connect="!isConnected"
                 @close="closeOverlay"
                 @connect="connectPlanning"
+                @deleteClick="deletePlanning"
             />
         </div>
     </div>
@@ -66,7 +67,8 @@ export default {
         },
         date: {
             type: String,
-            required: true,
+            required: false,
+            default: "01.01.1970"
         },
         isConnected: {
             type: Boolean,
@@ -104,8 +106,8 @@ export default {
             this.displayOverlay = false;
             this.$emit("close", this.id);
         },
-        deleteElement() {
-            this.$emit("delete", this.id);
+        deletePlanning() {
+            this.$emit("deletePlanning", this.id);
         },
         connectPlanning() {
             this.$emit("connect", this.id);

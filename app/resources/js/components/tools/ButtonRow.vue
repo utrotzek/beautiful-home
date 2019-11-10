@@ -74,7 +74,7 @@ export default {
             this.$emit("edit");
         },
         deleteClick() {
-            this.$emit("delete");
+            this.$emit("deleteClick");
         },
         close() {
             this.$emit("close");

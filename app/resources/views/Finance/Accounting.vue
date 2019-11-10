@@ -1,6 +1,7 @@
 <template>
     <div>
         <Headline :text="headline" />
+
         <div id="main-content">
             <div
                 id="accounting-container"
@@ -44,13 +45,13 @@
                     </div>
 
                     <div
-                        v-for="(item, key) in planningData"
+                        v-for="(item) in planningData"
                         :key="item.id"
                     >
                         <PlanningElement
                             v-if="item.display"
-                            :class="planningClass(item.id)"
                             :id="item.id"
+                            :class="planningClass(item.id)"
                             :total-amount="item.totalAmount"
                             :description="item.description"
                             :title="item.title"
@@ -58,6 +59,7 @@
                             :click-enabled="planningClickEnabled(item.id)"
                             @connect="connectPlanning(item.id, true)"
                             @close="connectPlanning(item.id, false)"
+                            @deletePlanning="deletePlanning"
                         />
                     </div>
                 </div>
@@ -86,12 +88,96 @@
                     >
                         <AccountingElement
                             v-if="item.display"
-                            :accounting-date="item.date"
-                            :accounting-title="item.title"
-                            :total-amount="item.totalAmount"
-                            :remaining-amount="item.remainingAmount"
+                            :accounting-data="item"
+                            :show-connect-target="accountingConnectable(item.id)"
+                            :class="accountingClass(item.id)"
+                            @updateData="updateAccounting"
+                            @doConnection="doShowConnectionModal"
                         />
                     </div>
+                </div>
+
+
+                <div v-if="showConnectionModal">
+                    <transition name="modal">
+                        <div class="modal-mask">
+                            <div class="modal-wrapper">
+                                <div
+                                    class="modal-dialog"
+                                    role="document"
+                                >
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">
+                                                Zuornen
+                                            </h5>
+                                            <button
+                                                type="button"
+                                                class="close"
+                                                data-dismiss="modal"
+                                                aria-label="Close"
+                                                @click="closeModal"
+                                            >
+                                                <span
+                                                    aria-hidden="true"
+                                                >&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><strong>{{ connectAccountingData.title }}</strong> mit Kostenstelle <strong>{{ connectPlanningData.title }}</strong> verknüpfen.</p>
+                                            <div class="form-group row">
+                                                <label
+                                                    for="desiredAmount"
+                                                    class="col-2 col-form-label"
+                                                >Betrag</label>
+                                                <div class="col-6">
+                                                    <input
+                                                        id="desiredAmount"
+                                                        v-model="connectDesiredAmount"
+                                                        type="text"
+                                                        class="form-control"
+                                                    >
+                                                </div>
+                                                <div class="col-4">
+                                                    <button
+                                                        v-if="remainingAmountAfterConnection !== 0"
+                                                        class="btn btn-secondary"
+                                                        @click="useFullAmountForConnection"
+                                                    >
+                                                        <span class="fa fa-hand-holding-usd"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div v-if="remainingAmountAfterConnection !== 0">
+                                                <div>
+                                                    Es bleibt dann ein Restbetrag von {{ remainingAmountAfterConnection }} €
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button
+                                                type="button"
+                                                class="btn btn-secondary"
+                                                @click="closeModal"
+                                            >
+                                                <i class="fas fa-ban"></i>
+                                                Abbrechen
+                                            </button>
+                                            <button
+                                                type="button"
+                                                class="btn btn-primary"
+                                                @click="doAccountingPlanningConnection"
+                                            >
+                                                <i class="fas fa-link"></i>
+                                                Zuordnen
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
                 </div>
             </div>
         </div>
@@ -120,35 +206,89 @@ export default {
             planningCollapsed: true,
             connectPlanningMode: false,
             connectPlanningId: 0,
-
+            connectAccountingId: 0,
+            connectPlanningTotalAmoint: 0,
+            connectAccountingTotalAmoint: 0,
+            connectDesiredAmount: 0,
+            connectAccountingData: {},
+            connectPlanningData: {},
+            showConnectionModal: false,
             accountingData: [
                 {
                     id: 1,
                     title: "Westdeutsche Lotterie GmbH & Co. OHG westlotto.de",
                     totalAmount: -100,
+                    remainingAmount: 0,
                     date: "12.10.2019",
-                    display: true
+                    display: true,
+                    connectedPlanning: [
+                        {
+                            id: 1,
+                            totalAmount: -100,
+                            title: "Lotto",
+                            description: "Regeömäßiger Spielschein",
+                        },
+                    ],
                 },
                 {
                     id: 2,
                     title: "REWE SAGT DANKE. 43400225//Muenster-Centrum/DE",
                     totalAmount: -400.96,
+                    remainingAmount: -100,
                     date: "30.10.2019",
-                    display: true
+                    display: true,
+                    connectedPlanning: [
+                        {
+                            id: 1,
+                            totalAmount: -300.96,
+                            title: "Lebensmittel",
+                            description: "",
+                        },
+                    ],
                 },
                 {
                     id: 3,
                     title: "Stadt Münster Stadtkasse",
                     totalAmount: 3000,
+                    remainingAmount: 0,
                     date: "30.10.2019",
-                    display: true
+                    display: true,
+                    connectedPlanning: [
+                        {
+                            id: 1,
+                            totalAmount: 2000,
+                            title: "Gehalt",
+                            description: "Uwe",
+                        },
+                        {
+                            id: 2,
+                            totalAmount: 1000,
+                            title: "Weihnachtsgeld",
+                            description: "Diesmal etwas weniger",
+                        }
+                    ],
                 },
                 {
                     id: 4,
                     title: "Scheffer und Loederbusch//Muenster/DE",
                     totalAmount: -399.94,
+                    remainingAmount: -299.94,
                     date: "26.10.2019",
-                    display: true
+                    display: true,
+                    connectedPlanning: [
+                        {
+                            id: 1,
+                            totalAmount: -1,
+                            title: "Einkaufen",
+                            description: "this is my descipriotn",
+                        },
+                        {
+                            id: 2,
+                            totalAmount: -99,
+                            title: "Amazon",
+                            description: "Weil das so ist",
+                        }
+                    ],
                 }
             ],
             planningData: [
@@ -188,6 +328,9 @@ export default {
         };
     },
     computed: {
+        remainingAmountAfterConnection() {
+            return this.connectAccountingData.remainingAmount - this.connectDesiredAmount;
+        }
     },
     mounted() {
         this.year = new Date().getFullYear();
@@ -201,18 +344,137 @@ export default {
         window.removeEventListener("resize", this.handleResize);
     },
     methods: {
-        planningClickEnabled(id) {
-            if (this.connectPlanningMode && this.connectPlanningId !== id) {
-                return false;
-            }else{
-                return true;
+        removeFromArray(arrayList, id){
+            let i=0;
+            let newArrayList = [];
+
+            for (i=0; i < arrayList.length; i++){
+                if (arrayList[i].id !== id){
+                    newArrayList.push(arrayList[i]);
+                }
             }
+            return newArrayList;
+        },
+        deletePlanning(id){
+            this.planningData = this.removeFromArray(this.planningData, id);
+        },
+        planningClickEnabled(id) {
+            return !(this.connectPlanningMode && this.connectPlanningId !== id);
         },
         handleResize() {
             let element = document.getElementById("accounting-container");
             let boundaries = element.getBoundingClientRect();
 
             this.accountingContainerHeight = window.innerHeight - (boundaries.top) ;
+        },
+        doShowConnectionModal(accountId){
+            let acounntingData = this.getAccountingById(accountId);
+            let planningData = this.getPlanningById(this.connectPlanningId);
+
+            this.connectAccountingData = acounntingData;
+            this.connectPlanningData = planningData;
+
+            this.showConnectionModal = true;
+            this.connectAccountingId = accountId;
+            this.connectAccountingTotalAmoint = acounntingData.remainingAmount;
+            this.connectPlanningTotalAmoint = planningData.totalAmount;
+
+            //make sure the desired amount for the connection is not greater than the remaining amount
+            //of the accounting element
+            if (this.connectAccountingData.remainingAmount < 0){
+                if (this.connectAccountingData.remainingAmount - this.connectPlanningTotalAmoint < 0) {
+                    this.connectDesiredAmount = this.connectPlanningTotalAmoint;
+                }else{
+                    this.connectDesiredAmount = this.connectAccountingData.remainingAmount;
+                }
+            }
+
+            if (this.connectAccountingData.remainingAmount > 0){
+                if (this.connectAccountingData.remainingAmount - this.connectPlanningTotalAmoint > 0) {
+                    this.connectDesiredAmount = this.connectPlanningTotalAmoint;
+                }else{
+                    this.connectDesiredAmount = this.connectAccountingData.remainingAmount;
+                }
+            }
+
+        },
+        useFullAmountForConnection() {
+            this.connectDesiredAmount = this.connectAccountingData.remainingAmount;
+        },
+        doAccountingPlanningConnection(){
+            let planningElement = this.getPlanningById(this.connectPlanningId);
+            let accountingElement = this.getAccountingById(this.connectAccountingId);
+            let clonedPlanning = JSON.parse(JSON.stringify(planningElement));
+            let remainingAmmount = accountingElement.totalAmount;
+            let i = 0;
+
+            clonedPlanning.totalAmount = this.connectDesiredAmount;
+            accountingElement.connectedPlanning.push(clonedPlanning);
+
+            for (i  = 0; i < accountingElement.connectedPlanning.length; i++){
+                remainingAmmount = remainingAmmount - accountingElement.connectedPlanning[i].totalAmount;
+            }
+            accountingElement.remainingAmount = remainingAmmount;
+
+            let planningNegative  = planningElement.totalAmount < 0;
+            planningElement.totalAmount = planningElement.totalAmount - this.connectDesiredAmount;
+
+            if (planningNegative && planningElement.totalAmount >= 0) {
+                this.deletePlanning(this.connectPlanningId);
+            }else if (!planningNegative && planningElement.totalAmount <= 0){
+                this.deletePlanning(this.connectPlanningId);
+            }
+
+            this.closeModal();
+            this.deactivateConnectionMode();
+        },
+        closeModal() {
+            this.showConnectionModal = false;
+        },
+        deactivateConnectionMode(){
+            this.connectPlanningMode = false;
+            this.connectPlanningId = 0;
+            this.connectAccountingId = 0;
+        },
+        updateAccounting(updatedAccounting) {
+            let i=0;
+            for(i=0; i < this.accountingData.length;i++){
+                if (updatedAccounting.id === this.accountingData[i].id)  {
+                    this.accountingData[i] = updatedAccounting;
+                }
+            }
+        },
+        getPlanningById(id){
+            let i=0;
+            for(i=0; i < this.planningData.length;i++){
+                if (id === this.planningData[i].id)  {
+                    return this.planningData[i];
+                }
+            }
+        },
+        getAccountingById(id){
+            let i=0;
+            for(i=0; i < this.accountingData.length;i++){
+                if (id === this.accountingData[i].id)  {
+                    return this.accountingData[i];
+                }
+            }
+        },
+        accountingConnectable(id) {
+            if (this.connectPlanningMode){
+                // noinspection EqualityComparisonWithCoercionJS
+                return !this.getAccountingById(id).remainingAmount == 0.0;
+            }
+            return false;
+        },
+        accountingClass(id) {
+            if (this.connectPlanningMode){
+                if (this.getAccountingById(id).remainingAmount === 0){
+                    return {"deactivated": true};
+                }else{
+                    return {"activated": true};
+                }
+            }
         },
         planningClass(id) {
             if (this.connectPlanningMode && this.connectPlanningId !== id){
@@ -299,5 +561,22 @@ export default {
 
     #accounting {
         padding: 0 48px  0 20px;
+    }
+
+    .modal-mask {
+        position: fixed;
+        z-index: 9998;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .5);
+        display: table;
+        transition: opacity .3s ease;
+    }
+
+    .modal-wrapper {
+        display: table-cell;
+        vertical-align: middle;
     }
 </style>
