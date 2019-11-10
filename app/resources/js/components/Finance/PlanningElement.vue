@@ -4,7 +4,7 @@
         class="planningElement"
         @click="showOverlay"
     >
-        <div class="date">
+        <div v-if="hasDate" class="date">
             {{ date }}
         </div>
         <div class="title">
@@ -70,6 +70,10 @@ export default {
         isConnected: {
             type: Boolean,
             default: false
+        },
+        hasDate: {
+            type: Boolean,
+            default: true
         }
     },
     data() {

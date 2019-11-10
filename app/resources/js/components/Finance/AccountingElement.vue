@@ -37,6 +37,7 @@
                     <PlanningElement
                         :id="planningElement.id"
                         is-connected
+                        :has-date="false"
                         :description="planningElement.description"
                         :title="planningElement.title"
                         :total-amount="planningElement.totalAmount"
