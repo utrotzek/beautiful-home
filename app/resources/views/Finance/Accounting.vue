@@ -93,6 +93,7 @@
                             :class="accountingClass(item.id)"
                             @updateData="updateAccounting"
                             @doConnection="doShowConnectionModal"
+                            @deleteConnection="deleteConnection"
                         />
                     </div>
                 </div>
@@ -223,7 +224,7 @@ export default {
                     display: true,
                     connectedPlanning: [
                         {
-                            id: 1,
+                            id: 10,
                             totalAmount: -100,
                             title: "Lotto",
                             description: "Regeömäßiger Spielschein",
@@ -239,7 +240,7 @@ export default {
                     display: true,
                     connectedPlanning: [
                         {
-                            id: 1,
+                            id: 20,
                             totalAmount: -300.96,
                             title: "Lebensmittel",
                             description: "",
@@ -255,13 +256,13 @@ export default {
                     display: true,
                     connectedPlanning: [
                         {
-                            id: 1,
+                            id: 30,
                             totalAmount: 2000,
                             title: "Gehalt",
                             description: "Uwe",
                         },
                         {
-                            id: 2,
+                            id: 31,
                             totalAmount: 1000,
                             title: "Weihnachtsgeld",
                             description: "Diesmal etwas weniger",
@@ -277,13 +278,13 @@ export default {
                     display: true,
                     connectedPlanning: [
                         {
-                            id: 1,
+                            id: 40,
                             totalAmount: -1,
                             title: "Einkaufen",
                             description: "this is my descipriotn",
                         },
                         {
-                            id: 2,
+                            id: 41,
                             totalAmount: -99,
                             title: "Amazon",
                             description: "Weil das so ist",
@@ -328,8 +329,13 @@ export default {
         };
     },
     computed: {
-        remainingAmountAfterConnection() {
-            return this.connectAccountingData.remainingAmount - this.connectDesiredAmount;
+        remainingAmountAfterConnection: function () {
+            let sum = this.connectAccountingData.remainingAmount - this.connectDesiredAmount;
+
+            if (sum !== 0) {
+                return parseFloat(sum).toFixed(2);
+            }
+            return 0;
         }
     },
     mounted() {
@@ -357,6 +363,33 @@ export default {
         },
         deletePlanning(id){
             this.planningData = this.removeFromArray(this.planningData, id);
+        },
+        getArrayElementById(id, array){
+            let i = 0;
+            for (i = 0; i < array.length; i++){
+                if (array[i].id === id){
+                    return array[i];
+                }
+            }
+        },
+        deleteConnection(accountId, connectedElementToRemove){
+            let i = 0;
+            for (i = 0; i < this.accountingData.length; i++){
+                if (this.accountingData[i].id === accountId){
+                    let elementToDelete = this.getArrayElementById(
+                            connectedElementToRemove,
+                            this.accountingData[i].connectedPlanning
+                        ),
+                        accountingElement = this.accountingData[i]
+                    ;
+
+                    accountingElement.connectedPlanning = this.removeFromArray(
+                        accountingElement.connectedPlanning, elementToDelete.id
+                    );
+
+                    accountingElement.remainingAmount = accountingElement.remainingAmount + elementToDelete.totalAmount;
+                }
+            }
         },
         planningClickEnabled(id) {
             return !(this.connectPlanningMode && this.connectPlanningId !== id);

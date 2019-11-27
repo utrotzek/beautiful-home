@@ -9,7 +9,7 @@
 
             <div class="row">
                 <div class="date col-12">
-                    {{ accountingDataLocal.date }}
+                    {{ accountingData.date }}
                 </div>
             </div>
             <div class="row">
@@ -23,19 +23,19 @@
                         class="fa fa-exclamation-circle todo"
                     >
                     </span>
-                    {{ accountingDataLocal.title }}
+                    {{ accountingData.title }}
                 </div>
                 <div
                     class="remaining-amount col-4"
                     :class="classObject"
                 >
-                    <span v-if="!showCheck">{{ accountingDataLocal.remainingAmount }} €</span>
+                    <span v-if="!showCheck">{{ accountingData.remainingAmount }} €</span>
                 </div>
             </div>
 
             <div class="row relatedElements">
                 <div
-                    v-for="(planningElement) in accountingDataLocal.connectedPlanning"
+                    v-for="(planningElement) in accountingData.connectedPlanning"
                     :key="planningElement.id"
                     class="col-12 col-md-6"
                 >
@@ -46,7 +46,7 @@
                         :description="planningElement.description"
                         :title="planningElement.title"
                         :total-amount="planningElement.totalAmount"
-                        @delete="deletePlanning"
+                        @deletePlanning="deletePlanning(planningElement.id)"
                     />
                 </div>
                 <div
@@ -112,23 +112,22 @@ export default {
     },
     data() {
         return {
-            accountingDataLocal: this.accountingData
         };
     },
     computed: {
         showCheck() {
-            return this.accountingDataLocal.remainingAmount === 0;
+            return this.accountingData.remainingAmount === 0;
         },
         classObject() {
             return {
-                "negative": this.accountingDataLocal.remainingAmount < 0,
-                "positive": this.accountingDataLocal.remainingAmount >= 0
+                "negative": this.accountingData.remainingAmount < 0,
+                "positive": this.accountingData.remainingAmount >= 0
             };
         },
     },
     methods: {
         doConnection(){
-            this.$emit("doConnection", this.accountingDataLocal.id);
+            this.$emit("doConnection", this.accountingData.id);
         },
         removeFromArray(arrayList, id){
             return arrayList.filter(function(ele){
@@ -136,7 +135,7 @@ export default {
             });
         },
         deletePlanning(id) {
-            this.planningElements = this.removeFromArray(this.planningElements, id);
+            this.$emit("deleteConnection", this.accountingData.id, id);
         }
     }
 };
