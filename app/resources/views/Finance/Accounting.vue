@@ -50,16 +50,16 @@
                     >
                         <PlanningElement
                             v-if="item.display"
-                            :id="item.id"
                             :class="planningClass(item.id)"
-                            :total-amount="item.totalAmount"
-                            :description="item.description"
-                            :title="item.title"
-                            :date="item.date"
+                            :planning-item="item"
                             :click-enabled="planningClickEnabled(item.id)"
+                            :edit-mode="item.editMode"
                             @connect="connectPlanning(item.id, true)"
+                            @delete="deletePlanning"
                             @close="connectPlanning(item.id, false)"
-                            @deletePlanning="deletePlanning"
+                            @edit="editPlanning(item.id, true)"
+                            @cancel="editPlanning(item.id, false)"
+                            @save="saveEditPlanning"
                         />
                     </div>
                 </div>
@@ -299,7 +299,8 @@ export default {
                     description: "Gesamter Monat",
                     totalAmount: -100,
                     date: "25.10.2019",
-                    display: true
+                    display: true,
+                    editMode:  false
                 },
                 {
                     id: 2,
@@ -307,7 +308,8 @@ export default {
                     description: "Rasierer Amazon",
                     totalAmount: -200,
                     date: "25.10.2019",
-                    display: true
+                    display: true,
+                    editMode:  false
                 },
                 {
                     id: 3,
@@ -315,7 +317,8 @@ export default {
                     description: "PC Festplatte",
                     totalAmount: -200,
                     date: "25.10.2019",
-                    display: true
+                    display: true,
+                    editMode:  false
                 },
                 {
                     id: 4,
@@ -323,7 +326,8 @@ export default {
                     description: "Urlaub",
                     totalAmount: -300,
                     date: "25.10.2019",
-                    display: true
+                    display: true,
+                    editMode:  false
                 }
             ]
         };
@@ -485,6 +489,14 @@ export default {
                 }
             }
         },
+        setPlanningById(id, item){
+            let i=0;
+            for(i=0; i < this.planningData.length;i++){
+                if (id === this.planningData[i].id)  {
+                    this.planningData[i] = item;
+                }
+            }
+        },
         getAccountingById(id){
             let i=0;
             for(i=0; i < this.accountingData.length;i++){
@@ -518,6 +530,13 @@ export default {
         },
         updateYear(newYear) {
             this.year = newYear;
+        },
+        editPlanning(id, enabled) {
+            this.getPlanningById(id).editMode = enabled;
+        },
+        saveEditPlanning(newPlanningItem){
+            newPlanningItem.editMode = false;
+            this.setPlanningById(newPlanningItem.id, newPlanningItem);
         },
         connectPlanning(id, enabled) {
             this.connectPlanningId = id;

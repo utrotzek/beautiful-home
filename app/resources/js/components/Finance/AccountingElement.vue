@@ -40,13 +40,10 @@
                     class="col-12 col-md-6"
                 >
                     <PlanningElement
-                        :id="planningElement.id"
                         is-connected
                         :has-date="false"
-                        :description="planningElement.description"
-                        :title="planningElement.title"
-                        :total-amount="planningElement.totalAmount"
-                        @deletePlanning="deletePlanning(planningElement.id)"
+                        :planning-item="planningElement"
+                        @delete="deletePlanning(planningElement.id)"
                     />
                 </div>
                 <div

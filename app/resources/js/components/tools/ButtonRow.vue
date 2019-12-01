@@ -6,6 +6,26 @@
     >
 
         <button
+            v-if="showSave"
+            type="button"
+            class="btn btn-light"
+            @click.stop
+            @click="save"
+        >
+            <i class="fas fa-save"></i> <span class="d-none d-sm-inline">Speichern</span>
+        </button>
+
+        <button
+            v-if="showCancel"
+            type="button"
+            class="btn btn-light"
+            @click.stop
+            @click="cancel"
+        >
+            <i class="fas fa-ban"></i> <span class="d-none d-sm-inline">Abbrechen</span>
+        </button>
+
+        <button
             v-if="showConnect"
             type="button"
             class="btn btn-light"
@@ -62,9 +82,17 @@ export default {
         },
         showClose: {
             type: Boolean,
-            default: true
+            default: false
         },
         showConnect: {
+            type: Boolean,
+            default: false
+        },
+        showSave: {
+            type: Boolean,
+            default: false
+        },
+        showCancel: {
             type: Boolean,
             default: false
         }
@@ -81,6 +109,12 @@ export default {
         },
         connect() {
             this.$emit("connect");
+        },
+        save() {
+            this.$emit("save");
+        },
+        cancel() {
+            this.$emit("cancel");
         }
     }
 };
