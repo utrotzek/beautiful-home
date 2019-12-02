@@ -45,7 +45,7 @@
             <textarea
                 v-else
                 v-model="localPlanningItem.description"
-                rows="5"
+                rows="3"
                 class="form-control"
             ></textarea>
         </div>
