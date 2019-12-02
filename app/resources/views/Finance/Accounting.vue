@@ -22,9 +22,28 @@
                         'max-height': accountingContainerHeight + 'px'
                     }"
                 >
-                    <h2 class="d-none d-md-block">
-                        Planung
-                    </h2>
+                    <div class="row">
+                        <div class="col-8">
+                            <h2 class="d-none d-md-block">
+                                Planung
+                            </h2>
+                        </div>
+                        <div class="col-12 col-md-4 text-left text-md-right">
+                            <div
+                                id="PlanningButtons"
+                                class="mb-3"
+                            >
+                                <button class="btn btn-outline-dark">
+                                    <i class="fa fa-plus-circle"></i>
+                                    <span class="d-inline-block d-md-none">
+                                        Neuer Eintrag
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <button
                         id="planningCloseButton"
                         type="button"
@@ -72,9 +91,27 @@
                     @click="collapsePlanning(true)"
                     @focus="collapsePlanning(true)"
                 >
-                    <h2 class="d-none d-md-block">
-                        Umsätze
-                    </h2>
+                    <div class="row">
+                        <div class="col-8">
+                            <h2 class="d-none d-md-block">
+                                Umsätze
+                            </h2>
+                        </div>
+                        <div class="col-12 col-md-4 text-left text-md-right">
+                            <div
+                                id="accountingButtons"
+                                class="mb-3"
+                            >
+                                <button class="btn btn-outline-dark">
+                                    <i class="fa fa-plus-circle"></i>
+                                    <span class="d-inline-block d-md-none">
+                                        Neuer Eintrag
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div
                         id="accountingSearch"
                         class="mb-3"
@@ -98,6 +135,77 @@
                     </div>
                 </div>
 
+                <div class="col-lg-3">
+                    <h3>Umsätze</h3>
+                    <table
+                        id="currentAmountTable"
+                        class="table  table-hover table-sm"
+                    >
+                        <thead class="thead-light">
+                            <tr>
+                                <th></th>
+                                <th>Einnahmen</th>
+                                <th>Ausgaben</th>
+                                <th>Summe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-weight-bold">Aktuell</td>
+                                <td>100</td>
+                                <td>100</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Planung</td>
+                                <td>100</td>
+                                <td>100</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Gesamt</td>
+                                <td>100</td>
+                                <td>100</td>
+                                <td>0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Kostenstellen</h3>
+                    <table
+                        id="expensiveCostCenter"
+                        class="table table-hover table-sm"
+                    >
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Kostenstelle</th>
+                                <th>Summe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>!!!Nicht zugeordnet!!!</td>
+                                <td>500</td>
+                            </tr>
+                            <tr>
+                                <td>Einkaufen</td>
+                                <td>500</td>
+                            </tr>
+                            <tr>
+                                <td>Sparbuch</td>
+                                <td>500</td>
+                            </tr>
+                            <tr>
+                                <td>Tanken</td>
+                                <td>100</td>
+                            </tr>
+                            <tr>
+                                <td>Elektronik</td>
+                                <td>300</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
                 <div v-if="showConnectionModal">
                     <transition name="modal">
