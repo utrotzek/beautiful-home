@@ -226,7 +226,10 @@ export default {
                         {
                             id: 10,
                             totalAmount: -100,
-                            title: "Lotto",
+                            costCenter: {
+                                id:  6,
+                                title: "Lotto"
+                            },
                             description: "Regeömäßiger Spielschein",
                         },
                     ],
@@ -242,7 +245,10 @@ export default {
                         {
                             id: 20,
                             totalAmount: -300.96,
-                            title: "Lebensmittel",
+                            costCenter: {
+                                id:  7,
+                                title: "Lebensmittel"
+                            },
                             description: "",
                         },
                     ],
@@ -258,13 +264,19 @@ export default {
                         {
                             id: 30,
                             totalAmount: 2000,
-                            title: "Gehalt",
+                            costCenter: {
+                                id:  2,
+                                title: "Gehalt"
+                            },
                             description: "Uwe",
                         },
                         {
                             id: 31,
                             totalAmount: 1000,
-                            title: "Weihnachtsgeld",
+                            costCenter: {
+                                id:  8,
+                                title: "Weihnachtsgeld"
+                            },
                             description: "Diesmal etwas weniger",
                         }
                     ],
@@ -279,15 +291,12 @@ export default {
                     connectedPlanning: [
                         {
                             id: 40,
-                            totalAmount: -1,
-                            title: "Einkaufen",
+                            totalAmount: -100,
+                            costCenter:  {
+                                id: 5,
+                                title: "Elektronik"
+                            },
                             description: "this is my descipriotn",
-                        },
-                        {
-                            id: 41,
-                            totalAmount: -99,
-                            title: "Amazon",
-                            description: "Weil das so ist",
                         }
                     ],
                 }
@@ -295,7 +304,10 @@ export default {
             planningData: [
                 {
                     id: 1,
-                    title: "Einkaufen",
+                    costCenter: {
+                        id: 1,
+                        title: "Einkaufen"
+                    },
                     description: "Gesamter Monat",
                     totalAmount: -100,
                     date: "25.10.2019",
@@ -304,7 +316,10 @@ export default {
                 },
                 {
                     id: 2,
-                    title: "Elektronik",
+                    costCenter: {
+                        id: 5,
+                        title: "Elektronik"
+                    },
                     description: "Rasierer Amazon",
                     totalAmount: -200,
                     date: "25.10.2019",
@@ -313,7 +328,10 @@ export default {
                 },
                 {
                     id: 3,
-                    title: "Elektronik",
+                    costCenter: {
+                        id: 5,
+                        title: "Elektronik"
+                    },
                     description: "PC Festplatte",
                     totalAmount: -200,
                     date: "25.10.2019",
@@ -322,7 +340,10 @@ export default {
                 },
                 {
                     id: 4,
-                    title: "Sparbuch",
+                    costCenter: {
+                        id: 3,
+                        title: "Sparbuch"
+                    },
                     description: "Urlaub",
                     totalAmount: -300,
                     date: "25.10.2019",

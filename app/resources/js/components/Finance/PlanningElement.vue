@@ -18,24 +18,30 @@
         </div>
         <div class="title">
             <div class="float-left">
-                <span v-if="!editMode">{{ localPlanningItem.title }}</span>
-                <input
+                <span v-if="!editMode">{{ localPlanningItem.costCenter.title }}</span>
+                <AutoCompleter
                     v-else
-                    v-model="localPlanningItem.title"
-                    type="text"
-                    class="form-control"
-                >
+                    :items="costCenterData"
+                    :enable-inline-creation="false"
+                    :show-all-items-on-empty-query="true"
+                    :preselected-value="localPlanningItem.costCenter.id"
+                    search-key="title"
+                    value-key="id"
+                    placeholder="Kosten stelle wählen"
+                    @selected="costCenterUpdate"
+                />
             </div>
             <div
-                class="float-right"
-                :class="classObject"
+                class="float-right text-right"
+                :class="negativePostiveClass"
             >
                 <span v-if="!editMode">{{ localPlanningItem.totalAmount }}</span>
                 <input
                     v-else
                     v-model="localPlanningItem.totalAmount"
                     type="text"
-                    class="form-control"
+                    class="form-control text-right"
+                    :class="negativePostiveClass"
                 >
             </div>
         </div>
@@ -80,12 +86,15 @@
 
 <script>
 
+import CostCenterData from "../../data/finance/CostCenter.js";
 import ButtonRow from "../../../js/components/tools/ButtonRow";
+import AutoCompleter from "../../../js/components/tools/Autocompleter";
 
 export default {
     name: "PlanningElementVue",
     components: {
-        ButtonRow
+        ButtonRow,
+        AutoCompleter
     },
     props: {
         planningItem: {
@@ -94,7 +103,10 @@ export default {
             default() {
                 return {
                     id: 1,
-                    title: "MyPlanning Item",
+                    costCenter: {
+                        id: 100,
+                        title: "MyPlanning Item"
+                    },
                     description: "My description",
                     totalAmount: 100,
                     date: "01.01.1970"
@@ -122,11 +134,12 @@ export default {
         return {
             displayOverlay: false,
             localPlanningItem: this.planningItem,
-            originalPlanningItem: this.planningItem
+            originalPlanningItem: this.planningItem,
+            costCenterData: CostCenterData
         };
     },
     computed: {
-        classObject() {
+        negativePostiveClass() {
             return {
                 "negative": this.localPlanningItem.totalAmount < 0,
                 "positive": this.localPlanningItem.totalAmount >= 0
@@ -163,7 +176,10 @@ export default {
             this.$emit("cancel", this.localPlanningItem.id, true);
         },
         saveEdit(){
-            this.$emit("save", this.planningItem, true);
+            this.$emit("save", this.localPlanningItem, true);
+        },
+        costCenterUpdate(item){
+            this.localPlanningItem.costCenter = item;
         }
     }
 };
@@ -194,5 +210,17 @@ export default {
 
     .negative {
         color: red;
+    }
+
+    .title {
+        position: relative;
+    }
+
+    .title .float-left {
+        width: 70%
+    }
+
+    .title .float-right {
+        width: 30%
     }
 </style>
