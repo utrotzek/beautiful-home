@@ -136,75 +136,10 @@
                 </div>
 
                 <div class="col-lg-3">
-                    <h3>Umsätze</h3>
-                    <table
-                        id="currentAmountTable"
-                        class="table table-sm"
-                    >
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Einnahmen</th>
-                                <th>Ausgaben</th>
-                                <th>Summe</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="font-weight-bold">Aktuell</td>
-                                <td>100</td>
-                                <td>100</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td class="font-weight-bold">Planung</td>
-                                <td>100</td>
-                                <td>100</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td class="font-weight-bold">Gesamt</td>
-                                <td>100</td>
-                                <td>100</td>
-                                <td>0</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <h3>Kostenstellen</h3>
-                    <table
-                        id="expensiveCostCenter"
-                        class="table table-sm"
-                    >
-                        <thead>
-                            <tr>
-                                <th>Kostenstelle</th>
-                                <th>Summe</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>!!!Nicht zugeordnet!!!</td>
-                                <td>500</td>
-                            </tr>
-                            <tr>
-                                <td>Einkaufen</td>
-                                <td>500</td>
-                            </tr>
-                            <tr>
-                                <td>Sparbuch</td>
-                                <td>500</td>
-                            </tr>
-                            <tr>
-                                <td>Tanken</td>
-                                <td>100</td>
-                            </tr>
-                            <tr>
-                                <td>Elektronik</td>
-                                <td>300</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <Overview
+                        :planning-items="planningData"
+                        :accounting-items="accountingData"
+                    />
                 </div>
 
                 <div v-if="showConnectionModal">
@@ -299,12 +234,14 @@
 import Search from "../../js/components/tools/Search";
 import PlanningElement from "../../js/components/Finance/PlanningElement";
 import AccountingElement from "../../js/components/Finance/AccountingElement";
+import Overview from "../../js/components/Finance/Overview";
 
 export default {
     components: {
         PlanningElement,
         AccountingElement,
-        Search
+        Search,
+        Overview
     },
     data: function(){
         return {
