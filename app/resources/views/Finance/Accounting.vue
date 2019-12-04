@@ -139,9 +139,9 @@
                     <h3>Umsätze</h3>
                     <table
                         id="currentAmountTable"
-                        class="table  table-hover table-sm"
+                        class="table table-sm"
                     >
-                        <thead class="thead-light">
+                        <thead>
                             <tr>
                                 <th></th>
                                 <th>Einnahmen</th>
@@ -174,9 +174,9 @@
                     <h3>Kostenstellen</h3>
                     <table
                         id="expensiveCostCenter"
-                        class="table table-hover table-sm"
+                        class="table table-sm"
                     >
-                        <thead class="thead-light">
+                        <thead>
                             <tr>
                                 <th>Kostenstelle</th>
                                 <th>Summe</th>
