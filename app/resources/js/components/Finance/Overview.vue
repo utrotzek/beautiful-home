@@ -1,5 +1,6 @@
 <template>
     <div class="financial-overview">
+        <span class="badge badge-pill badge-secondary">Aktueller Kontostand: {{ accountingSum | toCurrency }}</span>
         <h3>Umsätze</h3>
         <table
             id="currentAmountTable"
@@ -18,25 +19,25 @@
                     <td class="font-weight-bold">
                         Aktuell
                     </td>
-                    <td>{{ accountingIncome }}</td>
-                    <td>{{ accountingOutgoings }}</td>
-                    <td>{{ accountingSum }}</td>
+                    <td>{{ accountingIncome | toCurrency }}</td>
+                    <td>{{ accountingOutgoings | toCurrency }}</td>
+                    <td>{{ accountingSum | toCurrency }}</td>
                 </tr>
                 <tr>
                     <td class="font-weight-bold">
                         Planung
                     </td>
-                    <td>{{ planningIncome }}</td>
-                    <td>{{ planningOutgoings }}</td>
-                    <td>{{ planningSum }}</td>
+                    <td>{{ planningIncome | toCurrency }}</td>
+                    <td>{{ planningOutgoings | toCurrency }}</td>
+                    <td>{{ planningSum | toCurrency }}</td>
                 </tr>
                 <tr>
                     <td class="font-weight-bold">
                         Gesamt
                     </td>
-                    <td>{{ overallIncome }}</td>
-                    <td>{{ overallOutgoings }}</td>
-                    <td>{{ overallSum }}</td>
+                    <td>{{ overallIncome | toCurrency }}</td>
+                    <td>{{ overallOutgoings | toCurrency }}</td>
+                    <td>{{ overallSum | toCurrency }}</td>
                 </tr>
             </tbody>
         </table>
@@ -53,25 +54,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>!!!Nicht zugeordnet!!!</td>
-                    <td>500</td>
-                </tr>
-                <tr>
-                    <td>Einkaufen</td>
-                    <td>500</td>
-                </tr>
-                <tr>
-                    <td>Sparbuch</td>
-                    <td>500</td>
-                </tr>
-                <tr>
-                    <td>Tanken</td>
-                    <td>100</td>
-                </tr>
-                <tr>
-                    <td>Elektronik</td>
-                    <td>300</td>
+                <tr
+                    v-for="(item, key) in topCostCenter"
+                    :key="key"
+                >
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.amount }}</td>
                 </tr>
             </tbody>
         </table>
@@ -81,6 +69,20 @@
 <script>
 export default {
     name: "OverviewVue",
+    filters: {
+        toCurrency (value) {
+            if (typeof value !== "number") {
+                return value;
+            }
+            var formatter = new Intl.NumberFormat("de-DE", {
+                style: "currency",
+                currency: "EUR",
+                minimumFractionDigits: 2
+            });
+            return formatter.format(value);
+        }
+
+    },
     props: {
         planningItems: {
             type: Array,
@@ -191,6 +193,42 @@ export default {
         },
         overallSum() {
             return this.accountingSum + this.planningSum;
+        },
+        topCostCenter() {
+            let accIndex = 0;
+            let planIndex = 0;
+            let topCostCenters = [];
+
+            for (accIndex = 0; accIndex < this.accountingItems.length; accIndex++){
+                let accountingItem = this.accountingItems[accIndex];
+                let accConnectedIndex = 0;
+                for (accConnectedIndex = 0; accConnectedIndex < accountingItem.connectedPlanning.length; accConnectedIndex++){
+                    let connectedItem = accountingItem.connectedPlanning[accConnectedIndex];
+                    let costCenterItem = connectedItem.costCenter;
+                    let value = connectedItem.totalAmount;
+
+                    if (value < 0){
+                        value = value *-1;
+                    }
+
+                    let existingCostCenterItem = topCostCenters.find(costCenter => costCenter.id === costCenterItem.id );
+                    if (!existingCostCenterItem){
+                        topCostCenters.push({
+                            title: costCenterItem.title,
+                            amount: connectedItem.totalAmount,
+                            value: value,
+                            id: costCenterItem.id
+                        });
+                    }else{
+                        existingCostCenterItem.amount += connectedItem.totalAmount;
+                        existingCostCenterItem.value += value;
+                    }
+                }
+            }
+
+            topCostCenters = _.sortBy(topCostCenters, "value").reverse();
+            console.log(topCostCenters);
+            return topCostCenters;
         }
     }
 };
