@@ -19,25 +19,25 @@
                     <td class="font-weight-bold">
                         Aktuell
                     </td>
-                    <td>{{ accountingIncome | toCurrency }}</td>
-                    <td>{{ accountingOutgoings | toCurrency }}</td>
-                    <td>{{ accountingSum | toCurrency }}</td>
+                    <td class="text-right">{{ accountingIncome | toCurrency }}</td>
+                    <td class="text-right">{{ accountingOutgoings | toCurrency }}</td>
+                    <td class="text-right">{{ accountingSum | toCurrency }}</td>
                 </tr>
                 <tr>
                     <td class="font-weight-bold">
                         Planung
                     </td>
-                    <td>{{ planningIncome | toCurrency }}</td>
-                    <td>{{ planningOutgoings | toCurrency }}</td>
-                    <td>{{ planningSum | toCurrency }}</td>
+                    <td class="text-right">{{ planningIncome | toCurrency }}</td>
+                    <td class="text-right">{{ planningOutgoings | toCurrency }}</td>
+                    <td class="text-right">{{ planningSum | toCurrency }}</td>
                 </tr>
                 <tr>
                     <td class="font-weight-bold">
                         Gesamt
                     </td>
-                    <td>{{ overallIncome | toCurrency }}</td>
-                    <td>{{ overallOutgoings | toCurrency }}</td>
-                    <td>{{ overallSum | toCurrency }}</td>
+                    <td class="text-right">{{ overallIncome | toCurrency }}</td>
+                    <td class="text-right">{{ overallOutgoings | toCurrency }}</td>
+                    <td class="text-right">{{ overallSum | toCurrency }}</td>
                 </tr>
             </tbody>
         </table>
@@ -50,7 +50,7 @@
             <thead>
                 <tr>
                     <th>Kostenstelle</th>
-                    <th>Summe</th>
+                    <th class="text-right">Summe</th>
                 </tr>
             </thead>
             <tbody>
@@ -59,7 +59,7 @@
                     :key="key"
                 >
                     <td>{{ item.title }}</td>
-                    <td>{{ item.amount }}</td>
+                    <td class="text-right">{{ item.amount | toCurrency }}</td>
                 </tr>
             </tbody>
         </table>
