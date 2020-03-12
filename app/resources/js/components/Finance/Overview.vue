@@ -154,7 +154,7 @@ export default {
             for (i=0; i < this.accountingItems.length; i ++) {
                 let totalAmount = this.accountingItems[i].totalAmount;
                 if (totalAmount < 0){
-                    sum+=totalAmount;
+                    sum+=parseFloat(totalAmount);
                 }
             }
             return sum;
@@ -169,7 +169,7 @@ export default {
             for (i=0; i < this.planningItems.length; i ++) {
                 let totalAmount = this.planningItems[i].totalAmount;
                 if (totalAmount > 0){
-                    sum+=totalAmount;
+                    sum+=parseFloat(totalAmount);
                 }
             }
             return sum;
@@ -181,7 +181,7 @@ export default {
             for (i=0; i < this.planningItems.length; i ++) {
                 let totalAmount = this.planningItems[i].totalAmount;
                 if (totalAmount < 0){
-                    sum+=totalAmount;
+                    sum+=parseFloat(totalAmount);
                 }
             }
             return sum;
@@ -200,7 +200,6 @@ export default {
         },
         topCostCenter() {
             let accIndex = 0;
-            let planIndex = 0;
             let topCostCenters = [];
 
             for (accIndex = 0; accIndex < this.accountingItems.length; accIndex++){
@@ -219,19 +218,18 @@ export default {
                     if (!existingCostCenterItem){
                         topCostCenters.push({
                             title: costCenterItem.title,
-                            amount: connectedItem.totalAmount,
-                            value: value,
+                            amount: parseFloat(connectedItem.totalAmount),
+                            value: parseFloat(value),
                             id: costCenterItem.id
                         });
                     }else{
-                        existingCostCenterItem.amount += connectedItem.totalAmount;
-                        existingCostCenterItem.value += value;
+                        existingCostCenterItem.amount += parseFloat(connectedItem.totalAmount);
+                        existingCostCenterItem.value += parseFloat(value);
                     }
                 }
             }
 
             topCostCenters = _.sortBy(topCostCenters, "value").reverse();
-            console.log(topCostCenters);
             return topCostCenters;
         }
     }

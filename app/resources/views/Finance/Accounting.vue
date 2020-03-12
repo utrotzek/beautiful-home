@@ -424,12 +424,8 @@ export default {
     },
     computed: {
         remainingAmountAfterConnection: function () {
-            let sum = this.connectAccountingData.remainingAmount - this.connectDesiredAmount;
-
-            if (sum !== 0) {
-                return parseFloat(sum).toFixed(2);
-            }
-            return 0;
+            let sum = parseFloat(this.connectAccountingData.remainingAmount) - parseFloat(this.connectDesiredAmount);
+            return parseFloat(sum).toFixed(2);
         }
     },
     mounted() {
