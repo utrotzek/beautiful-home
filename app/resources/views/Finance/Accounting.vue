@@ -660,15 +660,16 @@ export default {
             }else{
                 let i, n = this.planningData.length -1;
                 for (i = 0; i <= n; i++){
-                    let currentItem = this.planningData[i];
-                    let display = (currentItem.title.toLowerCase().search(query.toLowerCase()) > -1);
+                    let planningItem = this.planningData[i];
+                    let costCenter = planningItem.costCenter;
+                    let display = (costCenter.title.toLowerCase().search(query.toLowerCase()) > -1);
                     if (!display){
-                        display = (currentItem.description.toLowerCase().search(query.toLowerCase()) > -1);
+                        display = (planningItem.description.toLowerCase().search(query.toLowerCase()) > -1);
                     }
                     if (!display) {
-                        display = (currentItem.date.toLowerCase().search(query.toLowerCase()) > -1);
+                        display = (planningItem.date.toLowerCase().search(query.toLowerCase()) > -1);
                     }
-                    currentItem.display = display;
+                    planningItem.display = display;
                 }
             }
         },
