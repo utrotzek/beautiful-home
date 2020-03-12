@@ -35,7 +35,7 @@
                 class="float-right text-right"
                 :class="negativePostiveClass"
             >
-                <span v-if="!editMode">{{ localPlanningItem.totalAmount }}</span>
+                <span v-if="!editMode">{{ localPlanningItem.totalAmount | toCurrency }}</span>
                 <input
                     v-else
                     v-model="localPlanningItem.totalAmount"

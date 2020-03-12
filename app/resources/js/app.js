@@ -1,7 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import filters from "../js/filters";
 
 Vue.use(VueRouter);
+Vue.use(filters);
 
 import App from "../views/App";
 import Home from "../views/Home";
@@ -26,7 +28,7 @@ const router = new VueRouter({
         {
             path: "/finance",
             name: "finance",
-            component: Finance, 
+            component: Finance,
             meta: {
                 breadcrumb: [
                     { name: "Finanzen" }

@@ -73,20 +73,6 @@
 <script>
 export default {
     name: "OverviewVue",
-    filters: {
-        toCurrency (value) {
-            if (typeof value !== "number") {
-                return value;
-            }
-            var formatter = new Intl.NumberFormat("de-DE", {
-                style: "currency",
-                currency: "EUR",
-                minimumFractionDigits: 2
-            });
-            return formatter.format(value);
-        }
-
-    },
     props: {
         planningItems: {
             type: Array,
