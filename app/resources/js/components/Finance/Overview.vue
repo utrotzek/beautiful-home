@@ -1,6 +1,10 @@
 <template>
     <div class="financial-overview">
-        <span class="badge badge-pill badge-secondary">Aktueller Kontostand: {{ accountingSum | toCurrency }}</span>
+        <div class="bank-balance">
+            <span class="label">Kontostand:</span>
+            <span class="amount positive">{{ accountingSum | toCurrency }}</span>
+        </div>
+        <hr >
         <h3>Umsätze</h3>
         <table
             id="currentAmountTable"

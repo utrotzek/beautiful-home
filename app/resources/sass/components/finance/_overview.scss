@@ -1,0 +1,17 @@
+.bank-balance {
+    & .label {
+        @extend h3;
+    }
+
+    & .amount {
+        @extend h3;
+
+        &.negative {
+            color: $red;
+        }
+
+        &.positive {
+            color: $black;
+        }
+    }
+}
