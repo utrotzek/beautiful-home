@@ -2,28 +2,112 @@
   display: none;
 }
 
-#planningCollapseButton {
-  display: none;
-  margin: 0;
-  padding: 0;
-  color: $gray-smooth;
-  border: solid #6c757d 1px;
-  border-radius: 20px 0px 0px 20px;
-  background-color: white;
-  width: 35px;
+#overviewCollapseButton {
+    display: none;
+    margin: 0;
+    padding: 0;
+    color: $gray-smooth;
+    border: solid #6c757d 1px;
+    border-radius: 20px 0 0 20px;
+    background-color: white;
+    width: 35px;
 
-  &.planningCollapsed {
-    right: 0px;
-    display: block;
+    &.overviewCollapsed {
+        right: 0;
+        top: 166px;
+        display: block;
+        position: absolute;
+        z-index: 100;
+        font-size: 20px;
+        padding: 5px
+    }
+
+    &.overviewCollapsed:hover {
+        width: 40px;
+        transition: width 0.2s;
+    }
+}
+
+#overview {
+    overflow-y: scroll;
+    //display: none;
     position: absolute;
-    z-index: 100;
-    font-size: 2rem;
-  }
+    border: solid black 1px;
+    background: $white;
+    width: 80vw;
+    right: 0;
+    z-index: 150;
+    top: 165px;
 
-  &.planningCollapsed:hover {
-    width: 40px;
-    transition: width 0.2s;
-  }
+    &.overviewCollapsed {
+        display:none;
+    }
+
+    & #overviewCloseButton {
+        position: absolute;
+        top: 0;
+        right: 10px;
+        font-size: 2rem;
+        background: transparent;
+        border: none;
+        margin: 0;
+        color: $gray-smooth;
+        padding: 0;
+    }
+}
+
+@media (min-width: 992px){
+    #overviewCollapseButton {
+        display: none;
+
+        &.overviewCollapsed {
+            display: none;
+        }
+    }
+
+    #overview {
+        display: block;
+        position: relative;
+        width: auto;
+        z-index: auto;
+        right: auto;
+        border: none;
+        padding-top: 0;
+        top: 0;
+
+        &.overviewCollapsed {
+            display: block;
+        }
+
+        & #overviewCloseButton {
+            display: none;
+        }
+    }
+}
+
+#planningCollapseButton {
+    display: none;
+    margin: 0;
+    padding: 0;
+    color: $gray-smooth;
+    border: solid #6c757d 1px;
+    border-radius: 20px 0 0 20px;
+    background-color: white;
+    width: 35px;
+
+    &.planningCollapsed {
+        right: 0;
+        top: 125px;
+        display: block;
+        position: absolute;
+        z-index: 100;
+        font-size: 26px;
+    }
+
+    &.planningCollapsed:hover {
+        width: 40px;
+        transition: width 0.2s;
+    }
 }
 
 #planning {

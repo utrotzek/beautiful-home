@@ -14,6 +14,14 @@
                 >
                     <span class="fa fa-chevron-left"></span>
                 </button>
+
+                <button
+                    id="overviewCollapseButton"
+                    :class="{ overviewCollapsed: overviewCollapsed}"
+                    @click="collapseOverview()"
+                >
+                    <span class="fa fa-info-circle"></span>
+                </button>
                 <div
                     id="planning"
                     class="col-sm-4 col-lg-4 col-12"
@@ -135,7 +143,22 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3">
+                <div
+                    id="overview"
+                    class="col-sm-8 col-lg-3"
+                    :class="{ overviewCollapsed: overviewCollapsed}"
+                >
+                    <button
+                        id="overviewCloseButton"
+                        type="button"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                        class="close"
+                        :class="{ overviewClosed: !overviewCollapsed}"
+                        @click="collapseOverview()"
+                    >
+                        <span aria-hidden="true">×</span>
+                    </button>
                     <Overview
                         :planning-items="planningData"
                         :accounting-items="accountingData"
@@ -250,6 +273,7 @@ export default {
             month: 10,
             accountingContainerHeight: 0,
             planningCollapsed: true,
+            overviewCollapsed: true,
             connectPlanningMode: false,
             connectPlanningId: 0,
             connectAccountingId: 0,
@@ -655,6 +679,14 @@ export default {
                 //toggle
                 this.planningCollapsed = !this.planningCollapsed;
             }
+        },
+        collapseOverview(collapse) {
+            if (collapse !== undefined){
+                this.overviewCollapsed = collapse;
+            }else{
+                //toggle
+                this.overviewCollapsed = !this.overviewCollapsed;
+            }
         }
     }
 };
@@ -667,7 +699,7 @@ export default {
 
     @media (min-width: 768px) {
         #planning {
-            padding: 0 10px 0 10px;
+            padding: 0 20px 0 20px;
         }
     }
 
