@@ -139,6 +139,7 @@
                             @updateData="updateAccounting"
                             @doConnection="doShowConnectionModal"
                             @deleteConnection="deleteConnection"
+                            @updateConnectedPlanning="updateConnectedPlanning"
                         />
                     </div>
                 </div>
@@ -277,8 +278,8 @@ export default {
             connectPlanningMode: false,
             connectPlanningId: 0,
             connectAccountingId: 0,
-            connectPlanningTotalAmoint: 0,
-            connectAccountingTotalAmoint: 0,
+            connectPlanningTotalAmount: 0,
+            connectAccountingTotalAmount: 0,
             connectDesiredAmount: 0,
             connectAccountingData: {},
             connectPlanningData: {},
@@ -300,6 +301,8 @@ export default {
                                 title: "Lotto"
                             },
                             description: "Regeömäßiger Spielschein",
+                            display: true,
+                            editMode:  false
                         },
                     ],
                 },
@@ -319,6 +322,8 @@ export default {
                                 title: "Lebensmittel"
                             },
                             description: "",
+                            display: true,
+                            editMode:  false
                         },
                     ],
                 },
@@ -338,6 +343,8 @@ export default {
                                 title: "Gehalt"
                             },
                             description: "Uwe",
+                            display: true,
+                            editMode:  false
                         },
                         {
                             id: 31,
@@ -347,6 +354,8 @@ export default {
                                 title: "Weihnachtsgeld"
                             },
                             description: "Diesmal etwas weniger",
+                            display: true,
+                            editMode:  false
                         }
                     ],
                 },
@@ -366,6 +375,8 @@ export default {
                                 title: "Elektronik"
                             },
                             description: "this is my descipriotn",
+                            display: true,
+                            editMode:  false
                         }
                     ],
                 }
@@ -476,8 +487,7 @@ export default {
                     accountingElement.connectedPlanning = this.removeFromArray(
                         accountingElement.connectedPlanning, elementToDelete.id
                     );
-
-                    accountingElement.remainingAmount = accountingElement.remainingAmount + elementToDelete.totalAmount;
+                    this.updateRemainingAmount(accountingElement);
                 }
             }
         },
@@ -499,22 +509,22 @@ export default {
 
             this.showConnectionModal = true;
             this.connectAccountingId = accountId;
-            this.connectAccountingTotalAmoint = acounntingData.remainingAmount;
-            this.connectPlanningTotalAmoint = planningData.totalAmount;
+            this.connectAccountingTotalAmount = acounntingData.remainingAmount;
+            this.connectPlanningTotalAmount = planningData.totalAmount;
 
             //make sure the desired amount for the connection is not greater than the remaining amount
             //of the accounting element
             if (this.connectAccountingData.remainingAmount < 0){
-                if (this.connectAccountingData.remainingAmount - this.connectPlanningTotalAmoint < 0) {
-                    this.connectDesiredAmount = this.connectPlanningTotalAmoint;
+                if (this.connectAccountingData.remainingAmount - this.connectPlanningTotalAmount < 0) {
+                    this.connectDesiredAmount = this.connectPlanningTotalAmount;
                 }else{
                     this.connectDesiredAmount = this.connectAccountingData.remainingAmount;
                 }
             }
 
             if (this.connectAccountingData.remainingAmount > 0){
-                if (this.connectAccountingData.remainingAmount - this.connectPlanningTotalAmoint > 0) {
-                    this.connectDesiredAmount = this.connectPlanningTotalAmoint;
+                if (this.connectAccountingData.remainingAmount - this.connectPlanningTotalAmount > 0) {
+                    this.connectDesiredAmount = this.connectPlanningTotalAmount;
                 }else{
                     this.connectDesiredAmount = this.connectAccountingData.remainingAmount;
                 }
@@ -528,16 +538,10 @@ export default {
             let planningElement = this.getPlanningById(this.connectPlanningId);
             let accountingElement = this.getAccountingById(this.connectAccountingId);
             let clonedPlanning = JSON.parse(JSON.stringify(planningElement));
-            let remainingAmmount = accountingElement.totalAmount;
-            let i = 0;
 
             clonedPlanning.totalAmount = this.connectDesiredAmount;
             accountingElement.connectedPlanning.push(clonedPlanning);
-
-            for (i  = 0; i < accountingElement.connectedPlanning.length; i++){
-                remainingAmmount = remainingAmmount - accountingElement.connectedPlanning[i].totalAmount;
-            }
-            accountingElement.remainingAmount = remainingAmmount;
+            this.updateRemainingAmount(accountingElement);
 
             let planningNegative  = planningElement.totalAmount < 0;
             planningElement.totalAmount = planningElement.totalAmount - this.connectDesiredAmount;
@@ -558,6 +562,26 @@ export default {
             this.connectPlanningMode = false;
             this.connectPlanningId = 0;
             this.connectAccountingId = 0;
+        },
+        updateConnectedPlanning(updatedPlanningItem, accountingId){
+            let accounting = this.getAccountingById(accountingId);
+            let i=0;
+
+            for (i=0; i < accounting.connectedPlanning.length;i++){
+                if (accounting.connectedPlanning.id === updatedPlanningItem.id){
+                    accounting.connectedPlanning = updatedPlanningItem;
+                }
+            }
+            this.updateRemainingAmount(accounting);
+            this.setAccountingById(accountingId, accounting);
+        },
+        updateRemainingAmount(accounting) {
+            let i=0;
+            let remainingAmount=accounting.totalAmount;
+            for (i=0; i < accounting.connectedPlanning.length; i++){
+                remainingAmount = parseFloat(remainingAmount) - parseFloat(accounting.connectedPlanning[i].totalAmount);
+            }
+            accounting.remainingAmount = remainingAmount;
         },
         updateAccounting(updatedAccounting) {
             let i=0;
@@ -588,6 +612,14 @@ export default {
             for(i=0; i < this.accountingData.length;i++){
                 if (id === this.accountingData[i].id)  {
                     return this.accountingData[i];
+                }
+            }
+        },
+        setAccountingById(id, item){
+            let i=0;
+            for(i=0; i < this.accountingData.length;i++){
+                if (id === this.accountingData[i].id)  {
+                    this.accountingData[i] = item;
                 }
             }
         },

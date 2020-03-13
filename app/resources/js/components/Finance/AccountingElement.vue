@@ -43,7 +43,11 @@
                         is-connected
                         :has-date="false"
                         :planning-item="planningElement"
+                        :edit-mode="planningElement.editMode"
                         @delete="deletePlanning(planningElement.id)"
+                        @edit="editPlanning(planningElement.id, true)"
+                        @cancel="editPlanning(planningElement.id, false)"
+                        @save="saveEditPlanning"
                     />
                 </div>
                 <div
@@ -95,12 +99,16 @@ export default {
                             totalAmount: -1,
                             title: "Einkaufen",
                             description: "this is my descipriotn",
+                            display: true,
+                            editMode:  false
                         },
                         {
                             id: 2,
                             totalAmount: -99,
                             title: "Amazon",
                             description: "Weil das so ist",
+                            display: true,
+                            editMode:  false
                         }
                     ],
                 };
@@ -133,7 +141,31 @@ export default {
         },
         deletePlanning(id) {
             this.$emit("deleteConnection", this.accountingData.id, id);
-        }
+        },
+        editPlanning(id, enabled) {
+            this.getPlanningById(id).editMode = enabled;
+        },
+        getPlanningById(id){
+            let i=0;
+            for(i=0; i < this.accountingData.connectedPlanning.length;i++){
+                if (id === this.accountingData.connectedPlanning[i].id)  {
+                    return this.accountingData.connectedPlanning[i];
+                }
+            }
+        },
+        saveEditPlanning(newPlanningItem){
+            newPlanningItem.editMode = false;
+            this.setPlanningById(newPlanningItem.id, newPlanningItem);
+            this.$emit("updateConnectedPlanning", newPlanningItem, this.accountingData.id);
+        },
+        setPlanningById(id, item){
+            let i=0;
+            for(i=0; i < this.accountingData.connectedPlanning.length;i++){
+                if (id === this.accountingData.connectedPlanning[i].id)  {
+                    this.accountingData.connectedPlanning[i] = item;
+                }
+            }
+        },
     }
 };
 </script>
