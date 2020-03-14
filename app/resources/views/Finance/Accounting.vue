@@ -41,7 +41,10 @@
                                 id="PlanningButtons"
                                 class="mb-3"
                             >
-                                <button class="btn btn-outline-dark">
+                                <button
+                                    class="btn btn-outline-dark"
+                                    @click="createNewPlanning"
+                                >
                                     <i class="fa fa-plus-circle"></i>
                                     <span class="d-inline-block d-md-none">
                                         Neuer Eintrag
@@ -72,7 +75,7 @@
                     </div>
 
                     <div
-                        v-for="(item) in planningData"
+                        v-for="(item) in orderedPlanning"
                         :key="item.id"
                     >
                         <PlanningElement
@@ -128,7 +131,7 @@
                     </div>
 
                     <div
-                        v-for="(item) in accountingData"
+                        v-for="(item) in sortedAccounting"
                         :key="item.id"
                     >
                         <AccountingElement
@@ -292,6 +295,7 @@ export default {
                     remainingAmount: 0,
                     date: "12.10.2019",
                     display: true,
+                    isNew: false,
                     connectedPlanning: [
                         {
                             id: 10,
@@ -313,6 +317,7 @@ export default {
                     remainingAmount: -100,
                     date: "30.10.2019",
                     display: true,
+                    isNew: false,
                     connectedPlanning: [
                         {
                             id: 20,
@@ -334,6 +339,7 @@ export default {
                     remainingAmount: 0,
                     date: "30.10.2019",
                     display: true,
+                    isNew: false,
                     connectedPlanning: [
                         {
                             id: 30,
@@ -366,6 +372,7 @@ export default {
                     remainingAmount: -299.94,
                     date: "26.10.2019",
                     display: true,
+                    isNew: false,
                     connectedPlanning: [
                         {
                             id: 40,
@@ -390,9 +397,10 @@ export default {
                     },
                     description: "Gesamter Monat",
                     totalAmount: -100,
-                    date: "25.10.2019",
+                    date: "01.10.2019",
                     display: true,
-                    editMode:  false
+                    editMode:  false,
+                    isNew:  false
                 },
                 {
                     id: 2,
@@ -402,9 +410,10 @@ export default {
                     },
                     description: "Rasierer Amazon",
                     totalAmount: -200,
-                    date: "25.10.2019",
+                    date: "04.10.2019",
                     display: true,
-                    editMode:  false
+                    editMode:  false,
+                    isNew:  false
                 },
                 {
                     id: 3,
@@ -414,9 +423,10 @@ export default {
                     },
                     description: "PC Festplatte",
                     totalAmount: -200,
-                    date: "25.10.2019",
+                    date: "06.10.2019",
                     display: true,
-                    editMode:  false
+                    editMode:  false,
+                    isNew:  false
                 },
                 {
                     id: 4,
@@ -426,9 +436,10 @@ export default {
                     },
                     description: "Urlaub",
                     totalAmount: -300,
-                    date: "25.10.2019",
+                    date: "06.10.2019",
                     display: true,
-                    editMode:  false
+                    editMode:  false,
+                    isNew:  false,
                 }
             ]
         };
@@ -437,6 +448,12 @@ export default {
         remainingAmountAfterConnection: function () {
             let sum = parseFloat(this.connectAccountingData.remainingAmount) - parseFloat(this.connectDesiredAmount);
             return parseFloat(sum).toFixed(2);
+        },
+        orderedPlanning: function() {
+            return _.orderBy(this.planningData, ["isNew", "date"], ["desc", "asc"]);
+        },
+        sortedAccounting: function() {
+            return _.orderBy(this.accountingData, ["isNew", "date"], ["desc", "desc"]);
         }
     },
     mounted() {
@@ -649,11 +666,28 @@ export default {
         updateYear(newYear) {
             this.year = newYear;
         },
+        createNewPlanning(){
+            let newPlanningElement = {
+                id: 100,
+                costCenter: {
+                    id: 1,
+                    title: "Einkaufen"
+                },
+                description: "",
+                totalAmount: 0,
+                date: "01.10.2019",
+                display: true,
+                editMode:  true,
+                isNew: true,
+            };
+            this.planningData.push(newPlanningElement);
+        },
         editPlanning(id, enabled) {
             this.getPlanningById(id).editMode = enabled;
         },
         saveEditPlanning(newPlanningItem){
             newPlanningItem.editMode = false;
+            newPlanningItem.isNew = false;
             this.setPlanningById(newPlanningItem.id, newPlanningItem);
         },
         connectPlanning(id, enabled) {
