@@ -114,7 +114,11 @@
                                 id="accountingButtons"
                                 class="mb-3"
                             >
-                                <button class="btn btn-outline-dark" title="Neuen Umsatz-Eintrag erstellen">
+                                <button
+                                    class="btn btn-outline-dark"
+                                    title="Neuen Umsatz-Eintrag erstellen"
+                                    @click="createNewAccounting"
+                                >
                                     <i class="fa fa-plus-circle"></i>
                                     <span class="d-inline-block d-md-none">
                                         Neuer Eintrag
@@ -304,6 +308,7 @@ export default {
                     date: "12.10.2019",
                     display: true,
                     isNew: false,
+                    editMode: false,
                     connectedPlanning: [
                         {
                             id: 10,
@@ -326,6 +331,7 @@ export default {
                     date: "30.10.2019",
                     display: true,
                     isNew: false,
+                    editMode: false,
                     connectedPlanning: [
                         {
                             id: 20,
@@ -348,6 +354,7 @@ export default {
                     date: "30.10.2019",
                     display: true,
                     isNew: false,
+                    editMode: false,
                     connectedPlanning: [
                         {
                             id: 30,
@@ -381,6 +388,7 @@ export default {
                     date: "26.10.2019",
                     display: true,
                     isNew: false,
+                    editMode: false,
                     connectedPlanning: [
                         {
                             id: 40,
@@ -603,13 +611,17 @@ export default {
         updateRemainingAmount(accounting) {
             let i=0;
             let remainingAmount=accounting.totalAmount;
-            for (i=0; i < accounting.connectedPlanning.length; i++){
-                remainingAmount = parseFloat(remainingAmount) - parseFloat(accounting.connectedPlanning[i].totalAmount);
+            if (accounting.connectedPlanning){
+                for (i=0; i < accounting.connectedPlanning.length; i++){
+                    remainingAmount = parseFloat(remainingAmount) - parseFloat(accounting.connectedPlanning[i].totalAmount);
+                }
             }
             accounting.remainingAmount = remainingAmount;
         },
         updateAccounting(updatedAccounting) {
             let i=0;
+
+            this.updateRemainingAmount(updatedAccounting);
             for(i=0; i < this.accountingData.length;i++){
                 if (updatedAccounting.id === this.accountingData[i].id)  {
                     this.accountingData[i] = updatedAccounting;
@@ -673,6 +685,21 @@ export default {
         },
         updateYear(newYear) {
             this.year = newYear;
+        },
+        createNewAccounting() {
+            let currentDate = new Date;
+            let newAccountingElement = {
+                id: 100,
+                title: "",
+                totalAmount: 0,
+                remainingAmount: 0,
+                date: currentDate.getDate() + ".10.2019",
+                display: true,
+                isNew: true,
+                editMode: true,
+                connectedPlanning: []
+            };
+            this.accountingData.push(newAccountingElement);
         },
         createNewPlanning(){
             let newPlanningElement = {

@@ -1,41 +1,65 @@
 <template>
     <div class="accounting-element row mb-3">
         <div class="col accounting-element-inner">
-            <div class="delete-element">
-                <button>
+            <div class="delete-element" v-if="!localAccountingData.editMode">
+                <button title="Bearbeiten" @click="startEditing">
+                    <i class="fa fa-edit"></i>
+                </button>
+                <button title="Bearbeiten">
                     <i class="fa fa-trash-alt"></i>
                 </button>
             </div>
 
             <div class="row">
-                <div class="date col-12">
-                    {{ accountingData.date }}
+                <div class="date col-9">
+                    <span v-if="!localAccountingData.editMode">{{ localAccountingData.date }}</span>
+                    <input
+                        v-else
+                        v-model="localAccountingData.date"
+                        type="text"
+                        class="form-control"
+                    >
                 </div>
             </div>
             <div class="row">
-                <div class="accounting-title col-8">
+                <div class="accounting-title col-9">
                     <span
-                        v-if="showCheck"
+                        v-if="showCheck && !localAccountingData.editMode"
                         class="fa fa-check-circle check"
                     ></span>
                     <span
-                        v-else
+                        v-else-if="!localAccountingData.editMode"
                         class="fa fa-exclamation-circle todo"
                     >
                     </span>
-                    {{ accountingData.title }}
+                    <span v-if="!localAccountingData.editMode">{{ localAccountingData.title }}</span>
+                    <input
+                        v-else
+                        v-model="localAccountingData.title"
+                        type="text"
+                        class="form-control"
+                    >
                 </div>
                 <div
-                    class="remaining-amount col-4"
+                    class="remaining-amount col-3"
                     :class="classObject"
                 >
-                    <span v-if="!showCheck">{{ accountingData.remainingAmount }} €</span>
+                    <span v-if="!showCheck && !localAccountingData.editMode">{{ localAccountingData.remainingAmount }} €</span>
+                    <input
+                        v-else-if="localAccountingData.editMode"
+                        v-model="localAccountingData.totalAmount"
+                        type="text"
+                        class="form-control text-right"
+                    >
                 </div>
             </div>
 
-            <div class="row relatedElements">
+            <div
+                v-if="!localAccountingData.editMode"
+                class="row relatedElements"
+            >
                 <div
-                    v-for="(planningElement) in accountingData.connectedPlanning"
+                    v-for="(planningElement) in localAccountingData.connectedPlanning"
                     :key="planningElement.id"
                     class="col-12 col-md-6"
                 >
@@ -62,6 +86,16 @@
                     </div>
                 </div>
             </div>
+            <div
+                v-else
+            >
+                <ButtonRow
+                    show-save
+                    show-cancel
+                    @save="save"
+                    @cancel="cancel"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -69,12 +103,14 @@
 <script>
 
 import PlanningElement from "../../../js/components/Finance/PlanningElement";
+import ButtonRow from "../../../js/components/tools/ButtonRow";
 
 export default {
     name: "AccountingElementVue",
 
     components: {
-        PlanningElement
+        PlanningElement,
+        ButtonRow
     },
     props: {
         showConnectTarget: {
@@ -93,6 +129,7 @@ export default {
                     remainingAmount: 0,
                     date: "12.10.2019",
                     display: true,
+                    editMode: false,
                     connectedPlanning: [
                         {
                             id: 1,
@@ -117,22 +154,27 @@ export default {
     },
     data() {
         return {
+            localAccountingData: this.accountingData,
+            originalAccountingData: JSON.parse(JSON.stringify(this.accountingData)),
         };
     },
     computed: {
         showCheck() {
-            return this.accountingData.remainingAmount === 0;
+            return this.localAccountingData.remainingAmount === 0;
         },
         classObject() {
             return {
-                "negative": this.accountingData.remainingAmount < 0,
-                "positive": this.accountingData.remainingAmount >= 0
+                "negative": this.localAccountingData.remainingAmount < 0,
+                "positive": this.localAccountingData.remainingAmount >= 0
             };
         },
     },
     methods: {
+        startEditing(){
+            this.localAccountingData.editMode = true;
+        },
         doConnection(){
-            this.$emit("doConnection", this.accountingData.id);
+            this.$emit("doConnection", this.localAccountingData.id);
         },
         removeFromArray(arrayList, id){
             return arrayList.filter(function(ele){
@@ -140,32 +182,43 @@ export default {
             });
         },
         deletePlanning(id) {
-            this.$emit("deleteConnection", this.accountingData.id, id);
+            this.$emit("deleteConnection", this.localAccountingData.id, id);
         },
         editPlanning(id, enabled) {
             this.getPlanningById(id).editMode = enabled;
         },
         getPlanningById(id){
             let i=0;
-            for(i=0; i < this.accountingData.connectedPlanning.length;i++){
-                if (id === this.accountingData.connectedPlanning[i].id)  {
-                    return this.accountingData.connectedPlanning[i];
+            for(i=0; i < this.localAccountingData.connectedPlanning.length;i++){
+                if (id === this.localAccountingData.connectedPlanning[i].id)  {
+                    return this.localAccountingData.connectedPlanning[i];
                 }
             }
         },
         saveEditPlanning(newPlanningItem){
             newPlanningItem.editMode = false;
             this.setPlanningById(newPlanningItem.id, newPlanningItem);
-            this.$emit("updateConnectedPlanning", newPlanningItem, this.accountingData.id);
+            this.$emit("updateConnectedPlanning", newPlanningItem, this.localAccountingData.id);
         },
         setPlanningById(id, item){
             let i=0;
-            for(i=0; i < this.accountingData.connectedPlanning.length;i++){
-                if (id === this.accountingData.connectedPlanning[i].id)  {
-                    this.accountingData.connectedPlanning[i] = item;
+            for(i=0; i < this.localAccountingData.connectedPlanning.length;i++){
+                if (id === this.localAccountingData.connectedPlanning[i].id)  {
+                    this.localAccountingData.connectedPlanning[i] = item;
                 }
             }
         },
+        cancel(){
+            this.localAccountingData.title = this.originalAccountingData.title;
+            this.localAccountingData.totalAmount = this.originalAccountingData.totalAmount;
+            this.localAccountingData.remainingAmount = this.originalAccountingData.remainingAmount;
+            this.localAccountingData.date = this.originalAccountingData.date;
+            this.localAccountingData.editMode = false;
+        },
+        save(){
+            this.localAccountingData.editMode = false;
+            this.$emit("updateData", this.localAccountingData);
+        }
     }
 };
 </script>
