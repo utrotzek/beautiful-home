@@ -152,6 +152,7 @@
                             :show-connect-target="accountingConnectable(item.id)"
                             :class="accountingClass(item.id)"
                             @updateData="updateAccounting"
+                            @deleteAccounting="deleteAccounting"
                             @doConnection="doShowConnectionModal"
                             @deleteConnection="deleteConnection"
                             @updateConnectedPlanning="updateConnectedPlanning"
@@ -627,6 +628,11 @@ export default {
                     this.accountingData[i] = updatedAccounting;
                 }
             }
+        },
+        deleteAccounting(accountingDataToDelete) {
+            this.accountingData.splice(this.accountingData.findIndex(function(i){
+                return i.id === accountingDataToDelete.id;
+            }), 1);
         },
         getPlanningById(id){
             let i=0;

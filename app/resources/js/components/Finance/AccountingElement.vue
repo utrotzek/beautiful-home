@@ -5,7 +5,7 @@
                 <button title="Bearbeiten" @click="startEditing">
                     <i class="fa fa-edit"></i>
                 </button>
-                <button title="Bearbeiten">
+                <button title="Bearbeiten" @click="deleteAccounting">
                     <i class="fa fa-trash-alt"></i>
                 </button>
             </div>
@@ -207,6 +207,9 @@ export default {
                     this.localAccountingData.connectedPlanning[i] = item;
                 }
             }
+        },
+        deleteAccounting() {
+            this.$emit("deleteAccounting", this.localAccountingData)
         },
         cancel(){
             this.localAccountingData.title = this.originalAccountingData.title;
