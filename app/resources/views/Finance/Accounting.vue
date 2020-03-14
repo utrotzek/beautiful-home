@@ -44,6 +44,7 @@
                                 <button
                                     class="btn btn-outline-dark"
                                     @click="createNewPlanning"
+                                    title="Neuen Planungs-Eintrag erstellen"
                                 >
                                     <i class="fa fa-plus-circle"></i>
                                     <span class="d-inline-block d-md-none">
@@ -113,10 +114,17 @@
                                 id="accountingButtons"
                                 class="mb-3"
                             >
-                                <button class="btn btn-outline-dark">
+                                <button class="btn btn-outline-dark" title="Neuen Umsatz-Eintrag erstellen">
                                     <i class="fa fa-plus-circle"></i>
                                     <span class="d-inline-block d-md-none">
                                         Neuer Eintrag
+                                    </span>
+                                </button>
+
+                                <button class="btn btn-outline-dark" title="csv einlesen">
+                                    <i class="fa fa-arrow-circle-up"></i>
+                                    <span class="d-inline-block d-md-none">
+                                        Datei hochladen
                                     </span>
                                 </button>
                             </div>
