@@ -43,8 +43,8 @@
                             >
                                 <button
                                     class="btn btn-outline-dark"
-                                    @click="createNewPlanning"
                                     title="Neuen Planungs-Eintrag erstellen"
+                                    @click="createNewPlanning"
                                 >
                                     <i class="fa fa-plus-circle"></i>
                                     <span class="d-inline-block d-md-none">
@@ -125,7 +125,10 @@
                                     </span>
                                 </button>
 
-                                <button class="btn btn-outline-dark" title="csv einlesen">
+                                <button
+                                    class="btn btn-outline-dark"
+                                    title="csv einlesen"
+                                >
                                     <i class="fa fa-arrow-circle-up"></i>
                                     <span class="d-inline-block d-md-none">
                                         Datei hochladen
