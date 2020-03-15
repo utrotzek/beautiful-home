@@ -1,24 +1,34 @@
 <template>
     <div class="accounting-element row mb-3">
         <div class="col accounting-element-inner">
-            <div class="delete-element" v-if="!localAccountingData.editMode">
-                <button title="Bearbeiten" @click="startEditing">
+            <div
+                v-if="!localAccountingData.editMode"
+                class="delete-element"
+            >
+                <button
+                    title="Bearbeiten"
+                    @click="startEditing"
+                >
                     <i class="fa fa-edit"></i>
                 </button>
-                <button title="Bearbeiten" @click="deleteAccounting">
+                <button
+                    title="Bearbeiten"
+                    @click="deleteAccounting"
+                >
                     <i class="fa fa-trash-alt"></i>
                 </button>
             </div>
 
             <div class="row">
                 <div class="date col-9">
-                    <span v-if="!localAccountingData.editMode">{{ localAccountingData.date }}</span>
-                    <input
+                    <span v-if="!localAccountingData.editMode">{{ localAccountingData.date | formatDate }}</span>
+                    <v-date-picker
                         v-else
                         v-model="localAccountingData.date"
-                        type="text"
-                        class="form-control"
-                    >
+                        :popover="{visibility: 'focus', placement: 'bottom', keepVisibleOnInput: false}"
+                        :available-dates="{ start: startDate, end: endDate }"
+                        :attributes="vCalendarAttributes"
+                    />
                 </div>
             </div>
             <div class="row">
@@ -102,6 +112,7 @@
 
 <script>
 
+import moment from "moment";
 import PlanningElement from "../../../js/components/Finance/PlanningElement";
 import ButtonRow from "../../../js/components/tools/ButtonRow";
 
@@ -113,6 +124,16 @@ export default {
         ButtonRow
     },
     props: {
+        year: {
+            type: Number,
+            require: true,
+            default: 2020
+        },
+        month: {
+            type: Number,
+            require: true,
+            default: 10
+        },
         showConnectTarget: {
             type: Boolean,
             require: false,
@@ -156,6 +177,13 @@ export default {
         return {
             localAccountingData: this.accountingData,
             originalAccountingData: JSON.parse(JSON.stringify(this.accountingData)),
+            vCalendarAttributes: [
+                {
+                    key: "today",
+                    dot: "red",
+                    dates: new Date(),
+                },
+            ]
         };
     },
     computed: {
@@ -168,6 +196,12 @@ export default {
                 "positive": this.localAccountingData.remainingAmount >= 0
             };
         },
+        startDate() {
+            return moment(this.year + "-" + this.month + "-1").toDate();
+        },
+        endDate() {
+            return moment(this.year + "-" + this.month + "-1").endOf("month").toDate();
+        }
     },
     methods: {
         startEditing(){
@@ -209,7 +243,7 @@ export default {
             }
         },
         deleteAccounting() {
-            this.$emit("deleteAccounting", this.localAccountingData)
+            this.$emit("deleteAccounting", this.localAccountingData);
         },
         cancel(){
             this.localAccountingData.title = this.originalAccountingData.title;

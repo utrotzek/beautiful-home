@@ -85,6 +85,8 @@
                             :planning-item="item"
                             :click-enabled="planningClickEnabled(item.id)"
                             :edit-mode="item.editMode"
+                            :year="year"
+                            :month="month"
                             @connect="connectPlanning(item.id, true)"
                             @delete="deletePlanning"
                             @close="connectPlanning(item.id, false)"
@@ -154,6 +156,8 @@
                             :accounting-data="item"
                             :show-connect-target="accountingConnectable(item.id)"
                             :class="accountingClass(item.id)"
+                            :year="year"
+                            :month="month"
                             @updateData="updateAccounting"
                             @deleteAccounting="deleteAccounting"
                             @doConnection="doShowConnectionModal"
@@ -274,6 +278,7 @@
 
 <script>
 
+import moment from "moment";
 import Search from "../../js/components/tools/Search";
 import PlanningElement from "../../js/components/Finance/PlanningElement";
 import AccountingElement from "../../js/components/Finance/AccountingElement";
@@ -309,7 +314,7 @@ export default {
                     title: "Westdeutsche Lotterie GmbH & Co. OHG westlotto.de",
                     totalAmount: -100,
                     remainingAmount: 0,
-                    date: "12.10.2019",
+                    date: moment("2019-10-3").toDate(),
                     display: true,
                     isNew: false,
                     editMode: false,
@@ -332,7 +337,7 @@ export default {
                     title: "REWE SAGT DANKE. 43400225//Muenster-Centrum/DE",
                     totalAmount: -400.96,
                     remainingAmount: -100,
-                    date: "30.10.2019",
+                    date: moment("2019-10-30").toDate(),
                     display: true,
                     isNew: false,
                     editMode: false,
@@ -355,7 +360,7 @@ export default {
                     title: "Stadt Münster Stadtkasse",
                     totalAmount: 3000,
                     remainingAmount: 0,
-                    date: "30.10.2019",
+                    date: moment("2019-10-30").toDate(),
                     display: true,
                     isNew: false,
                     editMode: false,
@@ -389,7 +394,7 @@ export default {
                     title: "Scheffer und Loederbusch//Muenster/DE",
                     totalAmount: -399.94,
                     remainingAmount: -299.94,
-                    date: "26.10.2019",
+                    date: moment("2019-10-26").toDate(),
                     display: true,
                     isNew: false,
                     editMode: false,
@@ -417,7 +422,7 @@ export default {
                     },
                     description: "Gesamter Monat",
                     totalAmount: -100,
-                    date: "01.10.2019",
+                    date: moment("2019-10-3").toDate(),
                     display: true,
                     editMode:  false,
                     isNew:  false
@@ -430,7 +435,7 @@ export default {
                     },
                     description: "Rasierer Amazon",
                     totalAmount: -200,
-                    date: "04.10.2019",
+                    date: moment("2019-10-4").toDate(),
                     display: true,
                     editMode:  false,
                     isNew:  false
@@ -443,7 +448,7 @@ export default {
                     },
                     description: "PC Festplatte",
                     totalAmount: -200,
-                    date: "06.10.2019",
+                    date: moment("2019-10-6").toDate(),
                     display: true,
                     editMode:  false,
                     isNew:  false
@@ -456,7 +461,7 @@ export default {
                     },
                     description: "Urlaub",
                     totalAmount: -300,
-                    date: "06.10.2019",
+                    date: moment("2019-10-6").toDate(),
                     display: true,
                     editMode:  false,
                     isNew:  false,
@@ -477,7 +482,6 @@ export default {
         }
     },
     mounted() {
-        this.year = new Date().getFullYear();
         this.$nextTick(() => this.handleResize());
 
     },

@@ -1,9 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import filters from "../js/filters";
+import VCalendar from "v-calendar";
 
 Vue.use(VueRouter);
 Vue.use(filters);
+Vue.use(VCalendar);
 
 import App from "../views/App";
 import Home from "../views/Home";

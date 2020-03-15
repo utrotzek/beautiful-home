@@ -8,13 +8,14 @@
             v-if="hasDate"
             class="date"
         >
-            <span v-if="!editMode">{{ localPlanningItem.date }}</span>
-            <input
+            <span v-if="!editMode">{{ localPlanningItem.date | formatDate }}</span>
+            <v-date-picker
                 v-else
                 v-model="localPlanningItem.date"
-                type="text"
-                class="form-control"
-            >
+                :popover="{visibility: 'focus', placement: 'bottom', keepVisibleOnInput: false}"
+                :available-dates="{ start: startDate, end: endDate }"
+                :attributes="vCalendarAttributes"
+            />
         </div>
         <div class="title">
             <div class="float-left">
@@ -86,6 +87,7 @@
 
 <script>
 
+import moment from "moment";
 import CostCenterData from "../../data/finance/CostCenter.js";
 import ButtonRow from "../../../js/components/tools/ButtonRow";
 import AutoCompleter from "../../../js/components/tools/Autocompleter";
@@ -97,6 +99,16 @@ export default {
         AutoCompleter
     },
     props: {
+        year: {
+            type: Number,
+            required: true,
+            default: 2020
+        },
+        month: {
+            type: Number,
+            required: true,
+            default: 10
+        },
         planningItem: {
             type: Object,
             required: true,
@@ -135,7 +147,14 @@ export default {
             displayOverlay: false,
             localPlanningItem: this.planningItem,
             originalPlanningItem: this.planningItem,
-            costCenterData: CostCenterData
+            costCenterData: CostCenterData,
+            vCalendarAttributes: [
+                {
+                    key: "today",
+                    dot: "red",
+                    dates: new Date(),
+                },
+            ]
         };
     },
     computed: {
@@ -144,6 +163,12 @@ export default {
                 "negative": this.localPlanningItem.totalAmount < 0,
                 "positive": this.localPlanningItem.totalAmount >= 0
             };
+        },
+        startDate() {
+            return moment(this.year + "-" + this.month + "-1").toDate();
+        },
+        endDate() {
+            return moment(this.year + "-" + this.month + "-1").endOf("month").toDate();
         }
     },
     watch: {
