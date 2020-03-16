@@ -24,7 +24,7 @@
                     <span v-if="!localAccountingData.editMode">{{ localAccountingData.date | formatDate }}</span>
                     <v-date-picker
                         v-else
-                        v-model="localAccountingData.date"
+                        v-model="date"
                         :popover="{visibility: 'focus', placement: 'bottom', keepVisibleOnInput: false}"
                         :available-dates="{ start: startDate, end: endDate }"
                         :attributes="vCalendarAttributes"
@@ -78,6 +78,8 @@
                         :has-date="false"
                         :planning-item="planningElement"
                         :edit-mode="planningElement.editMode"
+                        :month="month"
+                        :year="year"
                         @delete="deletePlanning(planningElement.id)"
                         @edit="editPlanning(planningElement.id, true)"
                         @cancel="editPlanning(planningElement.id, false)"
@@ -112,6 +114,7 @@
 
 <script>
 
+import _ from "lodash";
 import moment from "moment";
 import PlanningElement from "../../../js/components/Finance/PlanningElement";
 import ButtonRow from "../../../js/components/tools/ButtonRow";
@@ -176,7 +179,8 @@ export default {
     data() {
         return {
             localAccountingData: this.accountingData,
-            originalAccountingData: JSON.parse(JSON.stringify(this.accountingData)),
+            originalAccountingData: _.clone(this.accountingData),
+            date: this.accountingData.date,
             vCalendarAttributes: [
                 {
                     key: "today",
@@ -253,6 +257,7 @@ export default {
             this.localAccountingData.editMode = false;
         },
         save(){
+            this.localAccountingData.date = this.date;
             this.localAccountingData.editMode = false;
             this.$emit("updateData", this.localAccountingData);
         }

@@ -11,7 +11,7 @@
             <span v-if="!editMode">{{ localPlanningItem.date | formatDate }}</span>
             <v-date-picker
                 v-else
-                v-model="localPlanningItem.date"
+                v-model="date"
                 :popover="{visibility: 'focus', placement: 'bottom', keepVisibleOnInput: false}"
                 :available-dates="{ start: startDate, end: endDate }"
                 :attributes="vCalendarAttributes"
@@ -86,7 +86,7 @@
 </template>
 
 <script>
-
+import _ from "lodash";
 import moment from "moment";
 import CostCenterData from "../../data/finance/CostCenter.js";
 import ButtonRow from "../../../js/components/tools/ButtonRow";
@@ -146,7 +146,8 @@ export default {
         return {
             displayOverlay: false,
             localPlanningItem: this.planningItem,
-            originalPlanningItem: this.planningItem,
+            originalPlanningItem: _.clone(this.planningItem),
+            date: _.clone(this.planningItem.date),
             costCenterData: CostCenterData,
             vCalendarAttributes: [
                 {
@@ -174,7 +175,7 @@ export default {
     watch: {
         editMode () {
             //remember original value
-            this.originalPlanningItem = JSON.parse(JSON.stringify(this.localPlanningItem));
+            this.originalPlanningItem = _.clone(this.localPlanningItem);
         }
     },
     methods: {
@@ -201,6 +202,7 @@ export default {
             this.$emit("cancel", this.localPlanningItem.id, true);
         },
         saveEdit(){
+            this.localPlanningItem.date = _.clone(this.date);
             this.$emit("save", this.localPlanningItem, true);
         },
         costCenterUpdate(item){

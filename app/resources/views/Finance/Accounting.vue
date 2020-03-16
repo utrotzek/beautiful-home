@@ -700,13 +700,12 @@ export default {
             this.year = newYear;
         },
         createNewAccounting() {
-            let currentDate = new Date;
             let newAccountingElement = {
                 id: 100,
                 title: "",
                 totalAmount: 0,
                 remainingAmount: 0,
-                date: currentDate.getDate() + ".10.2019",
+                date: moment(this.year + "-" + this.month + "-1").toDate(),
                 display: true,
                 isNew: true,
                 editMode: true,
@@ -723,7 +722,7 @@ export default {
                 },
                 description: "",
                 totalAmount: 0,
-                date: "01.10.2019",
+                date: moment(this.year + "-" + this.month + "-1").toDate(),
                 display: true,
                 editMode:  true,
                 isNew: true,
