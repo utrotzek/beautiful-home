@@ -128,7 +128,7 @@ export default {
             for (i=0; i < this.accountingItems.length; i ++) {
                 let totalAmount = this.accountingItems[i].totalAmount;
                 if (totalAmount > 0){
-                    sum+=totalAmount;
+                    sum+=parseFloat(totalAmount);
                 }
             }
             return sum;
@@ -173,16 +173,16 @@ export default {
             return sum;
         },
         planningSum() {
-            return this.planningIncome + this.planningOutgoings;
+            return parseFloat(this.planningIncome) + parseFloat(this.planningOutgoings);
         },
         overallIncome() {
-            return this.accountingIncome + this.planningIncome;
+            return parseFloat(this.accountingIncome) + parseFloat(this.planningIncome);
         },
         overallOutgoings() {
-            return this.accountingOutgoings + this.planningOutgoings;
+            return parseFloat(this.accountingOutgoings) + parseFloat(this.planningOutgoings);
         },
         overallSum() {
-            return this.accountingSum + this.planningSum;
+            return parseFloat(this.accountingSum) + parseFloat(this.planningSum);
         },
         topCostCenter() {
             let accIndex = 0;
