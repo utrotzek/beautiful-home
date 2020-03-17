@@ -20,7 +20,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::namespace('ShoppingList')->group(function(){
     Route::prefix('shoppingList')->group(function(){
         Route::apiResource('group', "GroupController");
-        Route::apiResource('article', "ArticleController");    
-        Route::apiResource('unit', "UnitController");    
+        Route::apiResource('article', "ArticleController");
+        Route::apiResource('unit', "UnitController");
+    });
+});
+
+
+Route::namespace('Finance')->group(function(){
+    Route::prefix('finance')->group(function(){
+        Route::apiResource('period', "PeriodController");
     });
 });
