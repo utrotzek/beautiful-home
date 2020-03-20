@@ -10,40 +10,26 @@
                     />
                 </div>
             </div>
-            <div class="row text-center mt-4">
-                <div class="col-md-4 col-12 text-center">
+            <div
+                v-if="periods.length"
+                class="row text-center mt-4">
+
+                <div
+                    v-for="period in periods"
+                    :key="period.id"
+                    class="col-md-4 col-12 text-center"
+                >
+                    <span v-if="period.completed" class="fas fa-lock"></span>
+
                     <a
                         class="btn btn-link"
                         href="#"
-                    > Januar</a>
-                </div>
-                <div class="col-md-4 col-12 text-center">
-                    <a
-                        class="btn btn-link"
-                        href="#"
-                    > Februar</a>
-                </div>
-                <div class="col-md-4 col-12 text-center">
-                    <a
-                        class="btn btn-link"
-                        href="#"
-                    > März</a>
+                    >  {{ period.monthName }}</a>
                 </div>
             </div>
-            <div class="row text-center mt-md-5">
-                <div class="col-md-4 col-12 text-center">
-                    <router-link
-                        to="/finance/accounting"
-                        tag="button"
-                        class="btn btn-primary"
-                    >
-                        <span class="fa fa-plus-circle"></span>
-                        April anlegen
-                    </router-link>
-                </div>
-                <div class="col-4 text-center">
-                </div>
-                <div class="col-4 text-center">
+            <div v-else-if="loaded" class="row text-center mt-4">
+                <div class="col">
+                    Für dieses Jahr liegen keine Daten vor
                 </div>
             </div>
         </div>
@@ -54,24 +40,38 @@
 <script>
 import YearComponent from "../js/components/Finance/Year";
 
-// eslint-disable-next-line
-let currentYear = 2020; 
-    
 export default {
     components: {
         year: YearComponent
     },
     data: function(){
         return {
-            year: this.currentYear
+            year: new Date().getFullYear(),
+            periods: [],
+            loaded: false
         };
     },
+    watch: {
+        year: function (){
+            this.read();
+        }
+    },
     mounted() {
-        this.year = new Date().getFullYear();
+        this.read();
     },
     methods: {
         updateYear(newYear) {
             this.year = newYear;
+        },
+
+        async read() {
+            await window.axios.get("/api/finance/period?year=" + this.year)
+                .then(res => {
+                    this.periods = res.data;
+                }).catch(err => {
+                    this.periods = [];
+                });
+            this.loaded = true;
         }
     },
 };

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Finance;
 
 use App\Finance\Period;
+use App\Http\Resources\Period as PeriodResource;
+use App\Http\Resources\PeriodCollection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -11,12 +13,25 @@ class PeriodController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $periods = Period::all();
-        return response($periods->jsonSerialize());
+        if ($request->has('year')){
+            $year = (int)$request->input('year');
+            $periods = Period::where('year', $year)->get();
+        }else{
+            $periods = Period::all();
+        }
+
+        if (count($periods) > 0){
+            return response(new PeriodCollection($periods));
+        }else{
+            return response([], 404);
+        }
+    }
+
+    public function show($id){
+        return response(new PeriodResource(Period::find($id)));
     }
 
     /**
@@ -27,7 +42,13 @@ class PeriodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $period = new Period([
+            'month' => $request->month,
+            'year' => $request->year,
+            'completed' => $request->completed
+        ]);
+        $period->save();
+        return response(new PeriodResource($period));
     }
 
     /**
