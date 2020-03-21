@@ -27,6 +27,9 @@ Route::namespace('ShoppingList')->group(function(){
 
 
 Route::namespace('Finance')->group(function(){
+    Route::get('months', function (Request $request) {
+       return response()->json(\App\Utility\MonthUtility::getMonthList());
+    });
     Route::prefix('finance')->group(function(){
         Route::apiResource('period', "PeriodController");
     });

@@ -291,6 +291,13 @@ export default {
         Search,
         Overview
     },
+    props: {
+        period: {
+            type: Number,
+            required: true,
+            default: 1
+        }
+    },
     data: function(){
         return {
             headline: "Oktober 2019",
@@ -483,7 +490,6 @@ export default {
     },
     mounted() {
         this.$nextTick(() => this.handleResize());
-
     },
     created() {
         window.addEventListener("resize", this.handleResize);

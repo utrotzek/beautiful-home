@@ -39,7 +39,7 @@ const router = new VueRouter({
             }
         },
         {
-            path: "/finance/accounting",
+            path: "/finance/accounting/:periodId",
             name: "accounting",
             component: Accounting,
             meta: {

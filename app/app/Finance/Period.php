@@ -16,6 +16,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Period extends Model
 {
+    protected $fillable = [
+        'month',
+        'year',
+        'completed'
+    ];
+
     public function plannings()
     {
         return $this->hasMany('App\Finance\Planning');
