@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import filters from "../js/filters";
 import VCalendar from "v-calendar";
+import { vueTopprogress } from "vue-top-progress";
 
 Vue.use(VueRouter);
 Vue.use(filters);
@@ -113,6 +114,7 @@ Vue.directive("focus", {
 //add global components
 import Headline from "./components/Headline";
 Vue.component("Headline", Headline);
+Vue.component("Progressbar", vueTopprogress);
 
 /* eslint-disable no-unused-vars */
 const app = new Vue({

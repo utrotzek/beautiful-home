@@ -1,6 +1,7 @@
 <template>
     <div>
         <Headline text="Finanzen verwalten" />
+        <Progressbar ref="topProgress" color="#f8f9fa" />
         <div class="main-content">
             <div class="row text-center">
                 <div class="col">
@@ -65,12 +66,14 @@ export default {
         },
 
         async read() {
+            this.$refs.topProgress.start();
             await window.axios.get("/api/finance/period?year=" + this.year)
                 .then(res => {
                     this.periods = res.data;
                 }).catch(err => {
                     this.periods = [];
                 });
+            this.$refs.topProgress.done();
             this.loaded = true;
         }
     },

@@ -42,7 +42,8 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.7.2",
         "moment": "^2.24.0",
-        "v-calendar": "^1.0.0-beta.23"
+        "v-calendar": "^1.0.0-beta.23",
+        "vue-top-progress": "^0.7.0"
     },
     "jest": {
         "moduleFileExtensions": [
