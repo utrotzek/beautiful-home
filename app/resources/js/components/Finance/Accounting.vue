@@ -83,7 +83,7 @@
                     </div>
 
                     <div
-                        v-for="(item) in orderedPlanning"
+                        v-for="(item) in filteredPlanning"
                         :key="item.id"
                     >
                         <PlanningElement
@@ -101,6 +101,21 @@
                             @cancel="editPlanning(item.id, false)"
                             @save="saveEditPlanning"
                         />
+                    </div>
+                    <div v-if="filteredPlanning.length === 0">
+                        <div
+                            class="alert alert-light"
+                            role="alert"
+                        >
+                            Für den eingegebenen Suchbegriff wurden keine Einträge gefunden.
+                        </div>
+                    </div>
+                    <div
+                        v-if="noActivePlannings"
+                        class="alert alert-info"
+                        role="alert"
+                    >
+                        Keine Planungseinträge vorhanden
                     </div>
                 </div>
                 <div
@@ -428,7 +443,8 @@ export default {
                     ],
                 }
             ],
-            planningData: [ ]
+            planningData: [ ],
+            planningQuery: ""
         };
     },
     computed: {
@@ -439,8 +455,32 @@ export default {
         orderedPlanning: function() {
             return _.orderBy(this.planningData, ["isNew", "date"], ["desc", "asc"]);
         },
+        filteredPlanning() {
+            //filters the planning list by title, description and date
+            return this.orderedPlanning.filter(planning => {
+                let costCenter = planning.costCenter;
+                let display = (costCenter.title.toLowerCase().search(this.planningQuery.toLowerCase()) > -1);
+                if (!display){
+                    display = (planning.description.toLowerCase().search(this.planningQuery.toLowerCase()) > -1);
+                }
+                if (!display) {
+                    let formattedDate = moment(planning.date).format("DD.MM.YYYY");
+                    display = (formattedDate.search(this.planningQuery.toLowerCase()) > -1);
+                }
+                return display;
+            });
+        },
         sortedAccounting: function() {
             return _.orderBy(this.accountingData, ["isNew", "date"], ["desc", "desc"]);
+        },
+        noActivePlannings() {
+            let i = 0;
+            for (i=0; i < this.planningData.length; i++){
+                if (this.planningData[i].totalAmount !== 0){
+                    return false;
+                }
+            }
+            return true;
         }
     },
     mounted() {
@@ -750,26 +790,7 @@ export default {
             }
         },
         planningSearched(query) {
-            if (query.length === 0){
-                let i, n = this.planningData.length;
-                for (i = 0; i < n; i++){
-                    this.planningData[i].display = true;
-                }
-            }else{
-                let i, n = this.planningData.length -1;
-                for (i = 0; i <= n; i++){
-                    let planningItem = this.planningData[i];
-                    let costCenter = planningItem.costCenter;
-                    let display = (costCenter.title.toLowerCase().search(query.toLowerCase()) > -1);
-                    if (!display){
-                        display = (planningItem.description.toLowerCase().search(query.toLowerCase()) > -1);
-                    }
-                    if (!display) {
-                        display = (planningItem.date.toLowerCase().search(query.toLowerCase()) > -1);
-                    }
-                    planningItem.display = display;
-                }
-            }
+            this.planningQuery = query;
         },
         collapsePlanning(collapse) {
             if (collapse !== undefined){
