@@ -29,6 +29,7 @@
                 >
                     <span class="fa fa-info-circle"></span>
                 </button>
+
                 <div
                     id="planning"
                     class="col-sm-4 col-lg-4 col-12"
@@ -37,32 +38,6 @@
                         'max-height': accountingContainerHeight + 'px'
                     }"
                 >
-                    <div class="row">
-                        <div class="col-8">
-                            <h2 class="d-none d-md-block">
-                                Planung
-                            </h2>
-                        </div>
-                        <div class="col-12 col-md-4 text-left text-md-right">
-                            <div
-                                id="PlanningButtons"
-                                class="mb-3"
-                            >
-                                <button
-                                    class="btn btn-outline-dark"
-                                    title="Neuen Planungs-Eintrag erstellen"
-                                    @click="createNewPlanning"
-                                >
-                                    <i class="fa fa-plus-circle"></i>
-                                    <span class="d-inline-block d-md-none">
-                                        Neuer Eintrag
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-
                     <button
                         id="planningCloseButton"
                         type="button"
@@ -75,49 +50,15 @@
                         <span aria-hidden="true">×</span>
                     </button>
 
-                    <div
-                        id="planningSearch"
-                        class="mb-3"
-                    >
-                        <Search @searched="planningSearched" />
-                    </div>
-
-                    <div
-                        v-for="(item) in filteredPlanning"
-                        :key="item.id"
-                    >
-                        <PlanningElement
-                            v-if="item.display && item.totalAmount !== 0"
-                            :class="planningClass(item.id)"
-                            :planning-item="item"
-                            :click-enabled="planningClickEnabled(item.id)"
-                            :edit-mode="item.editMode"
-                            :year="year"
-                            :month="month"
-                            @connect="connectPlanning(item.id, true)"
-                            @delete="deletePlanning"
-                            @close="connectPlanning(item.id, false)"
-                            @edit="editPlanning(item.id, true)"
-                            @cancel="editPlanning(item.id, false)"
-                            @save="saveEditPlanning"
-                        />
-                    </div>
-                    <div v-if="filteredPlanning.length === 0">
-                        <div
-                            class="alert alert-light"
-                            role="alert"
-                        >
-                            Für den eingegebenen Suchbegriff wurden keine Einträge gefunden.
-                        </div>
-                    </div>
-                    <div
-                        v-if="noActivePlannings"
-                        class="alert alert-info"
-                        role="alert"
-                    >
-                        Keine Planungseinträge vorhanden
-                    </div>
+                    <PlanningSidebar
+                        :planning-data="planningData"
+                        :period="currentPeriod"
+                        @createNewPlanning="createNewPlanning"
+                        @deletePlanning="deletePlanning"
+                        @connectPlanning="connectPlanning"
+                    />
                 </div>
+
                 <div
                     id="accounting"
                     class="col-sm-8 col-lg-5"
@@ -301,13 +242,13 @@
 <script>
 import moment from "moment";
 import Search from "../tools/Search";
-import PlanningElement from "./PlanningElement";
+import PlanningSidebar from "./PlanningSidebar";
 import AccountingElement from "./AccountingElement";
 import Overview from "./Overview";
 
 export default {
     components: {
-        PlanningElement,
+        PlanningSidebar,
         AccountingElement,
         Search,
         Overview
@@ -444,7 +385,6 @@ export default {
                 }
             ],
             planningData: [ ],
-            planningQuery: ""
         };
     },
     computed: {
@@ -452,35 +392,8 @@ export default {
             let sum = parseFloat(this.connectAccountingData.remainingAmount) - parseFloat(this.connectDesiredAmount);
             return parseFloat(sum).toFixed(2);
         },
-        orderedPlanning: function() {
-            return _.orderBy(this.planningData, ["isNew", "date"], ["desc", "asc"]);
-        },
-        filteredPlanning() {
-            //filters the planning list by title, description and date
-            return this.orderedPlanning.filter(planning => {
-                let costCenter = planning.costCenter;
-                let display = (costCenter.title.toLowerCase().search(this.planningQuery.toLowerCase()) > -1);
-                if (!display){
-                    display = (planning.description.toLowerCase().search(this.planningQuery.toLowerCase()) > -1);
-                }
-                if (!display) {
-                    let formattedDate = moment(planning.date).format("DD.MM.YYYY");
-                    display = (formattedDate.search(this.planningQuery.toLowerCase()) > -1);
-                }
-                return display;
-            });
-        },
         sortedAccounting: function() {
             return _.orderBy(this.accountingData, ["isNew", "date"], ["desc", "desc"]);
-        },
-        noActivePlannings() {
-            let i = 0;
-            for (i=0; i < this.planningData.length; i++){
-                if (this.planningData[i].totalAmount !== 0){
-                    return false;
-                }
-            }
-            return true;
         }
     },
     mounted() {
@@ -561,9 +474,7 @@ export default {
                 }
             }
         },
-        planningClickEnabled(id) {
-            return !(this.connectPlanningMode && this.connectPlanningId !== id);
-        },
+
         handleResize() {
             let element = document.getElementById("accounting-container");
             let boundaries = element.getBoundingClientRect();
@@ -718,16 +629,6 @@ export default {
                 }
             }
         },
-        planningClass(id) {
-            if (this.connectPlanningMode && this.connectPlanningId !== id){
-                return { "deactivated": true };
-            }else {
-                return { "activated": true };
-            }
-        },
-        updateYear(newYear) {
-            this.year = newYear;
-        },
         createNewAccounting() {
             let newAccountingElement = {
                 id: 100,
@@ -744,7 +645,7 @@ export default {
         },
         createNewPlanning(){
             let newPlanningElement = {
-                id: 100,
+                id: 9999,
                 costCenter: {
                     id: 1,
                     title: "Einkaufen"
@@ -757,14 +658,6 @@ export default {
                 isNew: true,
             };
             this.planningData.push(newPlanningElement);
-        },
-        editPlanning(id, enabled) {
-            this.getPlanningById(id).editMode = enabled;
-        },
-        saveEditPlanning(newPlanningItem){
-            newPlanningItem.editMode = false;
-            newPlanningItem.isNew = false;
-            this.setPlanningById(newPlanningItem.id, newPlanningItem);
         },
         connectPlanning(id, enabled) {
             this.connectPlanningId = id;
@@ -788,9 +681,6 @@ export default {
                     currentItem.display = display;
                 }
             }
-        },
-        planningSearched(query) {
-            this.planningQuery = query;
         },
         collapsePlanning(collapse) {
             if (collapse !== undefined){
