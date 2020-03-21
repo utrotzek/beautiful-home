@@ -2,8 +2,15 @@
     <div>
         <Headline :text="headline" />
 
-        <div id="main-content">
+        <Progressbar
+            ref="topProgress"
+            color="#f8f9fa"
+        />
+        <div
+            id="main-content"
+        >
             <div
+                v-if="loaded"
                 id="accounting-container"
                 class="row"
             >
@@ -277,7 +284,6 @@
 
 
 <script>
-
 import moment from "moment";
 import Search from "../tools/Search";
 import PlanningElement from "./PlanningElement";
@@ -292,7 +298,7 @@ export default {
         Overview
     },
     props: {
-        period: {
+        periodId: {
             type: Number,
             required: true,
             default: 1
@@ -300,9 +306,11 @@ export default {
     },
     data: function(){
         return {
-            headline: "Oktober 2019",
+            currentPeriod: null,
+            headline: "",
             year: 2019,
             month: 10,
+            loaded: false,
             accountingContainerHeight: 0,
             planningCollapsed: true,
             overviewCollapsed: true,
@@ -489,7 +497,7 @@ export default {
         }
     },
     mounted() {
-        this.$nextTick(() => this.handleResize());
+        this.loadData();
     },
     created() {
         window.addEventListener("resize", this.handleResize);
@@ -498,6 +506,26 @@ export default {
         window.removeEventListener("resize", this.handleResize);
     },
     methods: {
+        async loadData () {
+            this.$refs.topProgress.start();
+            this.loaded = false;
+            await window.axios.get("/api/finance/period/" + this.periodId)
+                .then(res => {
+                    this.currentPeriod = res.data;
+                    this.year = this.currentPeriod.year;
+                    this.month = this.currentPeriod.month;
+
+                    this.headline = this.currentPeriod.monthName + " " + this.year;
+                });
+            this.$refs.topProgress.done();
+            this.loaded = true;
+            this.triggerResize();
+        },
+        triggerResize () {
+            //handle resize on initial loading
+            this.$nextTick(() => this.handleResize());
+        },
+
         removeFromArray(arrayList, id){
             let i=0;
             let newArrayList = [];

@@ -42,6 +42,12 @@ const router = new VueRouter({
             path: "/finance/accounting/:periodId",
             name: "accounting",
             component: Accounting,
+            //make sure period has correct type after page refresh
+            props(route) {
+                const props = { ...route.params };
+                props.periodId = parseInt(props.periodId);
+                return props;
+            },
             meta: {
                 breadcrumb: [
                     { name: "Finanzen / Buchhaltung" }

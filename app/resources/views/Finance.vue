@@ -136,12 +136,12 @@ export default {
             this.$refs.topProgress.start();
             await window.axios.post("/api/finance/period", {month: month, year: this.year, completed: false})
                 .then(res => {
-                    console.log(res)
-                    this.$router.push({name: "accounting", params: {period: 100}});
+                    this.$refs.topProgress.done();
+                    this.$router.push({name: "accounting", params: {periodId: res.data.id}});
                 }).catch(err => {
                     this.errorMessage = "Fehler beim speichern";
+                    this.$refs.topProgress.done();
                 });
-            this.$refs.topProgress.done();
         },
         async loadData() {
             this.$refs.topProgress.start();
