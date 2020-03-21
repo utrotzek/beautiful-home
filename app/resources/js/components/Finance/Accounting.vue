@@ -279,10 +279,10 @@
 <script>
 
 import moment from "moment";
-import Search from "../../js/components/tools/Search";
-import PlanningElement from "../../js/components/Finance/PlanningElement";
-import AccountingElement from "../../js/components/Finance/AccountingElement";
-import Overview from "../../js/components/Finance/Overview";
+import Search from "../tools/Search";
+import PlanningElement from "./PlanningElement";
+import AccountingElement from "./AccountingElement";
+import Overview from "./Overview";
 
 export default {
     components: {

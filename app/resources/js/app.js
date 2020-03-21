@@ -11,12 +11,12 @@ Vue.use(VCalendar);
 import App from "../views/App";
 import Home from "../views/Home";
 import Finance from "../views/Finance";
-import Accounting from "../views/Finance/Accounting";
 import Recipe from "../views/Recipe";
 import RecipeEdit from "../views/Recipe/Edit";
 import RecipeSearch from "../views/Recipe/Search";
 import RecipeRate from "../views/Recipe/Rate";
 import ShoppingList from "../views/ShoppingList";
+import Accounting from "../js/components/Finance/Accounting";
 
 const router = new VueRouter({
     mode: "history",
