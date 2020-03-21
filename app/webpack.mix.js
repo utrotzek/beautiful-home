@@ -11,15 +11,16 @@ const mix = require("laravel-mix");
  |
  */
 
+mix.webpackConfig({
+    watchOptions: {
+        ignored: /node_modules/
+    }
+});
+
 mix.js("resources/js/app.js", "public/js")
     .js("resources/js/bootstrap.js", "public/js")
     .sourceMaps()
     .sass("resources/sass/app.scss", "public/css")
     //accelerate watch by ignoring node_modules:
     //https://laracasts.com/discuss/channels/elixir/laravel-mix-extremly-slow?page=0#
-    .options({
-        watchOptions: {
-            ignored: /node_modules/
-        }
-    })
 ;
