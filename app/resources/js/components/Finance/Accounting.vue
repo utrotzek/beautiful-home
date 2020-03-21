@@ -87,7 +87,7 @@
                         :key="item.id"
                     >
                         <PlanningElement
-                            v-if="item.display"
+                            v-if="item.display && item.totalAmount !== 0"
                             :class="planningClass(item.id)"
                             :planning-item="item"
                             :click-enabled="planningClickEnabled(item.id)"
@@ -428,60 +428,7 @@ export default {
                     ],
                 }
             ],
-            planningData: [
-                {
-                    id: 1,
-                    costCenter: {
-                        id: 1,
-                        title: "Einkaufen"
-                    },
-                    description: "Gesamter Monat",
-                    totalAmount: -100,
-                    date: moment("2019-10-3").toDate(),
-                    display: true,
-                    editMode:  false,
-                    isNew:  false
-                },
-                {
-                    id: 2,
-                    costCenter: {
-                        id: 5,
-                        title: "Elektronik"
-                    },
-                    description: "Rasierer Amazon",
-                    totalAmount: -200,
-                    date: moment("2019-10-4").toDate(),
-                    display: true,
-                    editMode:  false,
-                    isNew:  false
-                },
-                {
-                    id: 3,
-                    costCenter: {
-                        id: 5,
-                        title: "Elektronik"
-                    },
-                    description: "PC Festplatte",
-                    totalAmount: -200,
-                    date: moment("2019-10-6").toDate(),
-                    display: true,
-                    editMode:  false,
-                    isNew:  false
-                },
-                {
-                    id: 4,
-                    costCenter: {
-                        id: 3,
-                        title: "Sparbuch"
-                    },
-                    description: "Urlaub",
-                    totalAmount: -300,
-                    date: moment("2019-10-6").toDate(),
-                    display: true,
-                    editMode:  false,
-                    isNew:  false,
-                }
-            ]
+            planningData: [ ]
         };
     },
     computed: {
@@ -509,7 +456,7 @@ export default {
         async loadData () {
             this.$refs.topProgress.start();
             this.loaded = false;
-            await window.axios.get("/api/finance/period/" + this.periodId)
+            const periodsPromise = window.axios.get("/api/finance/period/" + this.periodId)
                 .then(res => {
                     this.currentPeriod = res.data;
                     this.year = this.currentPeriod.year;
@@ -517,6 +464,14 @@ export default {
 
                     this.headline = this.currentPeriod.monthName + " " + this.year;
                 });
+
+            const planningsPromise = window.axios.get("/api/finance/plannings/forPeriod/" + this.periodId)
+                .then(res => {
+                    this.planningData = res.data;
+                });
+            await periodsPromise;
+            await planningsPromise;
+
             this.$refs.topProgress.done();
             this.loaded = true;
             this.triggerResize();
