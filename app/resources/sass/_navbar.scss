@@ -122,3 +122,8 @@
   height: calc(100vh - #{$navbar-base-height});
   overflow-y: auto;
 }
+
+
+.list-group .active a {
+    color: white;
+}

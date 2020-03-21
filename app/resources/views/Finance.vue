@@ -1,7 +1,10 @@
 <template>
     <div>
         <Headline text="Finanzen verwalten" />
-        <Progressbar ref="topProgress" color="#f8f9fa" />
+        <Progressbar
+            ref="topProgress"
+            color="#f8f9fa"
+        />
         <div class="main-content">
             <div class="row text-center">
                 <div class="col">
@@ -12,25 +15,52 @@
                 </div>
             </div>
             <div
-                v-if="periods.length"
-                class="row text-center mt-4">
-
+                class="row justify-content-center"
+            >
                 <div
-                    v-for="period in periods"
-                    :key="period.id"
-                    class="col-md-4 col-12 text-center"
+                    v-if="periods.length"
+                    class="col-3 mt-4 text-center"
                 >
-                    <span v-if="period.completed" class="fas fa-lock"></span>
+                    <div class="list-group">
+                        <a
+                            v-for="period in periods"
+                            :key="period.id"
+                            class="list-group-item list-group-item-action"
+                            href="#"
+                        >
+                            <span
+                                v-if="period.completed"
+                                class="fas fa-lock"
+                            ></span>
+                            {{ period.monthName }}
+                        </a>
 
-                    <a
-                        class="btn btn-link"
-                        href="#"
-                    >  {{ period.monthName }}</a>
+                        <router-link
+                            to="/finance/accounting"
+                            class="list-group-item list-group-item active"
+                        >
+                            <span class="fa fa-plus-circle"></span>
+                            April anlegen
+                        </router-link>
+                    </div>
                 </div>
-            </div>
-            <div v-else-if="loaded" class="row text-center mt-4">
-                <div class="col">
-                    Für dieses Jahr liegen keine Daten vor
+                <div
+                    v-else-if="loaded"
+                    class="col-3 mt-4 text-center"
+                >
+                    <div class="alert alert-info" role="alert">
+                        Für dieses Jahr liegen keine Daten vor
+                    </div>
+
+                    <div class="list-group">
+                        <router-link
+                            to="/finance/accounting"
+                            class="list-group-item list-group-item active"
+                        >
+                            <span class="fa fa-plus-circle"></span>
+                            April anlegen
+                        </router-link>
+                    </div>
                 </div>
             </div>
         </div>
@@ -51,6 +81,18 @@ export default {
             periods: [],
             loaded: false
         };
+    },
+    computed: {
+        nextMonth () {
+            let lastMonth, i;
+            for (i = 0; i < this.periods.length; i++){
+                let currentMonth = this.periods[i].month;
+                if (currentMonth > lastMonth){
+                    lastMonth = currentMonth;
+                }
+            }
+            return lastMonth + 1;
+        }
     },
     watch: {
         year: function (){
