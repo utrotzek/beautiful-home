@@ -160,7 +160,7 @@ export default {
             }
         },
         accountingConnectable(id) {
-            if (this.createConnectionData.planningData !== null){
+            if (this.createConnectionData.enabled && this.createConnectionData.planningData !== null){
                 let accountingAmount = this.getAccountingById(id).remainingAmount;
                 let planningAmount = this.createConnectionData.planningData.totalAmount;
 
@@ -219,6 +219,7 @@ export default {
             this.showModal = true;
         },
         doAccountingPlanningConnection(planning, accounting, desiredAmount){
+            this.showModal = false;
             this.$emit("doAccountingPlanningConnection", planning, accounting, desiredAmount);
         }
     }
