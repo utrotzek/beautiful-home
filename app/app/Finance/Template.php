@@ -12,6 +12,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Template newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Template query()
  * @mixin \Eloquent
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string $title
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Template whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Template whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Template whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Template whereUpdatedAt($value)
  */
 class Template extends Model
 {

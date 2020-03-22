@@ -15,6 +15,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Planning newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Planning query()
  * @mixin \Eloquent
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string $description
+ * @property float $totalAmount
+ * @property string $date
+ * @property int $cost_center_id
+ * @property int|null $period_id
+ * @property int|null $template_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Planning whereCostCenterId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Planning whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Planning whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Planning whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Planning whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Planning wherePeriodId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Planning whereTemplateId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Planning whereTotalAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Planning whereUpdatedAt($value)
  */
 class Planning extends Model
 {
