@@ -16,11 +16,20 @@ services:
     volumes:
     - ./app:/app
     user: "${UID}:${GID}"
+    environment:
+      TZ: "Etc/UTC"
   db:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: "root"
       MYSQL_DATABASE: "beautiful-home"
+      TZ: "Etc/UTC"
+    command:
+      - mysqld
+      - "--character-set-server=utf8mb4"
+      - "--skip-character-set-client-handshake"
+      - "--collation-server=utf8mb4_unicode_ci"
+      - "--default-time-zone=Etc/UTC"
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     ports:

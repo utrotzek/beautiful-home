@@ -299,6 +299,10 @@ export default {
         savePlanning(updatedPlanning) {
             this.$refs.topProgress.start();
 
+            //axios will convert the date to UTC (which is wrong) so we have to contert the date
+            //to string before transferring
+            updatedPlanning.date = moment(updatedPlanning.date).format("YYYY-MM-DD");
+
             window.axios.put("/api/finance/planning/" + updatedPlanning.id, updatedPlanning)
                 .then(res => {
                     //refresh data from the backend

@@ -88,7 +88,6 @@
 <script>
 import _ from "lodash";
 import moment from "moment";
-import CostCenterData from "../../data/finance/CostCenter.js";
 import ButtonRow from "../../../js/components/tools/ButtonRow";
 import AutoCompleter from "../../../js/components/tools/Autocompleter";
 
@@ -155,7 +154,7 @@ export default {
             displayOverlay: false,
             localPlanningItem: this.planningItem,
             originalPlanningItem: _.clone(this.planningItem),
-            date: _.clone(this.planningItem.date),
+            date: moment(this.planningItem.date).toDate(),
             vCalendarAttributes: [
                 {
                     key: "today",
@@ -211,7 +210,7 @@ export default {
             this.$emit("cancel", this.localPlanningItem);
         },
         saveEdit(){
-            this.localPlanningItem.date = _.clone(this.date);
+            this.localPlanningItem.date = this.date;
             this.localEditMode = false;
             this.displayOverlay = false;
             this.$emit("save", this.localPlanningItem, true);
