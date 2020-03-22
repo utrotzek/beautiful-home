@@ -145,12 +145,10 @@ export default {
             this.searchQuery = query;
         },
         accountingClass(id) {
-            if (this.createConnectionData.enabled) {
-                if (this.getAccountingById(id).remainingAmount === 0) {
-                    return {"deactivated": true};
-                } else {
-                    return {"activated": true};
-                }
+            if (this.createConnectionData.enabled && !this.accountingConnectable(id)) {
+                return {"deactivated": true};
+            } else {
+                return {"activated": true};
             }
         },
         getAccountingById(id){
@@ -162,10 +160,19 @@ export default {
             }
         },
         accountingConnectable(id) {
-            if (this.createConnectionData.enabled) {
-                // noinspection EqualityComparisonWithCoercionJS
-                return !this.getAccountingById(id).remainingAmount == 0.0;
+            if (this.createConnectionData.planningData !== null){
+                let accountingAmount = this.getAccountingById(id).remainingAmount;
+                let planningAmount = this.createConnectionData.planningData.totalAmount;
+
+                if (accountingAmount !== 0.0){
+                    if ((planningAmount < 0 && accountingAmount < 0) ||
+                        (planningAmount > 0 && accountingAmount > 0)
+                    ) {
+                        return true;
+                    }
+                }
             }
+
             return false;
         },
         updateAccounting(updatedAccounting) {
