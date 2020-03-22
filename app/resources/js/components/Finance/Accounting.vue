@@ -53,6 +53,7 @@
                     <PlanningSidebar
                         :planning-data="planningData"
                         :period="currentPeriod"
+                        :cost-center-data="costCenterData"
                         @createNewPlanning="createNewPlanning"
                         @deletePlanning="deletePlanning"
                         @connectPlanning="connectPlanning"
@@ -147,6 +148,7 @@ export default {
                 accountingData: null,
                 planningData: null
             },
+            costCenterData: [],
             accountingData: [
                 {
                     id: 1,
@@ -281,8 +283,14 @@ export default {
                 .then(res => {
                     this.planningData = res.data;
                 });
+
+            const costCenterPromise = window.axios.get("/api/finance/costCenter")
+                .then(res => {
+                    this.costCenterData = res.data;
+                });
             await periodsPromise;
             await planningsPromise;
+            await costCenterPromise;
 
             this.$refs.topProgress.done();
             this.loaded = true;

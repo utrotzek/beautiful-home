@@ -44,6 +44,7 @@
                 :edit-mode="item.editMode"
                 :year="period.year"
                 :month="period.month"
+                :cost-center-data="costCenterData"
                 @connect="connectPlanning(item.id, true)"
                 @delete="deletePlanning(item.id)"
                 @close="connectPlanning(item.id, false)"
@@ -90,6 +91,13 @@ export default {
             }
         },
         planningData: {
+            type: Array,
+            required: true,
+            default() {
+                return [];
+            }
+        },
+        costCenterData: {
             type: Array,
             required: true,
             default() {

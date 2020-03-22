@@ -140,6 +140,13 @@ export default {
         editMode: {
             type: Boolean,
             default: false
+        },
+        costCenterData: {
+            type: Array,
+            required: true,
+            default() {
+                return [];
+            }
         }
     },
     data() {
@@ -149,7 +156,6 @@ export default {
             localPlanningItem: this.planningItem,
             originalPlanningItem: _.clone(this.planningItem),
             date: _.clone(this.planningItem.date),
-            costCenterData: CostCenterData,
             vCalendarAttributes: [
                 {
                     key: "today",
