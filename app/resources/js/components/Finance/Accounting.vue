@@ -380,6 +380,8 @@ export default {
             }else if (!planningNegative && planningElement.totalAmount <= 0){
                 planningElement.totalAmount = 0;
             }
+
+            this.savePlanning(planningElement);
             this.deactivateConnectionMode();
         },
         deactivateConnectionMode(){
