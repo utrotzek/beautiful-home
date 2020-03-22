@@ -56,6 +56,7 @@
                         @createNewPlanning="createNewPlanning"
                         @deletePlanning="deletePlanning"
                         @connectPlanning="connectPlanning"
+                        @save="savePlanning"
                     />
                 </div>
 
@@ -483,6 +484,11 @@ export default {
                 //toggle
                 this.overviewCollapsed = !this.overviewCollapsed;
             }
+        },
+        savePlanning(updatedPlanning) {
+            updatedPlanning.editMode = false;
+            updatedPlanning.isNew = false;
+            this.setPlanningById(updatedPlanning.id, updatedPlanning);
         }
     }
 };

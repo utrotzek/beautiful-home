@@ -52,7 +52,7 @@
                 @save="saveEditPlanning"
             />
         </div>
-        <div v-if="planningData.length !== 0 &&  filteredPlanning.length === 0">
+        <div v-if="planningData.length !== 0 && filteredPlanning.length === 0">
             <div
                 class="alert alert-light"
                 role="alert"
@@ -155,9 +155,7 @@ export default {
             }
         },
         saveEditPlanning(newPlanningItem){
-            newPlanningItem.editMode = false;
-            newPlanningItem.isNew = false;
-            this.setPlanningById(newPlanningItem.id, newPlanningItem);
+            this.$emit("save", newPlanningItem);
         },
         planningSearched(query) {
             this.planningQuery = query;
