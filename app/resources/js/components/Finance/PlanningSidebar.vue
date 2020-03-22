@@ -52,7 +52,7 @@
                 @save="saveEditPlanning"
             />
         </div>
-        <div v-if="filteredPlanning.length === 0">
+        <div v-if="planningData.length !== 0 &&  filteredPlanning.length === 0">
             <div
                 class="alert alert-light"
                 role="alert"
