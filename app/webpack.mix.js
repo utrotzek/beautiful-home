@@ -19,7 +19,7 @@ mix.webpackConfig({
 
 mix.js("resources/js/app.js", "public/js")
     .js("resources/js/bootstrap.js", "public/js")
-    .sourceMaps()
+    .sourceMaps(false, "source-map")
     .sass("resources/sass/app.scss", "public/css")
     //accelerate watch by ignoring node_modules:
     //https://laracasts.com/discuss/channels/elixir/laravel-mix-extremly-slow?page=0#
