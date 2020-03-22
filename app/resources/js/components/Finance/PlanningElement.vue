@@ -8,7 +8,7 @@
             v-if="hasDate"
             class="date"
         >
-            <span v-if="!editMode">{{ localPlanningItem.date | formatDate }}</span>
+            <span v-if="!localEditMode">{{ localPlanningItem.date | formatDate }}</span>
             <v-date-picker
                 v-else
                 v-model="date"
@@ -19,7 +19,7 @@
         </div>
         <div class="title">
             <div class="float-left">
-                <span v-if="!editMode">{{ localPlanningItem.costCenter.title }}</span>
+                <span v-if="!localEditMode">{{ localPlanningItem.costCenter.title }}</span>
                 <AutoCompleter
                     v-else
                     :items="costCenterData"
@@ -36,7 +36,7 @@
                 class="float-right text-right"
                 :class="negativePostiveClass"
             >
-                <span v-if="!editMode">{{ localPlanningItem.totalAmount | toCurrency }}</span>
+                <span v-if="!localEditMode">{{ localPlanningItem.totalAmount | toCurrency }}</span>
                 <input
                     v-else
                     v-model="localPlanningItem.totalAmount"
@@ -48,7 +48,7 @@
         </div>
         <div class="clearfix"></div>
         <div class="description">
-            <span v-if="!editMode">{{ localPlanningItem.description }}</span>
+            <span v-if="!localEditMode">{{ localPlanningItem.description }}</span>
             <textarea
                 v-else
                 v-model="localPlanningItem.description"
@@ -62,7 +62,7 @@
             class="overlay"
         >
             <ButtonRow
-                v-if="!editMode"
+                v-if="!localEditMode"
                 show-delete
                 show-edit
                 show-close
@@ -144,6 +144,7 @@ export default {
     },
     data() {
         return {
+            localEditMode: this.editMode,
             displayOverlay: false,
             localPlanningItem: this.planningItem,
             originalPlanningItem: _.clone(this.planningItem),
@@ -173,7 +174,7 @@ export default {
         }
     },
     watch: {
-        editMode () {
+        localEditMode () {
             //remember original value
             this.originalPlanningItem = _.clone(this.localPlanningItem);
         }
@@ -195,14 +196,18 @@ export default {
             this.$emit("connect", this.localPlanningItem.id);
         },
         editPlanning() {
-            this.$emit("edit", this.localPlanningItem.id, true);
+            this.localEditMode = true;
         },
         cancelEdit(){
             this.localPlanningItem = this.originalPlanningItem;
-            this.$emit("cancel", this.localPlanningItem.id, true);
+            this.localEditMode = false;
+            this.displayOverlay = false;
+            this.$emit("cancel", this.localPlanningItem);
         },
         saveEdit(){
             this.localPlanningItem.date = _.clone(this.date);
+            this.localEditMode = false;
+            this.displayOverlay = false;
             this.$emit("save", this.localPlanningItem, true);
         },
         costCenterUpdate(item){

@@ -47,8 +47,8 @@
                 @connect="connectPlanning(item.id, true)"
                 @delete="deletePlanning(item.id)"
                 @close="connectPlanning(item.id, false)"
-                @edit="editPlanning(item.id, true)"
-                @cancel="editPlanning(item.id, false)"
+                @edit="editPlanning"
+                @cancel="editPlanning"
                 @save="saveEditPlanning"
             />
         </div>
@@ -143,8 +143,17 @@ export default {
                 return { "activated": true };
             }
         },
-        editPlanning(id, enabled) {
-            this.getPlanningById(id).editMode = enabled;
+        editPlanning(planning) {
+            planning.editMode = !planning.editMode;
+            this.savePlanningById(planning);
+        },
+        savePlanningById(updatedPlanning){
+            let i=0;
+            for(i=0; i < this.planningData.length;i++){
+                if (updatedPlanning.id === this.planningData[i].id)  {
+                    this.planningData[i] = updatedPlanning;
+                }
+            }
         },
         getPlanningById(id){
             let i=0;
@@ -155,6 +164,7 @@ export default {
             }
         },
         saveEditPlanning(newPlanningItem){
+            this.getPlanningById(newPlanningItem.id).editMode = false;
             this.$emit("save", newPlanningItem);
         },
         planningSearched(query) {

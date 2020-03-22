@@ -33,6 +33,7 @@ Route::namespace('Finance')->group(function(){
     Route::prefix('finance')->group(function(){
         Route::apiResource('period', "PeriodController");
 
+        Route::apiResource('planning', "PlanningController");
         Route::get('/plannings/forPeriod/{id}', ['uses' => 'PlanningController@forPeriod'] );
     });
 });

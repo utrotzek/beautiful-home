@@ -288,6 +288,17 @@ export default {
             this.loaded = true;
             this.triggerResize();
         },
+        savePlanning(updatedPlanning) {
+            this.$refs.topProgress.start();
+
+            window.axios.put("/api/finance/planning/" + updatedPlanning.id, updatedPlanning)
+                .then(res => {
+                    //refresh data from the backend
+                    updatedPlanning = res.data;
+                    this.$refs.topProgress.done();
+                    this.setPlanningById(updatedPlanning.id, updatedPlanning);
+                });
+        },
         triggerResize () {
             //handle resize on initial loading
             this.$nextTick(() => this.handleResize());
@@ -484,11 +495,6 @@ export default {
                 //toggle
                 this.overviewCollapsed = !this.overviewCollapsed;
             }
-        },
-        savePlanning(updatedPlanning) {
-            updatedPlanning.editMode = false;
-            updatedPlanning.isNew = false;
-            this.setPlanningById(updatedPlanning.id, updatedPlanning);
         }
     }
 };
