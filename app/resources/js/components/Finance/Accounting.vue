@@ -311,6 +311,15 @@ export default {
                     this.setPlanningById(updatedPlanning.id, updatedPlanning);
                 });
         },
+        deletePlanning(id){
+            this.$refs.topProgress.start();
+
+            window.axios.delete("/api/finance/planning/" + id)
+                .then(() => {
+                    this.$refs.topProgress.done();
+                    this.planningData = this.removeFromArray(this.planningData, id);
+                });
+        },
         triggerResize () {
             //handle resize on initial loading
             this.$nextTick(() => this.handleResize());
@@ -326,9 +335,6 @@ export default {
                 }
             }
             return newArrayList;
-        },
-        deletePlanning(id){
-            this.planningData = this.removeFromArray(this.planningData, id);
         },
         getArrayElementById(id, array){
             let i = 0;

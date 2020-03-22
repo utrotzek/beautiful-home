@@ -38,4 +38,12 @@ class PlanningController extends Controller
         $updatedPlanning = $planning->fresh();
         return response()->json(new \App\Http\Resources\Planning($updatedPlanning));
     }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Planning $planning)
+    {
+        $planning->delete();
+    }
 }
