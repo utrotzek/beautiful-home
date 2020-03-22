@@ -36,7 +36,7 @@
                                 <div class="col-6">
                                     <input
                                         id="desiredAmount"
-                                        v-model="desiredAmount"
+                                        v-model="localDesiredAmount"
                                         type="text"
                                         class="form-control"
                                     >
@@ -105,17 +105,27 @@ export default {
             type: Boolean,
             required: true,
             default: false
+        },
+        desiredAmount: {
+            type: Number,
+            required: true,
+            default: 0
         }
     },
     data() {
         return {
-            desiredAmount: 0
+            localDesiredAmount: this.desiredAmount
         };
     },
     computed: {
         remainingAmountAfterConnection: function () {
-            let sum = parseFloat(this.accounting.remainingAmount) - parseFloat(this.desiredAmount);
+            let sum = parseFloat(this.accounting.remainingAmount) - parseFloat(this.localDesiredAmount);
             return parseFloat(sum).toFixed(2);
+        }
+    },
+    watch: {
+        desiredAmount() {
+            this.localDesiredAmount = this.desiredAmount;
         }
     },
     methods: {
@@ -123,10 +133,10 @@ export default {
             this.$emit("close");
         },
         doAccountingPlanningConnection() {
-            this.$emit("doAccountingPlanningConnection", this.planning, this.accounting, this.desiredAmount);
+            this.$emit("doAccountingPlanningConnection", this.planning, this.accounting, this.localDesiredAmount);
         },
         useFullAmountForConnection() {
-            this.desiredAmount = this.accounting.remainingAmount;
+            this.localDesiredAmount = this.accounting.remainingAmount;
         },
     }
 };

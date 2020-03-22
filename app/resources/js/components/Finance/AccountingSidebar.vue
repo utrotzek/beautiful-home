@@ -4,6 +4,7 @@
             :planning="createConnectionData.planningData"
             :accounting="createConnectionData.accountingData"
             :show="showModal"
+            :desired-amount="createConnectionData.desiredAmount"
             @close="closeModal"
             @doAccountingPlanningConnection="doAccountingPlanningConnection"
         />
