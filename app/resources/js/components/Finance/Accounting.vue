@@ -68,66 +68,16 @@
                     @click="collapsePlanning(true)"
                     @focus="collapsePlanning(true)"
                 >
-                    <div class="row">
-                        <div class="col-8">
-                            <h2 class="d-none d-md-block">
-                                Umsätze
-                            </h2>
-                        </div>
-                        <div class="col-12 col-md-4 text-left text-md-right">
-                            <div
-                                id="accountingButtons"
-                                class="mb-3"
-                            >
-                                <button
-                                    class="btn btn-outline-dark"
-                                    title="Neuen Umsatz-Eintrag erstellen"
-                                    @click="createNewAccounting"
-                                >
-                                    <i class="fa fa-plus-circle"></i>
-                                    <span class="d-inline-block d-md-none">
-                                        Neuer Eintrag
-                                    </span>
-                                </button>
-
-                                <button
-                                    class="btn btn-outline-dark"
-                                    title="csv einlesen"
-                                >
-                                    <i class="fa fa-arrow-circle-up"></i>
-                                    <span class="d-inline-block d-md-none">
-                                        Datei hochladen
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        id="accountingSearch"
-                        class="mb-3"
-                    >
-                        <Search @searched="accountingSearched" />
-                    </div>
-
-                    <div
-                        v-for="(item) in sortedAccounting"
-                        :key="item.id"
-                    >
-                        <AccountingElement
-                            v-if="item.display"
-                            :accounting-data="item"
-                            :show-connect-target="accountingConnectable(item.id)"
-                            :class="accountingClass(item.id)"
-                            :year="year"
-                            :month="month"
-                            @updateData="updateAccounting"
-                            @deleteAccounting="deleteAccounting"
-                            @doConnection="doShowConnectionModal"
-                            @deleteConnection="deleteConnection"
-                            @updateConnectedPlanning="updateConnectedPlanning"
-                        />
-                    </div>
+                    <AccountingSidebar
+                        :accounting-data="accountingData"
+                        :period="currentPeriod"
+                        :create-connection-data="createConnectionData"
+                        @createNewAccounting="createNewAccounting"
+                        @updateAccounting="updateAccounting"
+                        @doAccountingPlanningConnection="doAccountingPlanningConnection"
+                        @deleteConnection="deleteConnection"
+                        @updateConnectedPlanning="updateConnectedPlanning"
+                    />
                 </div>
 
                 <div
@@ -151,88 +101,6 @@
                         :accounting-items="accountingData"
                     />
                 </div>
-
-                <div v-if="showConnectionModal">
-                    <transition name="modal">
-                        <div class="modal-mask">
-                            <div class="modal-wrapper">
-                                <div
-                                    class="modal-dialog"
-                                    role="document"
-                                >
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">
-                                                Zuordnen
-                                            </h5>
-                                            <button
-                                                type="button"
-                                                class="close"
-                                                data-dismiss="modal"
-                                                aria-label="Close"
-                                                @click="closeModal"
-                                            >
-                                                <span
-                                                    aria-hidden="true"
-                                                >&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p><strong>{{ connectAccountingData.title }}</strong> mit Kostenstelle <strong>{{ connectPlanningData.title }}</strong> verknüpfen.</p>
-                                            <div class="form-group row">
-                                                <label
-                                                    for="desiredAmount"
-                                                    class="col-2 col-form-label"
-                                                >Betrag</label>
-                                                <div class="col-6">
-                                                    <input
-                                                        id="desiredAmount"
-                                                        v-model="connectDesiredAmount"
-                                                        type="text"
-                                                        class="form-control"
-                                                    >
-                                                </div>
-                                                <div class="col-4">
-                                                    <button
-                                                        v-if="remainingAmountAfterConnection !== 0"
-                                                        class="btn btn-secondary"
-                                                        @click="useFullAmountForConnection"
-                                                    >
-                                                        <span class="fa fa-hand-holding-usd"></span>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <div v-if="remainingAmountAfterConnection !== 0">
-                                                <div>
-                                                    Es bleibt dann ein Restbetrag von {{ remainingAmountAfterConnection }} €
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button
-                                                type="button"
-                                                class="btn btn-secondary"
-                                                @click="closeModal"
-                                            >
-                                                <i class="fas fa-ban"></i>
-                                                Abbrechen
-                                            </button>
-                                            <button
-                                                type="button"
-                                                class="btn btn-primary"
-                                                @click="doAccountingPlanningConnection"
-                                            >
-                                                <i class="fas fa-link"></i>
-                                                Zuordnen
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </transition>
-                </div>
             </div>
         </div>
     </div>
@@ -241,16 +109,14 @@
 
 <script>
 import moment from "moment";
-import Search from "../tools/Search";
 import PlanningSidebar from "./PlanningSidebar";
-import AccountingElement from "./AccountingElement";
+import AccountingSidebar from "./AccountingSidebar";
 import Overview from "./Overview";
 
 export default {
     components: {
         PlanningSidebar,
-        AccountingElement,
-        Search,
+        AccountingSidebar,
         Overview
     },
     props: {
@@ -270,15 +136,16 @@ export default {
             accountingContainerHeight: 0,
             planningCollapsed: true,
             overviewCollapsed: true,
-            connectPlanningMode: false,
-            connectPlanningId: 0,
-            connectAccountingId: 0,
-            connectPlanningTotalAmount: 0,
-            connectAccountingTotalAmount: 0,
-            connectDesiredAmount: 0,
-            connectAccountingData: {},
-            connectPlanningData: {},
-            showConnectionModal: false,
+            createConnectionData: {
+                enabled: false,
+                planningId: 0,
+                accountingId: 0,
+                planningTotalAmount: 0,
+                accountingTotalAmount: 0,
+                desiredAmount: 0,
+                accountingData: null,
+                planningData: null
+            },
             accountingData: [
                 {
                     id: 1,
@@ -387,15 +254,6 @@ export default {
             planningData: [ ],
         };
     },
-    computed: {
-        remainingAmountAfterConnection: function () {
-            let sum = parseFloat(this.connectAccountingData.remainingAmount) - parseFloat(this.connectDesiredAmount);
-            return parseFloat(sum).toFixed(2);
-        },
-        sortedAccounting: function() {
-            return _.orderBy(this.accountingData, ["isNew", "date"], ["desc", "desc"]);
-        }
-    },
     mounted() {
         this.loadData();
     },
@@ -481,68 +339,29 @@ export default {
 
             this.accountingContainerHeight = window.innerHeight - (boundaries.top) ;
         },
-        doShowConnectionModal(accountId){
-            let acounntingData = this.getAccountingById(accountId);
-            let planningData = this.getPlanningById(this.connectPlanningId);
-
-            this.connectAccountingData = acounntingData;
-            this.connectPlanningData = planningData;
-
-            this.showConnectionModal = true;
-            this.connectAccountingId = accountId;
-            this.connectAccountingTotalAmount = acounntingData.remainingAmount;
-            this.connectPlanningTotalAmount = planningData.totalAmount;
-
-            //make sure the desired amount for the connection is not greater than the remaining amount
-            //of the accounting element
-            if (this.connectAccountingData.remainingAmount < 0){
-                if (this.connectAccountingData.remainingAmount - this.connectPlanningTotalAmount < 0) {
-                    this.connectDesiredAmount = this.connectPlanningTotalAmount;
-                }else{
-                    this.connectDesiredAmount = this.connectAccountingData.remainingAmount;
-                }
-            }
-
-            if (this.connectAccountingData.remainingAmount > 0){
-                if (this.connectAccountingData.remainingAmount - this.connectPlanningTotalAmount > 0) {
-                    this.connectDesiredAmount = this.connectPlanningTotalAmount;
-                }else{
-                    this.connectDesiredAmount = this.connectAccountingData.remainingAmount;
-                }
-            }
-
-        },
-        useFullAmountForConnection() {
-            this.connectDesiredAmount = this.connectAccountingData.remainingAmount;
-        },
-        doAccountingPlanningConnection(){
-            let planningElement = this.getPlanningById(this.connectPlanningId);
-            let accountingElement = this.getAccountingById(this.connectAccountingId);
+        doAccountingPlanningConnection(planning, accounting, desiredAmount){
+            let planningElement = planning;
+            let accountingElement = accounting;
             let clonedPlanning = JSON.parse(JSON.stringify(planningElement));
 
-            clonedPlanning.totalAmount = this.connectDesiredAmount;
+            clonedPlanning.totalAmount = desiredAmount;
             accountingElement.connectedPlanning.push(clonedPlanning);
             this.updateRemainingAmount(accountingElement);
 
             let planningNegative  = planningElement.totalAmount < 0;
-            planningElement.totalAmount = planningElement.totalAmount - this.connectDesiredAmount;
+            planningElement.totalAmount = planningElement.totalAmount - desiredAmount;
 
             if (planningNegative && planningElement.totalAmount >= 0) {
-                this.deletePlanning(this.connectPlanningId);
+                planningElement.totalAmount = 0;
             }else if (!planningNegative && planningElement.totalAmount <= 0){
-                this.deletePlanning(this.connectPlanningId);
+                planningElement.totalAmount = 0;
             }
-
-            this.closeModal();
             this.deactivateConnectionMode();
         },
-        closeModal() {
-            this.showConnectionModal = false;
-        },
         deactivateConnectionMode(){
-            this.connectPlanningMode = false;
-            this.connectPlanningId = 0;
-            this.connectAccountingId = 0;
+            this.createConnectionData.enabled = false;
+            this.createConnectionData.planningId = 0;
+            this.createConnectionData.accountingId = 0;
         },
         updateConnectedPlanning(updatedPlanningItem, accountingId){
             let accounting = this.getAccountingById(accountingId);
@@ -613,22 +432,7 @@ export default {
                 }
             }
         },
-        accountingConnectable(id) {
-            if (this.connectPlanningMode){
-                // noinspection EqualityComparisonWithCoercionJS
-                return !this.getAccountingById(id).remainingAmount == 0.0;
-            }
-            return false;
-        },
-        accountingClass(id) {
-            if (this.connectPlanningMode){
-                if (this.getAccountingById(id).remainingAmount === 0){
-                    return {"deactivated": true};
-                }else{
-                    return {"activated": true};
-                }
-            }
-        },
+
         createNewAccounting() {
             let newAccountingElement = {
                 id: 100,
@@ -660,27 +464,9 @@ export default {
             this.planningData.push(newPlanningElement);
         },
         connectPlanning(id, enabled) {
-            this.connectPlanningId = id;
-            this.connectPlanningMode = enabled;
-        },
-        accountingSearched(query) {
-            if (query.length === 0){
-                let i, n = this.accountingData.length;
-                for (i = 0; i < n; i++){
-                    this.accountingData[i].display = true;
-                }
-            }else{
-                let i, n = this.accountingData.length -1;
-                for (i = 0; i <= n; i++){
-                    let currentItem = this.accountingData[i];
-                    let display = (currentItem.title.toLowerCase().search(query.toLowerCase()) > -1);
-
-                    if (!display) {
-                        display = (currentItem.date.toLowerCase().search(query.toLowerCase()) > -1);
-                    }
-                    currentItem.display = display;
-                }
-            }
+            this.createConnectionData.enabled = enabled;
+            this.createConnectionData.planningId = id;
+            this.createConnectionData.planningData = this.getPlanningById(id);
         },
         collapsePlanning(collapse) {
             if (collapse !== undefined){
@@ -721,22 +507,5 @@ export default {
 
     #accounting {
         padding: 0 48px  0 20px;
-    }
-
-    .modal-mask {
-        position: fixed;
-        z-index: 9998;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, .5);
-        display: table;
-        transition: opacity .3s ease;
-    }
-
-    .modal-wrapper {
-        display: table-cell;
-        vertical-align: middle;
     }
 </style>
