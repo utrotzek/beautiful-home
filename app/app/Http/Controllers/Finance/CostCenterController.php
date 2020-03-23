@@ -19,15 +19,6 @@ class CostCenterController extends Controller
         return response()->json(new CostCenterCollection(CostCenter::all()));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -37,7 +28,13 @@ class CostCenterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $costCenter = CostCenter::make([
+            'title' => $request->input('title')
+        ]);
+
+        $costCenter->save();
+        $costCenter->refresh();
+        return response()->json(new \App\Http\Resources\CostCenter($costCenter));
     }
 
     /**

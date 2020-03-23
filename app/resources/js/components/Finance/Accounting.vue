@@ -58,6 +58,7 @@
                         @deletePlanning="deletePlanning"
                         @connectPlanning="connectPlanning"
                         @save="savePlanning"
+                        @createCostCenter="updateCostCenters"
                     />
                 </div>
 
@@ -284,10 +285,8 @@ export default {
                     this.planningData = res.data;
                 });
 
-            const costCenterPromise = window.axios.get("/api/finance/costCenter")
-                .then(res => {
-                    this.costCenterData = res.data;
-                });
+            const costCenterPromise = this.fetchCostCenters();
+
             await periodsPromise;
             await planningsPromise;
             await costCenterPromise;
@@ -295,6 +294,15 @@ export default {
             this.$refs.topProgress.done();
             this.loaded = true;
             this.triggerResize();
+        },
+        async fetchCostCenters() {
+            window.axios.get("/api/finance/costCenter")
+                .then(res => {
+                    this.costCenterData = res.data;
+                });
+        },
+        updateCostCenters(){
+            this.fetchCostCenters();
         },
         savePlanning(updatedPlanning) {
             this.$refs.topProgress.start();

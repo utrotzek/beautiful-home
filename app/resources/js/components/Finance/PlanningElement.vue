@@ -4,6 +4,11 @@
         class="planningElement form-group"
         @click="showOverlay"
     >
+        <Progressbar
+            ref="topProgress"
+            color="#f8f9fa"
+        />
+
         <div
             v-if="hasDate"
             class="date"
@@ -23,13 +28,14 @@
                 <AutoCompleter
                     v-else
                     :items="costCenterData"
-                    :enable-inline-creation="false"
+                    :enable-inline-creation="true"
                     :show-all-items-on-empty-query="true"
                     :preselected-value="localPlanningItem.costCenter.id"
                     search-key="title"
                     value-key="id"
-                    placeholder="Kosten stelle wählen"
+                    placeholder="Kostenstelle wählen"
                     @selected="costCenterUpdate"
+                    @create="createCostCenter"
                 />
             </div>
             <div
@@ -217,6 +223,16 @@ export default {
         },
         costCenterUpdate(item){
             this.localPlanningItem.costCenter = item;
+        },
+        createCostCenter(newCostCenterName){
+            this.$refs.topProgress.start();
+
+            window.axios.post("/api/finance/costCenter", {title: newCostCenterName})
+                .then(res => {
+                    this.$emit("createCostCenter", res.data);
+                    this.$refs.topProgress.done();
+                });
+
         }
     }
 };

@@ -51,6 +51,7 @@
                 @edit="editPlanning"
                 @cancel="editPlanning"
                 @save="saveEditPlanning"
+                @createCostCenter="createCostCenter"
             />
         </div>
         <div v-if="planningData.length !== 0 && filteredPlanning.length === 0">
@@ -187,6 +188,9 @@ export default {
         connectPlanning(id, enabled) {
             this.$emit("connectPlanning", id, enabled);
         },
+        createCostCenter(newCostCenter) {
+            this.$emit("createCostCenter", newCostCenter);
+        }
     }
 };
 </script>
