@@ -4,11 +4,11 @@
         aria-label="Basic example"
         class="btn-group d-flex"
     >
-
         <button
             v-if="showSave"
             type="button"
             class="btn btn-light"
+            :disabled="disabled"
             @click.stop
             @click="save"
         >
@@ -29,6 +29,7 @@
             v-if="showConnect"
             type="button"
             class="btn btn-light"
+            :disabled="disabled"
             @click.stop
             @click="connect"
         >
@@ -39,6 +40,7 @@
             v-if="showEdit"
             type="button"
             class="btn btn-light"
+            :disabled="disabled"
             @click.stop
             @click="edit"
         >
@@ -49,6 +51,7 @@
             v-if="showDelete"
             type="button"
             class="btn btn-light"
+            :disabled="disabled"
             @click.stop
             @click="deleteClick"
         >
@@ -59,6 +62,7 @@
             v-if="showClose"
             type="button"
             class="btn btn-light"
+            :disabled="disabled"
             @click.stop
             @click="close"
         >
@@ -93,6 +97,10 @@ export default {
             default: false
         },
         showCancel: {
+            type: Boolean,
+            default: false
+        },
+        disabled: {
             type: Boolean,
             default: false
         }

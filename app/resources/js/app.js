@@ -3,7 +3,9 @@ import VueRouter from "vue-router";
 import filters from "../js/filters";
 import VCalendar from "v-calendar";
 import { vueTopprogress } from "vue-top-progress";
+import Vuelidate from 'vuelidate'
 
+Vue.use(Vuelidate)
 Vue.use(VueRouter);
 Vue.use(filters);
 Vue.use(VCalendar);

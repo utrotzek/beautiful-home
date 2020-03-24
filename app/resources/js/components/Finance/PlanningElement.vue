@@ -34,6 +34,7 @@
                     search-key="title"
                     value-key="id"
                     placeholder="Kostenstelle wählen"
+                    :class="errorClass($v.localPlanningItem.costCenter.id)"
                     @selected="costCenterUpdate"
                     @create="createCostCenter"
                 />
@@ -48,7 +49,7 @@
                     v-model="localPlanningItem.totalAmount"
                     type="text"
                     class="form-control text-right"
-                    :class="negativePostiveClass"
+                    :class="[negativePostiveClass, errorClass($v.localPlanningItem.totalAmount)]"
                 >
             </div>
         </div>
@@ -73,6 +74,7 @@
                 show-edit
                 show-close
                 :show-connect="!isConnected"
+                :disabled="$v.$anyError"
                 @close="closeOverlay"
                 @edit="editPlanning"
                 @connect="connectPlanning"
@@ -83,6 +85,7 @@
                 v-else
                 show-save
                 show-cancel
+                :disabled="$v.$anyError"
                 @close="closeOverlay"
                 @save="saveEdit"
                 @cancel="cancelEdit"
@@ -92,10 +95,15 @@
 </template>
 
 <script>
+import { required, integer } from "vuelidate/lib/validators";
 import _ from "lodash";
 import moment from "moment";
 import ButtonRow from "../../../js/components/tools/ButtonRow";
 import AutoCompleter from "../../../js/components/tools/Autocompleter";
+
+const notZero = (value) => value > 0 || value < 0;
+//99999 is the default entry for new planning elements
+const notDefaultCostCenterId = (value) => value !== 99999;
 
 export default {
     name: "PlanningElementVue",
@@ -170,6 +178,21 @@ export default {
             ]
         };
     },
+    validations: {
+        localPlanningItem: {
+            costCenter: {
+                id: {
+                    required,
+                    integer,
+                    notDefaultCostCenterId
+                }
+            },
+            totalAmount: {
+                required,
+                notZero
+            }
+        },
+    },
     computed: {
         negativePostiveClass() {
             return {
@@ -190,7 +213,16 @@ export default {
             this.originalPlanningItem = _.clone(this.localPlanningItem);
         }
     },
+    mounted() {
+        this.$v.localPlanningItem.costCenter.id.$touch();
+        this.$v.localPlanningItem.totalAmount.$touch();
+    },
     methods: {
+        errorClass(validator) {
+            return {
+                "is-invalid": validator.$error,
+            };
+        },
         showOverlay() {
             if (this.clickEnabled){
                 this.displayOverlay = true;
@@ -210,10 +242,14 @@ export default {
             this.localEditMode = true;
         },
         cancelEdit(){
-            this.localPlanningItem = this.originalPlanningItem;
-            this.localEditMode = false;
-            this.displayOverlay = false;
-            this.$emit("cancel", this.localPlanningItem);
+            if (!this.localPlanningItem.isNew){
+                this.localPlanningItem = this.originalPlanningItem;
+                this.localEditMode = false;
+                this.displayOverlay = false;
+                this.$emit("cancel", this.localPlanningItem);
+            }else{
+                this.deletePlanning();
+            }
         },
         saveEdit(){
             this.localPlanningItem.date = this.date;

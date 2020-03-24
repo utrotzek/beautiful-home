@@ -334,13 +334,18 @@ export default {
             }
         },
         deletePlanning(id){
-            this.$refs.topProgress.start();
+            const planningToDelete = this.getPlanningById(id);
+            if (planningToDelete.isNew){
+                this.planningData = this.removeFromArray(this.planningData, planningToDelete.id);
+            }else{
+                this.$refs.topProgress.start();
 
-            window.axios.delete("/api/finance/planning/" + id)
-                .then(() => {
-                    this.$refs.topProgress.done();
-                    this.planningData = this.removeFromArray(this.planningData, id);
-                });
+                window.axios.delete("/api/finance/planning/" + planningToDelete.id)
+                    .then(() => {
+                        this.$refs.topProgress.done();
+                        this.planningData = this.removeFromArray(this.planningData, planningToDelete.id);
+                    });
+            }
         },
         triggerResize () {
             //handle resize on initial loading

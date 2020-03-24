@@ -270,4 +270,8 @@ export default {
         background-color: #a5a4a4;
         color:white;
     }
+
+    .is-invalid .form-control {
+        border-color: #dc3545;
+    }
 </style>
