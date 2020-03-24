@@ -253,6 +253,9 @@ export default {
         },
         saveEdit(){
             this.localPlanningItem.date = this.date;
+            //workaround to avoid multiple creation of plannign elements when the element gets created via the
+            //ui and edit it again before freshing the page.
+            this.localPlanningItem.isNew = this.planningItem.isNew;
             this.localEditMode = false;
             this.displayOverlay = false;
             this.$emit("save", this.localPlanningItem, true);
