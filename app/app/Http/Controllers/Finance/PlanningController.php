@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Finance;
 
 use App\Finance\CostCenter;
+use App\Finance\Period;
 use App\Finance\Planning;
 use App\Http\Resources\PlanningCollection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Input;
 
 class PlanningController extends Controller
 {
@@ -37,6 +36,25 @@ class PlanningController extends Controller
 
         $updatedPlanning = $planning->fresh();
         return response()->json(new \App\Http\Resources\Planning($updatedPlanning));
+    }
+
+    /**
+     * Inserts a new planning
+     */
+    public function store(Request $request): \Illuminate\Http\Response {
+        /** @var Planning $planning */
+        $planning = Planning::make([
+            'date' => new \DateTime($request->input('date')),
+            'description' => $request->input('description'),
+            'totalAmount' => $request->input('totalAmount'),
+        ]);
+
+        $planning->costCenter()->associate(CostCenter::find($request->input('costCenter')['id']));
+        $planning->period()->associate(Period::find($request->input('period')['id']));
+
+        $planning->save();
+        $planning->refresh();
+        return response(new \App\Http\Resources\Planning($planning));
     }
 
     /**

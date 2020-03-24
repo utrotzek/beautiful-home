@@ -36,6 +36,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Planning extends Model
 {
+    protected $fillable = [
+        'date',
+        'description',
+        'totalAmount'
+    ];
     protected $attributes = [
         'description' => '',
         'totalAmount' => 0.0

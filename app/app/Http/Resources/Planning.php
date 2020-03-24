@@ -20,6 +20,7 @@ class Planning extends JsonResource
             'totalAmount' => $this->totalAmount,
             'date' => $this->date,
             'costCenter' => new CostCenter($this->costCenter),
+            'period' => new Period($this->period),
             'display' => true,
             'editMode' => false,
             'isNew' => false,

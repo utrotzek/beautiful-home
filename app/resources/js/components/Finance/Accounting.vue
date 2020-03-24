@@ -304,20 +304,34 @@ export default {
         updateCostCenters(){
             this.fetchCostCenters();
         },
-        savePlanning(updatedPlanning) {
+        savePlanning(planning) {
             this.$refs.topProgress.start();
 
-            //axios will convert the date to UTC (which is wrong) so we have to contert the date
+            //axios will convert the date to UTC (which is wrong) so we have to convert the date
             //to string before transferring
-            updatedPlanning.date = moment(updatedPlanning.date).format("YYYY-MM-DD");
+            planning.date = moment(planning.date).format("YYYY-MM-DD");
 
-            window.axios.put("/api/finance/planning/" + updatedPlanning.id, updatedPlanning)
-                .then(res => {
-                    //refresh data from the backend
-                    updatedPlanning = res.data;
-                    this.$refs.topProgress.done();
-                    this.setPlanningById(updatedPlanning.id, updatedPlanning);
-                });
+            if (planning.isNew) {
+                const oldId = planning.id;
+                window.axios.post("/api/finance/planning", planning)
+                    .then(res => {
+                        //refresh data from the backend
+                        planning = res.data;
+                        this.$refs.topProgress.done();
+                        this.setPlanningById(planning.id, planning);
+
+                        this.planningData = this.removeFromArray(this.planningData, oldId);
+                        this.planningData.push(planning);
+                    });
+            }else{
+                window.axios.put("/api/finance/planning/" + planning.id, planning)
+                    .then(res => {
+                        //refresh data from the backend
+                        planning = res.data;
+                        this.$refs.topProgress.done();
+                        this.setPlanningById(planning.id, planning);
+                    });
+            }
         },
         deletePlanning(id){
             this.$refs.topProgress.start();
@@ -488,20 +502,41 @@ export default {
             this.accountingData.push(newAccountingElement);
         },
         createNewPlanning(){
-            let newPlanningElement = {
-                id: 9999,
-                costCenter: {
-                    id: 1,
-                    title: "Einkaufen"
-                },
-                description: "",
-                totalAmount: 0,
-                date: moment(this.year + "-" + this.month + "-1").toDate(),
-                display: true,
-                editMode:  true,
-                isNew: true,
-            };
-            this.planningData.push(newPlanningElement);
+            if (!this.hasUnsavedNew()) {
+                let newPlanningElement = {
+                    id: this.getUniquePlanningId(),
+                    costCenter: {
+                        id: 99999,
+                        title: "----------"
+                    },
+                    description: "",
+                    totalAmount: 0,
+                    date: moment(this.year + "-" + this.month + "-1").toDate(),
+                    display: true,
+                    editMode:  true,
+                    isNew: true,
+                    period: this.currentPeriod
+                };
+                this.planningData.push(newPlanningElement);
+            }
+        },
+        hasUnsavedNew() {
+            let i = 0;
+            for (i=0; i < this.planningData.length; i++){
+                if (this.planningData[i].isNew){
+                    return true;
+                }
+            }
+            return false;
+        },
+        getUniquePlanningId() {
+            let i = 0, maxId = 0;
+            for (i=0; i < this.planningData.length; i++){
+                if (this.planningData[i].id > maxId){
+                    maxId = this.planningData[i].id;
+                }
+            }
+            return maxId + 1;
         },
         connectPlanning(id, enabled) {
             this.createConnectionData.enabled = enabled;

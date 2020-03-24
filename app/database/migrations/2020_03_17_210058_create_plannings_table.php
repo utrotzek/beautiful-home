@@ -16,12 +16,12 @@ class CreatePlanningsTable extends Migration
         Schema::create('plannings', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->float('totalAmount');
             $table->date('date');
 
             //foreign keys
-            $table->unsignedInteger('cost_center_id');
+            $table->unsignedInteger('cost_center_id')->nullable();
             $table->unsignedInteger('period_id')->nullable();
             $table->unsignedInteger('template_id')->nullable();
         });
