@@ -16,21 +16,22 @@ class PeriodController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->has('year')){
+        if ($request->has('year')) {
             $year = (int)$request->input('year');
             $periods = Period::where('year', $year)->get();
-        }else{
+        } else {
             $periods = Period::all();
         }
 
-        if (count($periods) > 0){
+        if (count($periods) > 0) {
             return response(new PeriodCollection($periods));
-        }else{
+        } else {
             return response([], 404);
         }
     }
 
-    public function show($id){
+    public function show($id)
+    {
         return response(new PeriodResource(Period::find($id)));
     }
 

@@ -3,13 +3,13 @@
 
 namespace App\Utility;
 
-
 class MonthUtility
 {
     /**
      * Returns the list of months for a year
      */
-    public static function getMonthList(): array {
+    public static function getMonthList(): array
+    {
         return [
             1 => 'Januar',
             2 => 'Februar',

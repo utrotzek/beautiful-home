@@ -24,7 +24,8 @@ class Period extends JsonResource
         ];
     }
 
-    private function monthIdToName($number){
+    private function monthIdToName($number)
+    {
         $mapping = MonthUtility::getMonthList();
         return $mapping[$number];
     }

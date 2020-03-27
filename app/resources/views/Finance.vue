@@ -15,7 +15,10 @@
                 </div>
             </div>
             <!-- TODO make layout nicer -->
-            <div v-if="errorMessage" class="text-center">
+            <div
+                v-if="errorMessage"
+                class="text-center"
+            >
                 <div
                     class="alert alert-danger"
                     role="alert"
@@ -48,8 +51,8 @@
                         <a
                             v-if="nextMonth <= 12"
                             class="list-group-item list-group-item-action active"
-                            @click="createPeriod(nextMonth)"
                             href="#"
+                            @click="createPeriod(nextMonth)"
                         >
                             <span class="fa fa-plus-circle"></span>
                             {{ nextMonthName }}
@@ -74,8 +77,8 @@
                         <a
                             v-if="nextMonth <= 12"
                             class="list-group-item list-group-item-action active"
-                            @click="createPeriod(nextMonth)"
                             href="#"
+                            @click="createPeriod(nextMonth)"
                         >
                             <span class="fa fa-plus-circle"></span>
                             {{ nextMonthName }}
@@ -138,7 +141,7 @@ export default {
                 .then(res => {
                     this.$refs.topProgress.done();
                     this.$router.push({name: "accounting", params: {periodId: res.data.id}});
-                }).catch(err => {
+                }).catch(() => {
                     this.errorMessage = "Fehler beim speichern";
                     this.$refs.topProgress.done();
                 });
@@ -149,14 +152,14 @@ export default {
             await window.axios.get("/api/finance/period?year=" + this.year)
                 .then(res => {
                     this.periods = res.data;
-                }).catch(err => {
+                }).catch(() => {
                     this.periods = [];
                 });
 
             await window.axios.get("/api/months")
                 .then(res => {
                     this.allMonths = res.data;
-                }).catch(err => {
+                }).catch(() => {
                     this.allMonths = [];
                 });
             this.$refs.topProgress.done();

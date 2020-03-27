@@ -4,7 +4,7 @@
             <span class="label">Kontostand:</span>
             <span class="amount positive">{{ accountingSum | toCurrency }}</span>
         </div>
-        <hr >
+        <hr>
         <h3>Umsätze</h3>
         <table
             id="currentAmountTable"
@@ -23,25 +23,43 @@
                     <td class="font-weight-bold">
                         Aktuell
                     </td>
-                    <td class="text-right">{{ accountingIncome | toCurrency }}</td>
-                    <td class="text-right">{{ accountingOutgoings | toCurrency }}</td>
-                    <td class="text-right">{{ accountingSum | toCurrency }}</td>
+                    <td class="text-right">
+                        {{ accountingIncome | toCurrency }}
+                    </td>
+                    <td class="text-right">
+                        {{ accountingOutgoings | toCurrency }}
+                    </td>
+                    <td class="text-right">
+                        {{ accountingSum | toCurrency }}
+                    </td>
                 </tr>
                 <tr>
                     <td class="font-weight-bold">
                         Planung
                     </td>
-                    <td class="text-right">{{ planningIncome | toCurrency }}</td>
-                    <td class="text-right">{{ planningOutgoings | toCurrency }}</td>
-                    <td class="text-right">{{ planningSum | toCurrency }}</td>
+                    <td class="text-right">
+                        {{ planningIncome | toCurrency }}
+                    </td>
+                    <td class="text-right">
+                        {{ planningOutgoings | toCurrency }}
+                    </td>
+                    <td class="text-right">
+                        {{ planningSum | toCurrency }}
+                    </td>
                 </tr>
                 <tr>
                     <td class="font-weight-bold">
                         Gesamt
                     </td>
-                    <td class="text-right">{{ overallIncome | toCurrency }}</td>
-                    <td class="text-right">{{ overallOutgoings | toCurrency }}</td>
-                    <td class="text-right">{{ overallSum | toCurrency }}</td>
+                    <td class="text-right">
+                        {{ overallIncome | toCurrency }}
+                    </td>
+                    <td class="text-right">
+                        {{ overallOutgoings | toCurrency }}
+                    </td>
+                    <td class="text-right">
+                        {{ overallSum | toCurrency }}
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -54,7 +72,9 @@
             <thead>
                 <tr>
                     <th>Kostenstelle</th>
-                    <th class="text-right">Summe</th>
+                    <th class="text-right">
+                        Summe
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -63,7 +83,9 @@
                     :key="key"
                 >
                     <td>{{ item.title }}</td>
-                    <td class="text-right">{{ item.amount | toCurrency }}</td>
+                    <td class="text-right">
+                        {{ item.amount | toCurrency }}
+                    </td>
                 </tr>
             </tbody>
         </table>

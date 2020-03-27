@@ -11,14 +11,14 @@ use App\Http\Controllers\Controller;
 
 class PlanningController extends Controller
 {
-
-    public function forPeriod($periodId){
-
+    public function forPeriod($periodId)
+    {
         $plannings = Planning::where('period_id', '=', (int)$periodId)->get();
         return response(new PlanningCollection($plannings));
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         return response()->json(new \App\Http\Resources\Planning(Planning::find($id)));
     }
 
@@ -41,7 +41,8 @@ class PlanningController extends Controller
     /**
      * Inserts a new planning
      */
-    public function store(Request $request): \Illuminate\Http\Response {
+    public function store(Request $request): \Illuminate\Http\Response
+    {
         /** @var Planning $planning */
         $planning = Planning::make([
             'date' => new \DateTime($request->input('date')),

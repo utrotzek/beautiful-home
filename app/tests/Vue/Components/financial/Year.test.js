@@ -1,9 +1,9 @@
 import { mount } from "@vue/test-utils";
-import year from "../../../../resources/js/components/financial/year";
+import year from "../../../../resources/js/components/Finance/Year.vue";
 
 describe("year", () => {
     let wrapper = null;
-    
+
     beforeEach(() => {
         wrapper = mount(
             year,
@@ -14,7 +14,7 @@ describe("year", () => {
             }
         );
     });
-    
+
     it("can display the default year", () => {
         expect(wrapper.find(".year-label").text()).toEqual("2019");
     });
@@ -31,7 +31,7 @@ describe("year", () => {
         expect(wrapper.emitted("update-year")[3]).toEqual([2019]);
 
     });
-    
+
     function expectUpdatedValue(value){
     }
 });
