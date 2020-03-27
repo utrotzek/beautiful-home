@@ -30,11 +30,11 @@ class CostCenterAccounting extends Model
 {
     public function accounting()
     {
-        $this->belongsTo('App\Finance\Accounting');
+        return $this->belongsTo('App\Finance\Accounting');
     }
 
     public function costCenter()
     {
-        $this->belongsTo('App\Finance\CostCenter');
+        return $this->belongsTo('App\Finance\CostCenter');
     }
 }

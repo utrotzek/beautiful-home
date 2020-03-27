@@ -24,6 +24,9 @@ $factory->afterCreatingState(\App\Finance\Accounting::class, 'income', function 
             'cost_center_id' => \App\Finance\CostCenter::find(1)
         ])
     );
+
+    $accounting->remainingAmount = 0;
+    $accounting->save();
 });
 
 $factory->state(\App\Finance\Accounting::class, 'outgoing', function (Faker $faker) {
@@ -41,6 +44,9 @@ $factory->afterCreatingState(\App\Finance\Accounting::class, 'outgoing', functio
             'cost_center_id' => \App\Finance\CostCenter::find($faker->randomElement([2,3,4]))
         ])
     );
+
+    $accounting->remainingAmount = 0;
+    $accounting->save();
 });
 
 $factory->state(\App\Finance\Accounting::class, 'outgoingWithoutCostCenters', function (Faker $faker) {

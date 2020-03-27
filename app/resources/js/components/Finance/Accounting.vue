@@ -150,111 +150,7 @@ export default {
                 planningData: null
             },
             costCenterData: [],
-            accountingData: [
-                {
-                    id: 1,
-                    title: "Westdeutsche Lotterie GmbH & Co. OHG westlotto.de",
-                    totalAmount: -100,
-                    remainingAmount: 0,
-                    date: moment("2019-10-3").toDate(),
-                    display: true,
-                    isNew: false,
-                    editMode: false,
-                    connectedPlanning: [
-                        {
-                            id: 10,
-                            totalAmount: -100,
-                            costCenter: {
-                                id:  6,
-                                title: "Lotto"
-                            },
-                            description: "Regeömäßiger Spielschein",
-                            display: true,
-                            editMode:  false
-                        },
-                    ],
-                },
-                {
-                    id: 2,
-                    title: "REWE SAGT DANKE. 43400225//Muenster-Centrum/DE",
-                    totalAmount: -400.96,
-                    remainingAmount: -100,
-                    date: moment("2019-10-30").toDate(),
-                    display: true,
-                    isNew: false,
-                    editMode: false,
-                    connectedPlanning: [
-                        {
-                            id: 20,
-                            totalAmount: -300.96,
-                            costCenter: {
-                                id:  7,
-                                title: "Lebensmittel"
-                            },
-                            description: "",
-                            display: true,
-                            editMode:  false
-                        },
-                    ],
-                },
-                {
-                    id: 3,
-                    title: "Stadt Münster Stadtkasse",
-                    totalAmount: 3000,
-                    remainingAmount: 0,
-                    date: moment("2019-10-30").toDate(),
-                    display: true,
-                    isNew: false,
-                    editMode: false,
-                    connectedPlanning: [
-                        {
-                            id: 30,
-                            totalAmount: 2000,
-                            costCenter: {
-                                id:  2,
-                                title: "Gehalt"
-                            },
-                            description: "Uwe",
-                            display: true,
-                            editMode:  false
-                        },
-                        {
-                            id: 31,
-                            totalAmount: 1000,
-                            costCenter: {
-                                id:  8,
-                                title: "Weihnachtsgeld"
-                            },
-                            description: "Diesmal etwas weniger",
-                            display: true,
-                            editMode:  false
-                        }
-                    ],
-                },
-                {
-                    id: 4,
-                    title: "Scheffer und Loederbusch//Muenster/DE",
-                    totalAmount: -399.94,
-                    remainingAmount: -299.94,
-                    date: moment("2019-10-26").toDate(),
-                    display: true,
-                    isNew: false,
-                    editMode: false,
-                    connectedPlanning: [
-                        {
-                            id: 40,
-                            totalAmount: -100,
-                            costCenter:  {
-                                id: 5,
-                                title: "Elektronik"
-                            },
-                            description: "this is my descipriotn",
-                            display: true,
-                            editMode:  false
-                        }
-                    ],
-                }
-            ],
+            accountingData: [],
             planningData: [ ],
         };
     },
@@ -285,9 +181,15 @@ export default {
                     this.planningData = res.data;
                 });
 
+            const accountingsPromise = window.axios.get("/api/finance/accountings/forPeriod/" + this.periodId)
+                .then(res => {
+                    this.accountingData = res.data;
+                });
+
             const costCenterPromise = this.fetchCostCenters();
 
             await periodsPromise;
+            await accountingsPromise;
             await planningsPromise;
             await costCenterPromise;
 
@@ -494,7 +396,7 @@ export default {
 
         createNewAccounting() {
             let newAccountingElement = {
-                id: 100,
+                id: 9999999,
                 title: "",
                 totalAmount: 0,
                 remainingAmount: 0,
