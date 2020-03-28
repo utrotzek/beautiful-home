@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Finance;
 
 use App\Finance\Accounting;
+use App\Http\Resources\Finance\AccountingResource;
 use App\Http\Resources\Finance\AccountingResourceCollection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,6 +23,7 @@ class AccountingController extends Controller
      */
     public function index()
     {
+        return response(new AccountingResourceCollection(Accounting::all()));
     }
 
     /**
@@ -87,6 +89,6 @@ class AccountingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Accounting::find($id)->delete();
     }
 }

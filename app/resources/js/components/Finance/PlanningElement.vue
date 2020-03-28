@@ -156,7 +156,7 @@ export default {
         },
         costCenterData: {
             type: Array,
-            required: true,
+            required: false,
             default() {
                 return [];
             }

@@ -80,6 +80,7 @@
                         @doAccountingPlanningConnection="doAccountingPlanningConnection"
                         @deleteConnection="deleteConnection"
                         @updateConnectedPlanning="updateConnectedPlanning"
+                        @deleteAccounting="deleteAccounting"
                     />
                 </div>
 
@@ -357,9 +358,14 @@ export default {
             }
         },
         deleteAccounting(accountingDataToDelete) {
-            this.accountingData.splice(this.accountingData.findIndex(function(i){
-                return i.id === accountingDataToDelete.id;
-            }), 1);
+            this.$refs.topProgress.start();
+            window.axios.delete("/api/finance/accounting/" + accountingDataToDelete.id)
+                .then(() => {
+                    this.accountingData.splice(this.accountingData.findIndex(function(i){
+                        return i.id === accountingDataToDelete.id;
+                    }), 1);
+                    this.$refs.topProgress.done();
+                });
         },
         getPlanningById(id){
             let i=0;
