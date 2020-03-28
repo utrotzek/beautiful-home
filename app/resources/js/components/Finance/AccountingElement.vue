@@ -146,33 +146,7 @@ export default {
             type: Object,
             require: true,
             default() {
-                return {
-                    id: 1,
-                    title: "Westdeutsche Lotterie GmbH & Co. OHG westlotto.de",
-                    totalAmount: -100,
-                    remainingAmount: 0,
-                    date: "12.10.2019",
-                    display: true,
-                    editMode: false,
-                    connectedPlanning: [
-                        {
-                            id: 1,
-                            totalAmount: -1,
-                            title: "Einkaufen",
-                            description: "this is my descipriotn",
-                            display: true,
-                            editMode:  false
-                        },
-                        {
-                            id: 2,
-                            totalAmount: -99,
-                            title: "Amazon",
-                            description: "Weil das so ist",
-                            display: true,
-                            editMode:  false
-                        }
-                    ],
-                };
+                return null;
             }
         }
     },

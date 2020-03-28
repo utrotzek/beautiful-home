@@ -59,26 +59,19 @@ class AccountingController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Accounting $accounting)
     {
-        //
+        $accounting->title = $request->input('title');
+        $accounting->updateAmount($request->input('totalAmount'));
+        $accounting->date = new \DateTime($request->input('date'));
+        $accounting->save();
+        return response(new AccountingResource($accounting->refresh()));
     }
 
     /**

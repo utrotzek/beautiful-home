@@ -63,6 +63,7 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "cs-fixer": "bin/php-cs-fixer fix ./app"
+        "cs-fixer": "bin/php-cs-fixer fix ./app",
+        "phpunit": "bin/phpunit"
     }
 }

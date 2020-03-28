@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class CostCenterAccounting extends Model
 {
+    protected $fillable = ['totalAmount'];
     public function accounting()
     {
         return $this->belongsTo('App\Finance\Accounting');

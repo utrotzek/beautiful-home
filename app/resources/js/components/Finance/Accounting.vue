@@ -76,7 +76,7 @@
                         :period="currentPeriod"
                         :create-connection-data="createConnectionData"
                         @createNewAccounting="createNewAccounting"
-                        @updateAccounting="updateAccounting"
+                        @updateAccounting="saveAccounting"
                         @doAccountingPlanningConnection="doAccountingPlanningConnection"
                         @deleteConnection="deleteConnection"
                         @updateConnectedPlanning="updateConnectedPlanning"
@@ -207,6 +207,27 @@ export default {
         updateCostCenters(){
             this.fetchCostCenters();
         },
+        saveAccounting(updatedAccounting) {
+            this.$refs.topProgress.start();
+
+            //axios will convert the date to UTC (which is wrong) so we have to convert the date
+            //to string before transferring
+            updatedAccounting.date = moment(updatedAccounting.date).format("YYYY-MM-DD");
+
+            if (updatedAccounting.isNew) {
+                //do something
+                // eslint-disable-next-line no-unused-vars
+                let i = 0;
+                i++;
+            }else{
+                window.axios.put("/api/finance/accounting/" + updatedAccounting.id, updatedAccounting)
+                    .then(res => {
+                        updatedAccounting.remainingAmount = res.data.remainingAmount;
+                        this.$refs.topProgress.done();
+                    });
+            }
+        },
+
         savePlanning(planning) {
             this.$refs.topProgress.start();
 
@@ -347,25 +368,18 @@ export default {
             }
             accounting.remainingAmount = remainingAmount;
         },
-        updateAccounting(updatedAccounting) {
-            let i=0;
-
-            this.updateRemainingAmount(updatedAccounting);
-            for(i=0; i < this.accountingData.length;i++){
-                if (updatedAccounting.id === this.accountingData[i].id)  {
-                    this.accountingData[i] = updatedAccounting;
-                }
-            }
-        },
         deleteAccounting(accountingDataToDelete) {
             this.$refs.topProgress.start();
             window.axios.delete("/api/finance/accounting/" + accountingDataToDelete.id)
                 .then(() => {
-                    this.accountingData.splice(this.accountingData.findIndex(function(i){
-                        return i.id === accountingDataToDelete.id;
-                    }), 1);
+                    this.removeItemFromArray(this.accountingData, accountingDataToDelete.id);
                     this.$refs.topProgress.done();
                 });
+        },
+        removeItemFromArray(array, id){
+            array.splice(array.findIndex(function(i){
+                return i.id === id;
+            }), 1);
         },
         getPlanningById(id){
             let i=0;

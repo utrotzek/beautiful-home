@@ -19,8 +19,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $remainingAmount
  * @property string $date
  * @property int $period_id
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Finance\CostCenterAccounting[] $costCenterAccounting
- * @property-read \App\Finance\Period $period
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Accounting whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Accounting whereDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Accounting whereId($value)
@@ -32,6 +30,22 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Accounting extends Model
 {
+    protected $fillable =  [
+        'totalAmount',
+        'remainingAmount'
+    ];
+
+    public function updateAmount($newTotalAmount){
+        $remainingAmount = $newTotalAmount;
+        $this->totalAmount = $newTotalAmount;
+
+        //recalculate the remaining amount depending on the connected costCenterAccountings
+        foreach ($this->costCenterAccounting as $costCenterAccounting){
+            $remainingAmount = $remainingAmount - $costCenterAccounting->totalAmount;
+        }
+        $this->remainingAmount = $remainingAmount;
+    }
+
     public function costCenterAccounting()
     {
         return $this->hasMany('App\Finance\CostCenterAccounting');
