@@ -5,7 +5,7 @@ namespace App\Finance;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Finance\CostCenterAccounting
+ * App\Finance\CostCenterAccountingResource
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\CostCenterAccounting newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\CostCenterAccounting newQuery()

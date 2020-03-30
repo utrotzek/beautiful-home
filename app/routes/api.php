@@ -36,7 +36,10 @@ Route::namespace('Finance')->group(function(){
 
         Route::apiResource('accounting', "AccountingController");
         Route::get('/accountings/forPeriod/{id}', ['uses' => 'AccountingController@forPeriod'] );
+
         Route::apiResource('planning', "PlanningController");
         Route::get('/plannings/forPeriod/{id}', ['uses' => 'PlanningController@forPeriod'] );
+
+        Route::apiResource('costCenterAccounting', 'CostCenterAccountingController');
     });
 });

@@ -242,18 +242,13 @@ export default {
                         //refresh data from the backend
                         planning = res.data;
                         this.$refs.topProgress.done();
-                        this.setPlanningById(planning.id, planning);
-
                         this.planningData = this.removeFromArray(this.planningData, oldId);
                         this.planningData.push(planning);
                     });
             }else{
                 window.axios.put("/api/finance/planning/" + planning.id, planning)
-                    .then(res => {
-                        //refresh data from the backend
-                        planning = res.data;
+                    .then(() => {
                         this.$refs.topProgress.done();
-                        this.setPlanningById(planning.id, planning);
                     });
             }
         },
@@ -323,13 +318,27 @@ export default {
         doAccountingPlanningConnection(planning, accounting, desiredAmount){
             let planningElement = planning;
             let accountingElement = accounting;
-            let clonedPlanning = JSON.parse(JSON.stringify(planningElement));
 
-            clonedPlanning.totalAmount = desiredAmount;
-            accountingElement.connectedPlanning.push(clonedPlanning);
-            this.updateRemainingAmount(accountingElement);
+            const dataToStore = {
+                accountingId: accountingElement.id,
+                costCenterId: planningElement.costCenter.id,
+                totalAmount: desiredAmount,
+                description: planning.description
+            };
 
-            let planningNegative  = planningElement.totalAmount < 0;
+            window.axios.post("/api/finance/costCenterAccounting", dataToStore)
+                .then(res =>{
+                    const costCenterAccounting = res.data;
+                    accountingElement.connectedPlanning.push(costCenterAccounting);
+                    this.saveAccounting(accountingElement);
+                    planningElement = this.updatePlanningTotalAmount(planningElement, desiredAmount);
+                    this.savePlanning(planningElement);
+                    this.deactivateConnectionMode();
+                })
+            ;
+        },
+        updatePlanningTotalAmount(planningElement, desiredAmount){
+            let planningNegative  = planningElement.totalAmount <= 0;
             planningElement.totalAmount = planningElement.totalAmount - desiredAmount;
 
             if (planningNegative && planningElement.totalAmount >= 0) {
@@ -337,9 +346,7 @@ export default {
             }else if (!planningNegative && planningElement.totalAmount <= 0){
                 planningElement.totalAmount = 0;
             }
-
-            this.savePlanning(planningElement);
-            this.deactivateConnectionMode();
+            return planningElement;
         },
         deactivateConnectionMode(){
             this.createConnectionData.enabled = false;
