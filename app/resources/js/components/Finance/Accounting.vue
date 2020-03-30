@@ -132,6 +132,7 @@ export default {
     },
     data: function(){
         return {
+            progressBarCount: 0,
             currentPeriod: null,
             headline: "",
             year: 2019,
@@ -166,7 +167,7 @@ export default {
     },
     methods: {
         async loadData () {
-            this.$refs.topProgress.start();
+            this.startProgressBar();
             this.loaded = false;
             const periodsPromise = window.axios.get("/api/finance/period/" + this.periodId)
                 .then(res => {
@@ -194,7 +195,7 @@ export default {
             await planningsPromise;
             await costCenterPromise;
 
-            this.$refs.topProgress.done();
+            this.stopProgressBar();
             this.loaded = true;
             this.triggerResize();
         },
@@ -204,11 +205,25 @@ export default {
                     this.costCenterData = res.data;
                 });
         },
+        startProgressBar() {
+            if (this.progressBarCount === 0){
+                this.$refs.topProgress.start();
+            }
+            this.progressBarCount++;
+        },
+        stopProgressBar() {
+            if (this.progressBarCount > 0){
+                this.progressBarCount--;
+                if (this.progressBarCount === 0){
+                    this.$refs.topProgress.done();
+                }
+            }
+        },
         updateCostCenters(){
             this.fetchCostCenters();
         },
         saveAccounting(updatedAccounting) {
-            this.$refs.topProgress.start();
+            this.startProgressBar();
 
             //axios will convert the date to UTC (which is wrong) so we have to convert the date
             //to string before transferring
@@ -223,13 +238,13 @@ export default {
                 window.axios.put("/api/finance/accounting/" + updatedAccounting.id, updatedAccounting)
                     .then(res => {
                         updatedAccounting.remainingAmount = res.data.remainingAmount;
-                        this.$refs.topProgress.done();
+                        this.stopProgressBar();
                     });
             }
         },
 
         savePlanning(planning) {
-            this.$refs.topProgress.start();
+            this.startProgressBar();
 
             //axios will convert the date to UTC (which is wrong) so we have to convert the date
             //to string before transferring
@@ -241,14 +256,14 @@ export default {
                     .then(res => {
                         //refresh data from the backend
                         planning = res.data;
-                        this.$refs.topProgress.done();
+                        this.stopProgressBar();
                         this.planningData = this.removeFromArray(this.planningData, oldId);
                         this.planningData.push(planning);
                     });
             }else{
                 window.axios.put("/api/finance/planning/" + planning.id, planning)
                     .then(() => {
-                        this.$refs.topProgress.done();
+                        this.stopProgressBar();
                     });
             }
         },
@@ -257,11 +272,11 @@ export default {
             if (planningToDelete.isNew){
                 this.planningData = this.removeFromArray(this.planningData, planningToDelete.id);
             }else{
-                this.$refs.topProgress.start();
+                this.startProgressBar();
 
                 window.axios.delete("/api/finance/planning/" + planningToDelete.id)
                     .then(() => {
-                        this.$refs.topProgress.done();
+                        this.stopProgressBar();
                         this.planningData = this.removeFromArray(this.planningData, planningToDelete.id);
                     });
             }
@@ -376,11 +391,11 @@ export default {
             accounting.remainingAmount = remainingAmount;
         },
         deleteAccounting(accountingDataToDelete) {
-            this.$refs.topProgress.start();
+            this.startProgressBar();
             window.axios.delete("/api/finance/accounting/" + accountingDataToDelete.id)
                 .then(() => {
                     this.removeItemFromArray(this.accountingData, accountingDataToDelete.id);
-                    this.$refs.topProgress.done();
+                    this.stopProgressBar();
                 });
         },
         removeItemFromArray(array, id){
