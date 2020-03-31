@@ -315,22 +315,6 @@ export default {
                     this.stopProgressBar();
                 })
             ;
-
-            // for (i = 0; i < this.accountingData.length; i++){
-            //     if (this.accountingData[i].id === accountId){
-            //         let elementToDelete = this.getArrayElementById(
-            //                 connectedElementToRemove,
-            //                 this.accountingData[i].connectedPlanning
-            //             ),
-            //             accountingElement = this.accountingData[i]
-            //         ;
-            //
-            //         accountingElement.connectedPlanning = this.removeFromArray(
-            //             accountingElement.connectedPlanning, elementToDelete.id
-            //         );
-            //         this.updateRemainingAmount(accountingElement);
-            //     }
-            // }
         },
 
         handleResize() {
@@ -391,17 +375,6 @@ export default {
                     this.saveAccounting(accounting);
                 })
             ;
-
-            // let accounting = this.getAccountingById(accountingId);
-            // let i=0;
-            //
-            // for (i=0; i < accounting.connectedPlanning.length;i++){
-            //     if (accounting.connectedPlanning.id === updatedPlanningItem.id){
-            //         accounting.connectedPlanning = updatedPlanningItem;
-            //     }
-            // }
-            // this.updateRemainingAmount(accounting);
-            // this.setAccountingById(accountingId, accounting);
         },
         updateRemainingAmount(accounting) {
             let i=0;
