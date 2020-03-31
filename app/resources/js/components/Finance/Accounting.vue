@@ -238,6 +238,7 @@ export default {
                 window.axios.put("/api/finance/accounting/" + updatedAccounting.id, updatedAccounting)
                     .then(res => {
                         updatedAccounting.remainingAmount = res.data.remainingAmount;
+                        updatedAccounting.connectedPlanning = res.data.connectedPlanning;
                         this.stopProgressBar();
                     });
             }
@@ -305,23 +306,31 @@ export default {
                 }
             }
         },
-        deleteConnection(accountId, connectedElementToRemove){
-            let i = 0;
-            for (i = 0; i < this.accountingData.length; i++){
-                if (this.accountingData[i].id === accountId){
-                    let elementToDelete = this.getArrayElementById(
-                            connectedElementToRemove,
-                            this.accountingData[i].connectedPlanning
-                        ),
-                        accountingElement = this.accountingData[i]
-                    ;
+        deleteConnection(accountId, costCenterAccountingToRemove){
+            this.startProgressBar();
+            window.axios.delete("/api/finance/costCenterAccounting/" + costCenterAccountingToRemove.id)
+                .then(() =>{
+                    const accounting = this.getAccountingById(accountId);
+                    this.saveAccounting(accounting);
+                    this.stopProgressBar();
+                })
+            ;
 
-                    accountingElement.connectedPlanning = this.removeFromArray(
-                        accountingElement.connectedPlanning, elementToDelete.id
-                    );
-                    this.updateRemainingAmount(accountingElement);
-                }
-            }
+            // for (i = 0; i < this.accountingData.length; i++){
+            //     if (this.accountingData[i].id === accountId){
+            //         let elementToDelete = this.getArrayElementById(
+            //                 connectedElementToRemove,
+            //                 this.accountingData[i].connectedPlanning
+            //             ),
+            //             accountingElement = this.accountingData[i]
+            //         ;
+            //
+            //         accountingElement.connectedPlanning = this.removeFromArray(
+            //             accountingElement.connectedPlanning, elementToDelete.id
+            //         );
+            //         this.updateRemainingAmount(accountingElement);
+            //     }
+            // }
         },
 
         handleResize() {

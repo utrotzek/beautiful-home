@@ -194,7 +194,7 @@ export default {
             });
         },
         deletePlanning(id) {
-            this.$emit("deleteConnection", this.localAccountingData.id, id);
+            this.$emit("deleteConnection", this.localAccountingData.id, this.getPlanningById(id));
         },
         editPlanning(id, enabled) {
             this.getPlanningById(id).editMode = enabled;
