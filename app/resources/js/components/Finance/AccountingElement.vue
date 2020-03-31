@@ -54,7 +54,7 @@
                     class="remaining-amount col-3"
                     :class="classObject"
                 >
-                    <span v-if="!showCheck && !localAccountingData.editMode">{{ localAccountingData.remainingAmount }} €</span>
+                    <span v-if="!showCheck && !localAccountingData.editMode">{{ localAccountingData.remainingAmount | toCurrency }} €</span>
                     <input
                         v-else-if="localAccountingData.editMode"
                         v-model="localAccountingData.totalAmount"
