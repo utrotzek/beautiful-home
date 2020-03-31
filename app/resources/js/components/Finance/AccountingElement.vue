@@ -153,7 +153,7 @@ export default {
     data() {
         return {
             localAccountingData: this.accountingData,
-            originalAccountingData: _.clone(this.accountingData),
+            originalAccountingData: null,
             date: this.accountingData.date,
             vCalendarAttributes: [
                 {
@@ -180,6 +180,9 @@ export default {
         endDate() {
             return moment(this.year + "-" + this.month + "-1").endOf("month").toDate();
         }
+    },
+    mounted(){
+        this.originalAccountingData =  _.clone(this.accountingData);
     },
     methods: {
         startEditing(){
@@ -226,7 +229,6 @@ export default {
         cancel(){
             this.localAccountingData.title = this.originalAccountingData.title;
             this.localAccountingData.totalAmount = this.originalAccountingData.totalAmount;
-            this.localAccountingData.remainingAmount = this.originalAccountingData.remainingAmount;
             this.localAccountingData.date = this.originalAccountingData.date;
             this.localAccountingData.editMode = false;
         },
