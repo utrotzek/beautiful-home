@@ -79,9 +79,18 @@ class CostCenterAccountingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, CostCenterAccounting $costCenterAccounting)
     {
-        //
+        $costCenterAccounting->totalAmount = $request->input('totalAmount');
+        $costCenterAccounting->description = $request->input('description');
+        $costCenterAccounting->costCenter()->associate(
+            CostCenter::find($request->input('costCenterId'))
+        );
+
+        $costCenterAccounting->accounting()->associate(
+            Accounting::find($request->input('accountingId'))
+        );
+        $costCenterAccounting->save();
     }
 
     /**

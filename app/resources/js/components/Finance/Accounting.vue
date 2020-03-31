@@ -377,17 +377,31 @@ export default {
             this.createConnectionData.planningId = 0;
             this.createConnectionData.accountingId = 0;
         },
-        updateConnectedPlanning(updatedPlanningItem, accountingId){
-            let accounting = this.getAccountingById(accountingId);
-            let i=0;
+        updateConnectedPlanning(updatedCostCenterItem, accountingId){
+            const accounting = this.getAccountingById(accountingId);
+            const dataToStore = {
+                accountingId: accountingId,
+                costCenterId: updatedCostCenterItem.costCenter.id,
+                totalAmount: updatedCostCenterItem.totalAmount,
+                description: updatedCostCenterItem.description
+            };
 
-            for (i=0; i < accounting.connectedPlanning.length;i++){
-                if (accounting.connectedPlanning.id === updatedPlanningItem.id){
-                    accounting.connectedPlanning = updatedPlanningItem;
-                }
-            }
-            this.updateRemainingAmount(accounting);
-            this.setAccountingById(accountingId, accounting);
+            window.axios.put("/api/finance/costCenterAccounting/" + updatedCostCenterItem.id, dataToStore)
+                .then(() =>{
+                    this.saveAccounting(accounting);
+                })
+            ;
+
+            // let accounting = this.getAccountingById(accountingId);
+            // let i=0;
+            //
+            // for (i=0; i < accounting.connectedPlanning.length;i++){
+            //     if (accounting.connectedPlanning.id === updatedPlanningItem.id){
+            //         accounting.connectedPlanning = updatedPlanningItem;
+            //     }
+            // }
+            // this.updateRemainingAmount(accounting);
+            // this.setAccountingById(accountingId, accounting);
         },
         updateRemainingAmount(accounting) {
             let i=0;
