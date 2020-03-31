@@ -12,10 +12,10 @@
         >
             <thead>
                 <tr>
-                    <th></th>
-                    <th>Einnahmen</th>
-                    <th>Ausgaben</th>
-                    <th>Summe</th>
+                    <th class="text-right"></th>
+                    <th class="text-right">Einnahmen</th>
+                    <th class="text-right">Ausgaben</th>
+                    <th class="text-right">Summe</th>
                 </tr>
             </thead>
             <tbody>
@@ -64,31 +64,59 @@
             </tbody>
         </table>
 
-        <h3>Kostenstellen</h3>
-        <table
-            id="expensiveCostCenter"
-            class="table table-sm"
-        >
-            <thead>
-                <tr>
-                    <th>Kostenstelle</th>
-                    <th class="text-right">
-                        Summe
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr
-                    v-for="(item, key) in topCostCenter"
-                    :key="key"
-                >
-                    <td>{{ item.title }}</td>
-                    <td class="text-right">
-                        {{ item.amount | toCurrency }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div id="top-outgoing" v-if="topOutgoingCostCenter.length > 0">
+            <h3>Top Ausgaben</h3>
+            <table
+                class="table table-sm"
+            >
+                <thead>
+                    <tr>
+                        <th>Kostenstelle</th>
+                        <th class="text-right">
+                            Summe
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        v-for="(item, key) in topOutgoingCostCenter"
+                        :key="key"
+                    >
+                        <td>{{ item.title }}</td>
+                        <td class="text-right">
+                            {{ item.amount | toCurrency }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="top-income" v-if="topIncomeCostCenter.length > 0">
+            <h3>Top Einnahmen</h3>
+            <table
+                class="table table-sm"
+            >
+                <thead>
+                    <tr>
+                        <th>Kostenstelle</th>
+                        <th class="text-right">
+                            Summe
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        v-for="(item, key) in topIncomeCostCenter"
+                        :key="key"
+                    >
+                        <td>{{ item.title }}</td>
+                        <td class="text-right">
+                            {{ item.amount | toCurrency }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </template>
 
@@ -206,6 +234,14 @@ export default {
         overallSum() {
             return parseFloat(this.accountingSum) + parseFloat(this.planningSum);
         },
+        topIncomeCostCenter() {
+            return this.topCostCenter().filter(item => {return item.amount > 0; });
+        },
+        topOutgoingCostCenter() {
+            return this.topCostCenter().filter(item => {return item.amount < 0; });
+        },
+    },
+    methods: {
         topCostCenter() {
             let accIndex = 0;
             let topCostCenters = [];
