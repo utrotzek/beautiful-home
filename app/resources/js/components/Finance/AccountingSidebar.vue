@@ -51,22 +51,44 @@
         </div>
 
         <div
-            v-for="(item) in filteredAccounting"
-            :key="item.id"
+            v-if="filteredAccounting.length > 0"
+            class="accounting-elements"
         >
-            <AccountingElement
-                :accounting-data="item"
-                :show-connect-target="accountingConnectable(item.id)"
-                :class="accountingClass(item.id)"
-                :year="period.year"
-                :month="period.month"
-                @updateData="updateAccounting"
-                @deleteAccounting="deleteAccounting"
-                @doConnection="doShowConnectionModal"
-                @deleteConnection="deleteConnection"
-                @updateConnectedPlanning="updateConnectedPlanning"
-            />
+            <div
+                v-for="(item) in filteredAccounting"
+                :key="item.id"
+            >
+                <AccountingElement
+                    :accounting-data="item"
+                    :show-connect-target="accountingConnectable(item.id)"
+                    :class="accountingClass(item.id)"
+                    :year="period.year"
+                    :month="period.month"
+                    @updateData="updateAccounting"
+                    @deleteAccounting="deleteAccounting"
+                    @doConnection="doShowConnectionModal"
+                    @deleteConnection="deleteConnection"
+                    @updateConnectedPlanning="updateConnectedPlanning"
+                />
+            </div>
         </div>
+        <div v-else-if="searchQuery.length > 0">
+            <div
+                class="alert alert-light"
+                role="alert"
+            >
+                Für den eingegebenen Suchbegriff wurden keine Einträge gefunden.
+            </div>
+        </div>
+        <div v-else>
+            <div
+                class="alert alert-info"
+                role="alert"
+            >
+                Keine Umsätze vorhanden
+            </div>
+        </div>
+
     </div>
 </template>
 
