@@ -394,12 +394,16 @@ export default {
             accounting.remainingAmount = remainingAmount;
         },
         deleteAccounting(accountingDataToDelete) {
-            this.startProgressBar();
-            window.axios.delete("/api/finance/accounting/" + accountingDataToDelete.id)
-                .then(() => {
-                    this.removeItemFromArray(this.accountingData, accountingDataToDelete.id);
-                    this.stopProgressBar();
-                });
+            if (!accountingDataToDelete.isNew){
+                this.startProgressBar();
+                window.axios.delete("/api/finance/accounting/" + accountingDataToDelete.id)
+                    .then(() => {
+                        this.removeItemFromArray(this.accountingData, accountingDataToDelete.id);
+                        this.stopProgressBar();
+                    });
+            }else{
+                this.removeItemFromArray(this.accountingData, accountingDataToDelete.id);
+            }
         },
         removeItemFromArray(array, id){
             array.splice(array.findIndex(function(i){
@@ -440,22 +444,24 @@ export default {
         },
 
         createNewAccounting() {
-            let newAccountingElement = {
-                id: 9999999,
-                title: "",
-                totalAmount: "",
-                remainingAmount: -20,
-                date: moment(this.year + "-" + this.month + "-1").toDate(),
-                display: true,
-                isNew: true,
-                editMode: true,
-                connectedPlanning: [],
-                period: this.currentPeriod
-            };
-            this.accountingData.push(newAccountingElement);
+            if (!this.hasUnsavedNewAccountings()){
+                let newAccountingElement = {
+                    id: 9999999,
+                    title: "",
+                    totalAmount: "",
+                    remainingAmount: -20,
+                    date: moment(this.year + "-" + this.month + "-1").toDate(),
+                    display: true,
+                    isNew: true,
+                    editMode: true,
+                    connectedPlanning: [],
+                    period: this.currentPeriod
+                };
+                this.accountingData.push(newAccountingElement);
+            }
         },
         createNewPlanning(){
-            if (!this.hasUnsavedNew()) {
+            if (!this.hasUnsavedNewPlannings()) {
                 let newPlanningElement = {
                     id: this.getUniquePlanningId(),
                     costCenter: {
@@ -473,10 +479,19 @@ export default {
                 this.planningData.push(newPlanningElement);
             }
         },
-        hasUnsavedNew() {
+        hasUnsavedNewPlannings() {
             let i = 0;
             for (i=0; i < this.planningData.length; i++){
                 if (this.planningData[i].isNew){
+                    return true;
+                }
+            }
+            return false;
+        },
+        hasUnsavedNewAccountings() {
+            let i = 0;
+            for (i=0; i < this.accountingData.length; i++){
+                if (this.accountingData[i].isNew){
                     return true;
                 }
             }

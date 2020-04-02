@@ -244,7 +244,7 @@ export default {
         doAccountingPlanningConnection(planning, accounting, desiredAmount){
             this.showModal = false;
             this.$emit("doAccountingPlanningConnection", planning, accounting, desiredAmount);
-        }
+        },
     }
 };
 </script>

@@ -242,10 +242,14 @@ export default {
             this.$emit("deleteAccounting", this.localAccountingData);
         },
         cancel(){
-            this.localAccountingData.title = this.originalAccountingData.title;
-            this.localAccountingData.totalAmount = this.originalAccountingData.totalAmount;
-            this.localAccountingData.date = this.originalAccountingData.date;
-            this.localAccountingData.editMode = false;
+            if (!this.localAccountingData.isNew){
+                this.localAccountingData.title = this.originalAccountingData.title;
+                this.localAccountingData.totalAmount = this.originalAccountingData.totalAmount;
+                this.localAccountingData.date = this.originalAccountingData.date;
+                this.localAccountingData.editMode = false;
+            }else {
+                this.deleteAccounting();
+            }
         },
         save(){
             this.localAccountingData.date = this.date;
