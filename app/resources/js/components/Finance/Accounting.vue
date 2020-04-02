@@ -443,7 +443,7 @@ export default {
             let newAccountingElement = {
                 id: 9999999,
                 title: "",
-                totalAmount: 0,
+                totalAmount: "",
                 remainingAmount: -20,
                 date: moment(this.year + "-" + this.month + "-1").toDate(),
                 display: true,
@@ -463,7 +463,7 @@ export default {
                         title: "----------"
                     },
                     description: "",
-                    totalAmount: 0,
+                    totalAmount: "",
                     date: moment(this.year + "-" + this.month + "-1").toDate(),
                     display: true,
                     editMode:  true,

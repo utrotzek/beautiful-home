@@ -187,6 +187,10 @@ export default {
         this.$watch(
             "localAccountingData.totalAmount", //what you want to watch
             () => {
+                if (this.localAccountingData.totalAmount === "0"){
+                    this.localAccountingData.totalAmount = "";
+                }
+
                 if (this.localAccountingData.isNew){
                     this.localAccountingData.remainingAmount = this.localAccountingData.totalAmount;
                 }

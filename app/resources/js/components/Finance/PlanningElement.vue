@@ -216,6 +216,15 @@ export default {
     mounted() {
         this.$v.localPlanningItem.costCenter.id.$touch();
         this.$v.localPlanningItem.totalAmount.$touch();
+
+        this.$watch(
+            "localPlanningItem.totalAmount", //what you want to watch
+            () => {
+                if (this.localPlanningItem.totalAmount === "0"){
+                    this.localPlanningItem.totalAmount = "";
+                }
+            }
+        );
     },
     methods: {
         errorClass(validator) {
