@@ -222,23 +222,30 @@ export default {
         updateCostCenters(){
             this.fetchCostCenters();
         },
-        saveAccounting(updatedAccounting) {
+        saveAccounting(accounting) {
             this.startProgressBar();
 
             //axios will convert the date to UTC (which is wrong) so we have to convert the date
             //to string before transferring
-            updatedAccounting.date = moment(updatedAccounting.date).format("YYYY-MM-DD");
+            accounting.date = moment(accounting.date).format("YYYY-MM-DD");
 
-            if (updatedAccounting.isNew) {
-                //do something
-                // eslint-disable-next-line no-unused-vars
-                let i = 0;
-                i++;
-            }else{
-                window.axios.put("/api/finance/accounting/" + updatedAccounting.id, updatedAccounting)
+            if (accounting.isNew) {
+                const tempId = accounting.id;
+
+                window.axios.post("/api/finance/accounting", accounting)
                     .then(res => {
-                        updatedAccounting.remainingAmount = res.data.remainingAmount;
-                        updatedAccounting.connectedPlanning = res.data.connectedPlanning;
+                        accounting = res.data;
+                        this.stopProgressBar();
+                        this.accountingData = this.removeFromArray(this.accountingData, tempId);
+                        this.accountingData.push(accounting);
+                        this.stopProgressBar();
+                    });
+
+            }else{
+                window.axios.put("/api/finance/accounting/" + accounting.id, accounting)
+                    .then(res => {
+                        accounting.remainingAmount = res.data.remainingAmount;
+                        accounting.connectedPlanning = res.data.connectedPlanning;
                         this.stopProgressBar();
                     });
             }
@@ -437,12 +444,13 @@ export default {
                 id: 9999999,
                 title: "",
                 totalAmount: 0,
-                remainingAmount: 0,
+                remainingAmount: -20,
                 date: moment(this.year + "-" + this.month + "-1").toDate(),
                 display: true,
                 isNew: true,
                 editMode: true,
-                connectedPlanning: []
+                connectedPlanning: [],
+                period: this.currentPeriod
             };
             this.accountingData.push(newAccountingElement);
         },

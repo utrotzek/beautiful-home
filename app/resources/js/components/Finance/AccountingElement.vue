@@ -183,6 +183,17 @@ export default {
     },
     mounted(){
         this.originalAccountingData =  _.clone(this.accountingData);
+
+        this.$watch(
+            "localAccountingData.totalAmount", //what you want to watch
+            () => {
+                if (this.localAccountingData.isNew){
+                    this.localAccountingData.remainingAmount = this.localAccountingData.totalAmount;
+                }
+            }
+        );
+
+
     },
     methods: {
         startEditing(){

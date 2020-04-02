@@ -31,8 +31,10 @@ use Illuminate\Database\Eloquent\Model;
 class Accounting extends Model
 {
     protected $fillable =  [
+        'title',
         'totalAmount',
-        'remainingAmount'
+        'remainingAmount',
+        'date'
     ];
 
     public function updateAmount($newTotalAmount){

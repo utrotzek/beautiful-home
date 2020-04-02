@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Finance;
 
 use App\Finance\Accounting;
+use App\Finance\Period;
 use App\Http\Resources\Finance\AccountingResource;
 use App\Http\Resources\Finance\AccountingResourceCollection;
 use Illuminate\Http\Request;
@@ -33,7 +34,6 @@ class AccountingController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -44,7 +44,15 @@ class AccountingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /** @var Accounting $accounting */
+        $accounting = Accounting::make([
+            'title' => $request->input('title'),
+            'date' => $request->input('date')
+        ]);
+        $accounting->updateAmount($request->input('totalAmount'));
+        $accounting->period()->associate(Period::find($request->input('period')['id']));
+        $accounting->save();
+        return response(new AccountingResource($accounting->refresh()));
     }
 
     /**
