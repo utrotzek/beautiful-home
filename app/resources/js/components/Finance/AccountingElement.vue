@@ -45,9 +45,10 @@
                     <span v-if="!localAccountingData.editMode">{{ localAccountingData.title }}</span>
                     <input
                         v-else
-                        v-model="localAccountingData.title"
+                        v-model="$v.localAccountingData.title.$model"
                         type="text"
                         class="form-control"
+                        :class="errorClass($v.localAccountingData.title)"
                     >
                 </div>
                 <div
@@ -57,9 +58,10 @@
                     <span v-if="!showCheck && !localAccountingData.editMode">{{ localAccountingData.remainingAmount | toCurrency }} €</span>
                     <input
                         v-else-if="localAccountingData.editMode"
-                        v-model="localAccountingData.totalAmount"
+                        v-model="$v.localAccountingData.totalAmount.$model"
                         type="text"
                         class="form-control text-right"
+                        :class="errorClass($v.localAccountingData.totalAmount)"
                     >
                 </div>
             </div>
@@ -104,6 +106,7 @@
                 <ButtonRow
                     show-save
                     show-cancel
+                    :disabled="$v.$anyError"
                     @save="save"
                     @cancel="cancel"
                 />
@@ -118,6 +121,9 @@ import _ from "lodash";
 import moment from "moment";
 import PlanningElement from "../../../js/components/Finance/PlanningElement";
 import ButtonRow from "../../../js/components/tools/ButtonRow";
+import { required } from "vuelidate/lib/validators";
+
+const notZero = (value) => value > 0 || value < 0;
 
 export default {
     name: "AccountingElementVue",
@@ -199,7 +205,23 @@ export default {
 
 
     },
+    validations: {
+        localAccountingData: {
+            totalAmount: {
+                required,
+                notZero
+            },
+            title: {
+                required
+            }
+        },
+    },
     methods: {
+        errorClass(validator) {
+            return {
+                "is-invalid": validator.$error,
+            };
+        },
         startEditing(){
             this.localAccountingData.editMode = true;
         },
@@ -252,9 +274,13 @@ export default {
             }
         },
         save(){
-            this.localAccountingData.date = this.date;
-            this.localAccountingData.editMode = false;
-            this.$emit("updateData", this.localAccountingData);
+            this.$v.$touch();
+
+            if (!this.$v.$invalid){
+                this.localAccountingData.date = this.date;
+                this.localAccountingData.editMode = false;
+                this.$emit("updateData", this.localAccountingData);
+            }
         }
     }
 };
