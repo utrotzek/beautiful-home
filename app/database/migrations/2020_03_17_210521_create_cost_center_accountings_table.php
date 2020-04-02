@@ -17,7 +17,7 @@ class CreateCostCenterAccountingsTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->float('totalAmount');
-            $table->string('description');
+            $table->string('description')->nullable();
 
             //foreign keys
             $table->unsignedInteger('accounting_id');

@@ -18,7 +18,7 @@ class CreatePeriodsTable extends Migration
             $table->timestamps();
             $table->integer('month');
             $table->integer('year');
-            $table->boolean('completed');
+            $table->boolean('completed')->default(false);
         });
     }
 
