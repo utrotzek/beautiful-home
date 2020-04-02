@@ -154,7 +154,7 @@ export default {
         return {
             localAccountingData: this.accountingData,
             originalAccountingData: null,
-            date: this.accountingData.date,
+            date: moment(this.accountingData.date).toDate(),
             vCalendarAttributes: [
                 {
                     key: "today",
