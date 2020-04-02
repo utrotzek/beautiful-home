@@ -16,7 +16,7 @@ class CreateAccountingsTable extends Migration
         Schema::create('accountings', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->float('totalAmount');
             $table->float('remainingAmount');
             $table->date('date');
