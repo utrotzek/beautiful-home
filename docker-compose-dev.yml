@@ -18,6 +18,7 @@ services:
     user: "${UID}:${GID}"
     environment:
       TZ: "Etc/UTC"
+      XDEBUG_CONFIG: remote_host=${LOCAL_IP}
   db:
     image: mysql:5.7
     environment:
