@@ -37,7 +37,6 @@
 export default {
     data (){
         return {
-            userName: "Vanessa",
             motivation: [
                 "Einen großartigen Tag!",
                 "Viel Spaß beim Arbeiten und einen schönen Tag!",
