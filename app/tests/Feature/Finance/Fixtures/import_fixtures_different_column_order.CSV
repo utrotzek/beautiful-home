@@ -1,0 +1,3 @@
+Buchungstext;Valutadatum;Betrag;Beguenstigter/Zahlungspflichtiger;Buchungstag;Waehrung;Info
+Gehalt;01.03.2099;1000;Arbeitgeber	;01.03.2099;EUR;Umsatz gebucht
+Kartenzahlung;02.03.2099;-20,20;REWE;02.03.2099;EUR;Umsatz gebucht

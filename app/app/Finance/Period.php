@@ -34,6 +34,10 @@ class Period extends Model
         'completed'
     ];
 
+    protected $attributes = [
+        'completed' => false
+    ];
+
     public function plannings()
     {
         return $this->hasMany('App\Finance\Planning');

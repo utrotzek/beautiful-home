@@ -57,4 +57,15 @@ class Accounting extends Model
     {
         return $this->belongsTo('App\Finance\Period');
     }
+
+    public function isDuplicate(): bool
+    {
+        $count = Accounting::where('title', '=', $this->title)
+            ->where('date', '=', $this->date)
+            ->where('totalAmount', '=', $this->totalAmount)
+            ->where('period_id', '=', $this->period_id)
+            ->get()
+            ->count();
+        return $count > 0;
+    }
 }
