@@ -37,12 +37,13 @@ class Accounting extends Model
         'date'
     ];
 
-    public function updateAmount($newTotalAmount){
+    public function updateAmount($newTotalAmount)
+    {
         $remainingAmount = $newTotalAmount;
         $this->totalAmount = $newTotalAmount;
 
         //recalculate the remaining amount depending on the connected costCenterAccountings
-        foreach ($this->costCenterAccounting as $costCenterAccounting){
+        foreach ($this->costCenterAccounting as $costCenterAccounting) {
             $remainingAmount = $remainingAmount - $costCenterAccounting->totalAmount;
         }
         $this->remainingAmount = $remainingAmount;

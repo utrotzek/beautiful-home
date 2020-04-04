@@ -37,12 +37,12 @@ class ImportService
     private function importData(array $dataArray, bool $preview = false): array
     {
         $accountings = [];
-        foreach ($dataArray as $data){
+        foreach ($dataArray as $data) {
             $accounting = $this->getMappedAccounting($data);
             $accounting->period()->associate($this->period);
 
-            if (!$accounting->isDuplicate()){
-                if (!$preview){
+            if (!$accounting->isDuplicate()) {
+                if (!$preview) {
                     $accounting->save();
                 }
                 $accountings[] = $accounting;
@@ -51,18 +51,19 @@ class ImportService
         return $accountings;
     }
 
-    private function initializeColumnIndexes(&$contentArray){
+    private function initializeColumnIndexes(&$contentArray)
+    {
         $headlineRow = array_shift($contentArray);
         $validationErrors = [];
 
-        foreach ($this->propertyMapping as $property => $mappingConfig){
+        foreach ($this->propertyMapping as $property => $mappingConfig) {
             $this->arrayIndexes[$property] = [];
 
             //one property can be mapped to multiple columns. We'll store the fields as an array
-            foreach ($mappingConfig as $configItem){
+            foreach ($mappingConfig as $configItem) {
                 $foundIndex = array_search($configItem, $headlineRow);
 
-                if ($foundIndex !== FALSE){
+                if ($foundIndex !== false) {
                     $this->arrayIndexes[$property][] = $foundIndex;
                 } else {
                     $validationErrors[] = "Headline for property '$property' and column '$configItem' could not be found";
@@ -70,7 +71,7 @@ class ImportService
             }
         }
 
-        if (count($validationErrors) > 0){
+        if (count($validationErrors) > 0) {
             throw new CsvValidationException('Error while validating csv file', $validationErrors);
         }
     }
@@ -87,7 +88,8 @@ class ImportService
         return $accounting;
     }
 
-    private function getValue($data, $property){
+    private function getValue($data, $property)
+    {
         $allData = [];
         foreach ($this->arrayIndexes[$property] as $index) {
             $allData[] = trim($data[$index]);
@@ -95,9 +97,10 @@ class ImportService
         return implode(PHP_EOL, $allData);
     }
 
-    private function getRowsAsArray($csvRows){
+    private function getRowsAsArray($csvRows)
+    {
         $contentArray = [];
-        foreach ($csvRows as $row){
+        foreach ($csvRows as $row) {
             $contentArray[] = str_getcsv($row, ';', '');
         }
         return $contentArray;

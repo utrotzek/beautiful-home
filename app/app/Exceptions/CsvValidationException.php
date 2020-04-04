@@ -14,7 +14,8 @@ class CsvValidationException extends Exception
         $this->validationErrors = $validationErrors;
     }
 
-    public function getValidationErrors(){
+    public function getValidationErrors()
+    {
         return $this->validationErrors;
     }
 }
