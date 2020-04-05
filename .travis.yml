@@ -17,9 +17,12 @@ before_install:
 
 script:
 - docker-compose -f docker-compose-dev.yml run build ./artisan dusk --env=testing
-#deactivate coverage check for now
-#- docker-compose -f docker-compose-dev.yml run build yarn test-vue --coverage
+## deactivate coverage check for now
+## - docker-compose -f docker-compose-dev.yml run build yarn test-vue --coverage
 - docker-compose -f docker-compose-dev.yml run build yarn test-vue
 - docker-compose -f docker-compose-dev.yml run build yarn es-lint
 - docker-compose -f docker-compose-dev.yml run build composer run-script cs-fixer -- --dry-run --verbose
+
+## install database
+- docker-compose -f docker-compose-dev.yml run build ./artisan migrate:refresh
 - docker-compose -f docker-compose-dev.yml run build composer run-script phpunit
