@@ -1,5 +1,11 @@
 <template>
     <div class="accountingSidebar">
+        <ImporterModal
+            :show="importerVisible"
+            :period="period"
+            @close="toggleImporter"
+        />
+
         <ConnectionModal
             :planning="createConnectionData.planningData"
             :accounting="createConnectionData.accountingData"
@@ -33,6 +39,7 @@
                     <button
                         class="btn btn-outline-dark"
                         title="csv einlesen"
+                        @click="toggleImporter"
                     >
                         <i class="fa fa-arrow-circle-up"></i>
                         <span class="d-inline-block d-md-none">
@@ -97,13 +104,15 @@ import moment from "moment";
 import Search from "../tools/Search";
 import AccountingElement from "./AccountingElement";
 import ConnectionModal from "./ConnectionModal";
+import ImporterModal from "./Importer/ImporterModal";
 
 export default {
     name: "AccountingSidebar",
     components: {
         Search,
         AccountingElement,
-        ConnectionModal
+        ConnectionModal,
+        ImporterModal
     },
     props: {
         period: {
@@ -140,7 +149,8 @@ export default {
     data() {
         return {
             searchQuery: "",
-            showModal: false
+            showModal: false,
+            importerVisible: false,
         };
     },
     computed: {
@@ -161,6 +171,9 @@ export default {
         }
     },
     methods: {
+        toggleImporter(){
+            this.importerVisible = !this.importerVisible;
+        },
         createNewAccounting() {
             this.$emit("createNewAccounting");
         },

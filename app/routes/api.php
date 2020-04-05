@@ -41,5 +41,7 @@ Route::namespace('Finance')->group(function(){
         Route::get('/plannings/forPeriod/{id}', ['uses' => 'PlanningController@forPeriod'] );
 
         Route::apiResource('costCenterAccounting', 'CostCenterAccountingController');
+
+        Route::post('/accounting/import', 'AccountingController@import');
     });
 });

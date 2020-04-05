@@ -2,15 +2,31 @@
 
 namespace App\Http\Controllers\Finance;
 
+use App\File\TempFile;
 use App\Finance\Accounting;
 use App\Finance\Period;
 use App\Http\Resources\Finance\AccountingResource;
 use App\Http\Resources\Finance\AccountingResourceCollection;
+use App\Services\Finance\ImportService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class AccountingController extends Controller
 {
+    public function import(Request $request)
+    {
+        $preview = filter_var($request->input('preview'), FILTER_VALIDATE_BOOLEAN);
+        $period = Period::find($request->input('period')['id']);
+        $fileData = file_get_contents($request->input('file'));
+
+        $tempFile = new TempFile();
+        $tempFileName = $tempFile->createTempFile($fileData);
+
+        $importService = new ImportService();
+        $accountings = $importService->importAccountingForPeriod($tempFileName, $period, $preview);
+        return response($accountings);
+    }
+
     public function forPeriod($periodId)
     {
         $accountings = Accounting::where('period_id', '=', (int)$periodId)->get();
