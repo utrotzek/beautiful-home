@@ -81,6 +81,9 @@
                         @deleteConnection="deleteConnection"
                         @updateConnectedPlanning="updateConnectedPlanning"
                         @deleteAccounting="deleteAccounting"
+                        @loading="startProgressBar"
+                        @loadingCompleted="stopProgressBar"
+                        @dataImported="refreshData"
                     />
                 </div>
 
@@ -204,6 +207,9 @@ export default {
                 .then(res => {
                     this.costCenterData = res.data;
                 });
+        },
+        refreshData() {
+            this.loadData();
         },
         startProgressBar() {
             if (this.progressBarCount === 0){

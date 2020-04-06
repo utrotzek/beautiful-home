@@ -4,6 +4,9 @@
             :show="importerVisible"
             :period="period"
             @close="toggleImporter"
+            @loading="$emit('loading')"
+            @loadingCompleted="$emit('loadingCompleted')"
+            @dataImported="$emit('dataImported')"
         />
 
         <ConnectionModal
@@ -151,6 +154,7 @@ export default {
             searchQuery: "",
             showModal: false,
             importerVisible: false,
+            temp: false
         };
     },
     computed: {

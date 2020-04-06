@@ -76,41 +76,49 @@
                                 class="step2"
                             >
                                 <h4>Vorschau</h4>
-                                <p>
-                                    Wenn Sie den Importvorgang anstoßen, würden die Daten wie folgt importiert werden.
-                                </p>
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Datum</th>
-                                            <th>Title</th>
-                                            <th>Betrag</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr
-                                            v-for="item in accountingPreview"
-                                            :key="item.id"
-                                        >
-                                            <td>{{ item.date | formatDate }}</td>
-                                            <td>{{ item.title }}</td>
-                                            <td>{{ item.totalAmount | toCurrency }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <p v-if="accountingImport.length > accountingPreview.length">
-                                    Dies ist nur ein Auszug der Daten. Insgesamt werden <strong>{{ accountingImport.length }}</strong> importiert
-                                </p>
-                                <p>
-                                    Wenn alles gut aussieht, dann können Sie den Importvorgang beginnen.
-                                    Es werden keine Duplikate importiert.
-                                </p>
+                                <div v-if="accountingImport.length > 0">
+                                    <p>
+                                        Folgende Daten werden dem aktuellen Monat hinzugefügt.
+                                    </p>
+                                    <div class="sticky-head">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Datum</th>
+                                                    <th>Title</th>
+                                                    <th>Betrag</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr
+                                                    v-for="item in accountingImport"
+                                                    :key="item.id"
+                                                >
+                                                    <td>{{ item.date | formatDate }}</td>
+                                                    <td>{{ item.title }}</td>
+                                                    <td>{{ item.totalAmount | toCurrency }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <p>
+                                        Bitte klicken Sie auf "Daten importieren"
+                                    </p>
+                                </div>
+                                <div v-else>
+                                    <div
+                                        class="alert alert-info"
+                                        role="alert"
+                                    >
+                                        Die Datei enthält keine Daten oder Daten die bereits importiert wurden.
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button
                                 type="button"
-                                class="btn btn-secondary"
+                                class="btn btn-danger abort-button"
                                 @click="close"
                             >
                                 <i class="fas fa-ban"></i>
@@ -119,7 +127,7 @@
                             <button
                                 v-if="step===2"
                                 type="button"
-                                class="btn btn-default abort-button"
+                                class="btn btn-light"
                                 @click="back"
                             >
                                 <i class="fas fa-arrow-alt-circle-left"></i>
@@ -129,6 +137,7 @@
                                 v-if="step===1"
                                 type="button"
                                 class="btn btn-primary"
+                                :disabled="file.data === ''"
                                 @click="upload"
                             >
                                 <i class="fas fa-eye"></i>
@@ -138,10 +147,11 @@
                                 v-if="step===2"
                                 type="button"
                                 class="btn btn-primary"
+                                :disabled="accountingImport.length === 0"
                                 @click="startImport"
                             >
                                 <i class="fas fa-save"></i>
-                                Import Vorgang starten
+                                Daten importieren
                             </button>
                         </div>
                     </div>
@@ -187,6 +197,11 @@ export default {
         }
     },
     methods: {
+        validateClass(){
+            return {
+                "is-invalid": this.file.data === ""
+            };
+        },
         close () {
             this.step = 1;
             this.accountingImport = null;
@@ -202,17 +217,20 @@ export default {
             this.step--;
         },
         upload() {
-            const data = {
-                period: this.period,
-                preview: true,
-                file: this.file.data
-            };
-            window.axios.post("/api/finance/accounting/import", data)
-                .then(res => {
-                    this.accountingImport = res.data;
-                });
-
-            this.step++;
+            if (this.file.data !== ""){
+                const data = {
+                    period: this.period,
+                    preview: true,
+                    file: this.file.data
+                };
+                this.$emit("loading");
+                window.axios.post("/api/finance/accounting/import", data)
+                    .then(res => {
+                        this.accountingImport = res.data;
+                        this.step++;
+                        this.$emit("loadingCompleted");
+                    });
+            }
         },
         onFileSelect(e) {
             let files = e.target.files || e.dataTransfer.files;
@@ -234,8 +252,21 @@ export default {
             reader.readAsDataURL(file);
         },
         startImport() {
-
-        }
+            if (this.file.data !== "") {
+                const data = {
+                    period: this.period,
+                    preview: false,
+                    file: this.file.data
+                };
+                this.$emit("loading");
+                window.axios.post("/api/finance/accounting/import", data)
+                    .then(() => {
+                        this.$emit("dataImported");
+                        this.$emit("loadingCompleted");
+                        this.$emit("close");
+                    });
+            }
+        },
     }
 };
 </script>
@@ -261,4 +292,12 @@ export default {
     .abort-button {
         margin-right: auto;
     }
+
+    .sticky-head          { overflow-y: auto; height: 20rem; }
+    .sticky-head thead th { position: sticky; top: -1px; }
+
+    /* Just common table stuff. Really. */
+    table  { border-collapse: collapse; width: 100%; }
+    th, td { padding: 8px 16px; }
+    th     { background:#eee; }
 </style>
