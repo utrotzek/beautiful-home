@@ -55,7 +55,7 @@
         </div>
         <div class="clearfix"></div>
         <div class="description">
-            <span v-if="!localEditMode">{{ localPlanningItem.description }}</span>
+            <span v-if="!localEditMode" class="pre-formatted">{{ localPlanningItem.description }}</span>
             <textarea
                 v-else
                 v-model="localPlanningItem.description"
@@ -324,5 +324,9 @@ export default {
 
     .title .float-right {
         width: 30%
+    }
+
+    .pre-formatted {
+        white-space: pre;
     }
 </style>

@@ -42,14 +42,18 @@
                         class="fa fa-exclamation-circle todo"
                     >
                     </span>
-                    <span v-if="!localAccountingData.editMode">{{ localAccountingData.title }}</span>
-                    <input
+                    <span
+                        v-if="!localAccountingData.editMode"
+                        class="pre-formatted"
+                    >{{ localAccountingData.title }}</span>
+                    <textarea
                         v-else
                         v-model="$v.localAccountingData.title.$model"
                         type="text"
                         class="form-control"
                         :class="errorClass($v.localAccountingData.title)"
                     >
+                    </textarea>
                 </div>
                 <div
                     class="remaining-amount col-3"
@@ -343,5 +347,9 @@ export default {
     /*noinspection ALL*/
     .negative {
         color: red;
+    }
+
+    .pre-formatted {
+        white-space: pre;
     }
 </style>
