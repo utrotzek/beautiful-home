@@ -7,14 +7,23 @@ use App\Finance\Period;
 
 class ImportService
 {
+    /**
+     * @var Period
+     */
     protected $period;
 
+    /**
+     * @var array
+     */
     protected $propertyMapping = [
         'date' => ['Buchungstag'],
         'title' => ['Buchungstext', 'Beguenstigter/Zahlungspflichtiger'],
         'totalAmount' => ['Betrag']
     ];
 
+    /**
+     * @var array
+     */
     protected $arrayIndexes = [
         'date' => [0],
         'title' => [1],
@@ -39,14 +48,15 @@ class ImportService
         $accountings = [];
         foreach ($dataArray as $data) {
             $accounting = $this->getMappedAccounting($data);
-            $accounting->period()->associate($this->period);
 
-            if (!$accounting->isDuplicate()) {
+            $dateWithinPeriod = $accounting->date->format('m.Y') == $this->period->month.'.'.$this->period->year;
+            if ($dateWithinPeriod && !$accounting->isDuplicate()){
                 if (!$preview) {
                     $accounting->save();
                 }
                 $accountings[] = $accounting;
             }
+
         }
         return $accountings;
     }
@@ -85,6 +95,8 @@ class ImportService
         $accounting->updateAmount($sanitizedTotalAmount);
         $accounting->title = $this->getValue($data, 'title');
         $accounting->date = new \DateTime($this->getValue($data, 'date'));
+        $accounting->period()->associate($this->period);
+
         return $accounting;
     }
 

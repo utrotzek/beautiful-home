@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $title
  * @property float $totalAmount
  * @property float $remainingAmount
- * @property string $date
+ * @property \DateTime $date
  * @property int $period_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Accounting whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Finance\Accounting whereDate($value)

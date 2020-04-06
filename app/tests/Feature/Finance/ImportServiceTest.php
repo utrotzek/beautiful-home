@@ -169,10 +169,25 @@ class ImportServiceTest extends TestCase
         $this->assertCount($expectedCount, $previewAccountings);
     }
 
+    /**
+     * @test
+     */
+    public function onlyDataPeriodWillBeImported(): void
+    {
+        $csvPath = __DIR__ . '/Fixtures/import_multiple_periods.CSV';
+        $importService = new ImportService();
+
+        $importService->importAccountingForPeriod($csvPath, $this->currentPeriod, false);
+
+        $allAccountings = $this->currentPeriod->accountings()->get();
+        $expectedCount = 2;
+        $this->assertCount($expectedCount, $allAccountings);
+    }
+
     protected function initializeFixtures(): void
     {
         $this->currentPeriod = Period::make([
-            'month' => 12,
+            'month' => 3,
             'year' => 2099
         ]);
         $this->currentPeriod->save();

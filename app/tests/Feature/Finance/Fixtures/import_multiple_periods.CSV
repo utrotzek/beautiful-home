@@ -1,0 +1,4 @@
+Buchungstag;Valutadatum;Buchungstext;Beguenstigter/Zahlungspflichtiger;Betrag;Waehrung;Info
+04.03.2099;30.03.2099;KARTENZAHLUNG;REWE SAGT DANKE. 43400225//Muenster-Centrum/DE;-21,85;EUR;Umsatz gebucht
+03.04.2099;30.03.2099;WRONG PERIOD;REWE SAGT DANKE. 43400222//Muenster-Centrum/DE;-12,09;EUR;Umsatz gebucht
+01.03.2099;30.03.2099;Gehalt;Arbeitsstelle;1000;EUR;Umsatz gebucht
