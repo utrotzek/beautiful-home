@@ -149,19 +149,22 @@ export default {
         async loadData() {
             this.$refs.topProgress.start();
             this.loaded = false;
-            await window.axios.get("/api/finance/period?year=" + this.year)
+            const periodPromise = window.axios.get("/api/finance/period?year=" + this.year)
                 .then(res => {
                     this.periods = res.data;
                 }).catch(() => {
                     this.periods = [];
                 });
 
-            await window.axios.get("/api/months")
+            const monthPromise = window.axios.get("/api/months")
                 .then(res => {
                     this.allMonths = res.data;
                 }).catch(() => {
                     this.allMonths = [];
                 });
+
+            await periodPromise;
+            await monthPromise;
             this.$refs.topProgress.done();
             this.loaded = true;
         }
