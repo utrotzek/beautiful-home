@@ -3,7 +3,6 @@
 
 namespace App\File;
 
-
 class TempFile
 {
     protected $fileHandle;

@@ -13,9 +13,15 @@
             <thead>
                 <tr>
                     <th class="text-right"></th>
-                    <th class="text-right">Einnahmen</th>
-                    <th class="text-right">Ausgaben</th>
-                    <th class="text-right">Summe</th>
+                    <th class="text-right">
+                        Einnahmen
+                    </th>
+                    <th class="text-right">
+                        Ausgaben
+                    </th>
+                    <th class="text-right">
+                        Summe
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -64,7 +70,10 @@
             </tbody>
         </table>
 
-        <div id="top-outgoing" v-if="topOutgoingCostCenter.length > 0">
+        <div
+            v-if="topOutgoingCostCenter.length > 0"
+            id="top-outgoing"
+        >
             <h3>Top Ausgaben</h3>
             <table
                 class="table table-sm"
@@ -91,7 +100,10 @@
             </table>
         </div>
 
-        <div id="top-income" v-if="topIncomeCostCenter.length > 0">
+        <div
+            v-if="topIncomeCostCenter.length > 0"
+            id="top-income"
+        >
             <h3>Top Einnahmen</h3>
             <table
                 class="table table-sm"

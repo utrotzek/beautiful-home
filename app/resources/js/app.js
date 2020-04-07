@@ -4,9 +4,9 @@ import filters from "../js/filters";
 import VCalendar from "v-calendar";
 import { vueTopprogress } from "vue-top-progress";
 import Vuelidate from "vuelidate";
-import ToggleButton from 'vue-js-toggle-button'
+import ToggleButton from "vue-js-toggle-button";
 
-Vue.use(ToggleButton)
+Vue.use(ToggleButton);
 Vue.use(Vuelidate);
 Vue.use(VueRouter);
 Vue.use(filters);

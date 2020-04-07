@@ -50,13 +50,12 @@ class ImportService
             $accounting = $this->getMappedAccounting($data);
 
             $dateWithinPeriod = $accounting->date->format('m.Y') == $this->period->month.'.'.$this->period->year;
-            if ($dateWithinPeriod && !$accounting->isDuplicate()){
+            if ($dateWithinPeriod && !$accounting->isDuplicate()) {
                 if (!$preview) {
                     $accounting->save();
                 }
                 $accountings[] = $accounting;
             }
-
         }
         return $accountings;
     }
