@@ -327,6 +327,6 @@ export default {
     }
 
     .pre-formatted {
-        white-space: pre;
+        white-space: pre-wrap;
     }
 </style>

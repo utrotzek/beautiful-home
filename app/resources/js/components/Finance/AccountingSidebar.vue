@@ -64,12 +64,14 @@
             <toggle-button
                 v-model="showFinishedAccountings"
                 :width="toggleWidth"
+                :height="toggleHeight"
                 :color="{checked: '#919191', unchecked: '#E9ECEF'}"
             />
             Unerledigte:
             <toggle-button
                 v-model="showUnfinishedAccountings"
                 :width="toggleWidth"
+                :height="toggleHeight"
                 :color="{checked: '#919191', unchecked: '#E9ECEF'}"
             />
         </div>
@@ -170,7 +172,8 @@ export default {
             temp: false,
             showFinishedAccountings: true,
             showUnfinishedAccountings: true,
-            toggleWidth: 35
+            toggleWidth: 30,
+            toggleHeight: 16
         };
     },
     computed: {
@@ -294,5 +297,9 @@ export default {
     .filter label {
         padding: 0;
         margin: 0;
+    }
+
+    .filter {
+        font-size:90%
     }
 </style>
