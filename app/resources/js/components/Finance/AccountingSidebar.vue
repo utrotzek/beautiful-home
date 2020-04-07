@@ -19,8 +19,14 @@
         />
         <div class="row">
             <div class="col-8">
-                <h2 class="d-none d-md-block">
-                    Umsätze
+                <h2
+                    v-if="unfinishedCount > 0"
+                    class="d-none d-md-block"
+                >
+                    Umsätze ({{ unfinishedCount }})
+                </h2>
+                <h2 v-else>
+                    Umsätze <span class="fa fa-check-circle"></span>
                 </h2>
             </div>
             <div class="col-12 col-md-4 text-left text-md-right">
@@ -177,6 +183,11 @@ export default {
         };
     },
     computed: {
+        unfinishedCount() {
+            return this.accountingData.filter((accounting) => {
+                return accounting.remainingAmount !== 0.0;
+            }).length;
+        },
         sortedAccounting: function() {
             return _.orderBy(this.accountingData, ["isNew", "date"], ["desc", "desc"]);
         },
