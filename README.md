@@ -23,3 +23,4 @@ documentation:
 * [vCalender](https://vcalendar.io/): The date picker is used for almost all date fields of the app
 * [Top Progressbar](https://github.com/dalphyx/vue-top-progress): The vue js componen for the top progress bar animation
 * [vuelidate](https://vuelidate.js.org/): The form validation framework
+* [vue-js-toggle-button] (https://github.com/euvl/vue-js-toggle-button): Checkbox slider plugin

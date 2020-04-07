@@ -55,9 +55,23 @@
 
         <div
             id="accountingSearch"
-            class="mb-3"
+            class="mb-1"
         >
             <Search @searched="accountingSearched" />
+        </div>
+        <div class="filter mb-2 text-right">
+            Erledigte:
+            <toggle-button
+                v-model="showFinishedAccountings"
+                :width="toggleWidth"
+                :color="{checked: '#919191', unchecked: '#E9ECEF'}"
+            />
+            Unerledigte:
+            <toggle-button
+                v-model="showUnfinishedAccountings"
+                :width="toggleWidth"
+                :color="{checked: '#919191', unchecked: '#E9ECEF'}"
+            />
         </div>
 
         <div
@@ -98,7 +112,6 @@
                 Keine Umsätze vorhanden
             </div>
         </div>
-
     </div>
 </template>
 
@@ -154,7 +167,10 @@ export default {
             searchQuery: "",
             showModal: false,
             importerVisible: false,
-            temp: false
+            temp: false,
+            showFinishedAccountings: true,
+            showUnfinishedAccountings: true,
+            toggleWidth: 35
         };
     },
     computed: {
@@ -168,6 +184,14 @@ export default {
                 if (!display){
                     let formattedDate = moment(accounting.date).format("DD.MM.YYYY");
                     display = (formattedDate.search(this.searchQuery.toLowerCase()) > -1);
+                }
+
+                if (!this.showFinishedAccountings && accounting.remainingAmount === 0.0){
+                    display = false;
+                }
+
+                if (!this.showUnfinishedAccountings && accounting.remainingAmount !== 0.0){
+                    display = false;
                 }
 
                 return display;
@@ -267,5 +291,8 @@ export default {
 </script>
 
 <style scoped>
-
+    .filter label {
+        padding: 0;
+        margin: 0;
+    }
 </style>
