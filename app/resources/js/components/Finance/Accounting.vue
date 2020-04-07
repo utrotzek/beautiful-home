@@ -234,6 +234,7 @@ export default {
             //axios will convert the date to UTC (which is wrong) so we have to convert the date
             //to string before transferring
             accounting.date = moment(accounting.date).format("YYYY-MM-DD");
+            this.updateRemainingAccountingAmount(accounting);
 
             if (accounting.isNew) {
                 const tempId = accounting.id;
@@ -256,7 +257,13 @@ export default {
                     });
             }
         },
-
+        updateRemainingAccountingAmount(accounting){
+            let remainingAmount = accounting.totalAmount;
+            for (let i=0; i < accounting.connectedPlanning.length; i++){
+                remainingAmount -= accounting.connectedPlanning[i].totalAmount;
+            }
+            accounting.remainingAmount = remainingAmount;
+        },
         savePlanning(planning) {
             this.startProgressBar();
 
