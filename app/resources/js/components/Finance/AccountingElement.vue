@@ -103,6 +103,16 @@
                         <span class="fa fa-plus-circle align-middle"></span>
                     </div>
                 </div>
+                <div
+                    v-else
+                    class="col-12 col-md-6"
+                >
+                    <div
+                        class="connectPlaceholder"
+                    >
+                        <span class="fa align-middle"></span>
+                    </div>
+                </div>
             </div>
             <div
                 v-else
@@ -291,13 +301,21 @@ export default {
 </script>
 
 <style scoped>
+
+    .connectPlaceholder {
+        text-align: center;
+        vertical-align: middle;
+        border: none;
+        margin: 0 0 1em 0;
+        height: 2rem;
+    }
+
     .connectTarget {
         text-align: center;
         vertical-align: middle;
         border: dashed #adb5bd 2px;
-        padding: 8px;
         margin: 0 0 1em 0;
-        height: 3rem;
+        height: 2rem;
         cursor: pointer;
     }
 
