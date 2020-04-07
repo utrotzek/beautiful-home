@@ -377,8 +377,10 @@ export default {
             return planningElement;
         },
         deactivateConnectionMode(){
-            this.createConnectionData.enabled = false;
-            this.createConnectionData.planningId = 0;
+            if (this.createConnectionData.planningData.totalAmount === 0){
+                this.createConnectionData.enabled = false;
+                this.createConnectionData.planningId = 0;
+            }
             this.createConnectionData.accountingId = 0;
         },
         updateConnectedPlanning(updatedCostCenterItem, accountingId){
