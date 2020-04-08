@@ -14,7 +14,7 @@ Vue.use(VCalendar);
 
 import App from "../views/App";
 import Home from "../views/Home";
-import Finance from "../views/Finance";
+import FinanceView from "./components/Finance/FinanceView";
 import Recipe from "../views/Recipe";
 import RecipeEdit from "../views/Recipe/Edit";
 import RecipeSearch from "../views/Recipe/Search";
@@ -35,7 +35,7 @@ const router = new VueRouter({
         {
             path: "/finance",
             name: "finance",
-            component: Finance,
+            component: FinanceView,
             meta: {
                 breadcrumb: [
                     { name: "Finanzen" }

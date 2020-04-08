@@ -117,7 +117,16 @@
                 v-if="view==='templates'"
                 id="templateView"
             >
-                Templates...
+                <div
+                    v-if="loaded"
+                    class="row justify-content-center"
+                >
+                    <div class="col-xs-8 col-md-3  mt-4 mb-3">
+                        <TemplateCrud
+
+                        />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -125,10 +134,12 @@
 
 
 <script>
-import YearComponent from "../js/components/Finance/Year";
+import YearComponent from "./Year";
+import TemplateCrud from "./TemplateCrud";
 
 export default {
     components: {
+        TemplateCrud,
         year: YearComponent
     },
     data: function(){
