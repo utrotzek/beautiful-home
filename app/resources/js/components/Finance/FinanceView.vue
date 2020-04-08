@@ -122,8 +122,8 @@
                     class="row justify-content-center"
                 >
                     <div class="col-xs-8 col-md-3  mt-4 mb-3">
-                        <TemplateCrud
-
+                        <TemplatesCrud
+                            templates="[]"
                         />
                     </div>
                 </div>
@@ -135,11 +135,11 @@
 
 <script>
 import YearComponent from "./Year";
-import TemplateCrud from "./TemplateCrud";
+import TemplatesCrud from "./TemplatesCrud";
 
 export default {
     components: {
-        TemplateCrud,
+        TemplatesCrud: TemplatesCrud,
         year: YearComponent
     },
     data: function(){

@@ -3,20 +3,22 @@
         <div
             v-for="template in templates"
             :key="template.id"
-            class="row mb-2"
+            class="row mb-2 entry"
         >
-            <div class="col-6">
+            <div class="col-6 title">
                 {{ template.title }}
             </div>
             <div class="col-6 edit-controls">
                 <button
                     title="Vorlage bearbeiten"
+                    class="edit"
                     @click="editTemplate(template)"
                 >
                     <i class="fa fa-edit"></i>
                 </button>
                 <button
                     title="Vorlage löschen"
+                    class="delete"
                     @click="deleteTemplate(template)"
                 >
                     <i class="fa fa-trash-alt"></i>
@@ -31,7 +33,7 @@
                         <label class="sr-only">Name</label>
                         <input
                             v-model="$v.newTemplateName.$model"
-                            class="form-control"
+                            class="form-control template-name"
                             :class="errorClass($v.newTemplateName)"
                             placeholder="Name"
                             type="text"
@@ -39,7 +41,7 @@
                         >
                     </div>
                     <button
-                        class="btn btn-primary mb-2"
+                        class="btn btn-primary mb-2 submit"
                         :disabled="$v.$anyError"
                         @click="createTemplate"
                     >
@@ -55,7 +57,7 @@
 import { required, minLength } from "vuelidate/lib/validators";
 
 export default {
-    name: "TemplateCrudVue",
+    name: "TemplatesCrudVue",
     props: {
         templates: {
             type: Array,

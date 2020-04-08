@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TemplateCrud renders properly 1`] = `
+<div
+  class="template-crud"
+>
+  <div
+    class="row mb-2 entry"
+  >
+    <div
+      class="col-6 title"
+    >
+      
+            Standard
+        
+    </div>
+     
+    <div
+      class="col-6 edit-controls"
+    >
+      <button
+        class="edit"
+        title="Vorlage bearbeiten"
+      >
+        <i
+          class="fa fa-edit"
+        />
+      </button>
+       
+      <button
+        class="delete"
+        title="Vorlage löschen"
+      >
+        <i
+          class="fa fa-trash-alt"
+        />
+      </button>
+    </div>
+  </div>
+  <div
+    class="row mb-2 entry"
+  >
+    <div
+      class="col-6 title"
+    >
+      
+            Nicht Standard
+        
+    </div>
+     
+    <div
+      class="col-6 edit-controls"
+    >
+      <button
+        class="edit"
+        title="Vorlage bearbeiten"
+      >
+        <i
+          class="fa fa-edit"
+        />
+      </button>
+       
+      <button
+        class="delete"
+        title="Vorlage löschen"
+      >
+        <i
+          class="fa fa-trash-alt"
+        />
+      </button>
+    </div>
+  </div>
+   
+  <div
+    class="row mt-4"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="form-inline"
+      >
+        <div
+          class="form-group mx-sm-3 mb-2"
+        >
+          <label
+            class="sr-only"
+          >
+            Name
+          </label>
+           
+          <input
+            class="form-control template-name"
+            name="template-name"
+            placeholder="Name"
+            type="text"
+          />
+        </div>
+         
+        <button
+          class="btn btn-primary mb-2 submit"
+        >
+          
+                    Vorlage anlegen
+                
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
