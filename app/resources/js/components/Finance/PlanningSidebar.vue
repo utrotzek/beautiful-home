@@ -138,7 +138,7 @@ export default {
             return this.orderedPlanning.filter(planning => {
                 let costCenter = planning.costCenter;
                 let display = (costCenter.title.toLowerCase().search(this.planningQuery.toLowerCase()) > -1);
-                if (!display){
+                if (!display && planning.description){
                     display = (planning.description.toLowerCase().search(this.planningQuery.toLowerCase()) > -1);
                 }
                 if (!display) {
