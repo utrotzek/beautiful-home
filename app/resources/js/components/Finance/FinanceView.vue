@@ -125,6 +125,7 @@
                         <TemplatesCrud
                             :templates="templateData"
                             @editTemplate="editTemplate"
+                            @deleteTemplate="deleteTemplate"
                         />
                     </div>
                 </div>
@@ -229,6 +230,17 @@ export default {
         },
         editTemplate(template){
             this.$router.push({name: "templateEditor", params: {templateId: template.id}});
+        },
+        deleteTemplate(template){
+            this.$refs.topProgress.start();
+            window.axios.delete("/api/finance/template/" + template.id)
+                .then(() => {
+                    const indexToDelete = this.templateData.findIndex((element) => element.id === template.id);
+                    if (indexToDelete > -1) {
+                        this.templateData.splice(indexToDelete,1);
+                    }
+                    this.$refs.topProgress.done();
+                });
         }
     },
 };
