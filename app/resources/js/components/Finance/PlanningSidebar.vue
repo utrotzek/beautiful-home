@@ -45,6 +45,7 @@
                 :year="year"
                 :month="month"
                 :cost-center-data="costCenterData"
+                :allowConnection="allowConnection"
                 @connect="connectPlanning(item.id, true)"
                 @delete="deletePlanning(item.id)"
                 @close="connectPlanning(item.id, false)"
@@ -112,6 +113,11 @@ export default {
             default() {
                 return [];
             }
+        },
+        allowConnection: {
+            type: Boolean,
+            required: false,
+            default: true
         }
     },
     data () {

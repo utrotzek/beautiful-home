@@ -20,6 +20,7 @@
                             :month="month"
                             :planning-data="planningData"
                             :cost-center-data="costCenterData"
+                            :allow-connection="false"
                             @createNewPlanning="createNewPlanning"
                             @save="savePlanning"
                             @deletePlanning="deletePlanning"

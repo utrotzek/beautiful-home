@@ -76,7 +76,7 @@
                 show-delete
                 show-edit
                 show-close
-                :show-connect="!isConnected"
+                :show-connect="!isConnected && allowConnection"
                 :disabled="$v.$anyError"
                 @close="closeOverlay"
                 @edit="editPlanning"
@@ -163,6 +163,11 @@ export default {
             default() {
                 return [];
             }
+        },
+        allowConnection: {
+            type: Boolean,
+            required: false,
+            default: true
         }
     },
     data() {
