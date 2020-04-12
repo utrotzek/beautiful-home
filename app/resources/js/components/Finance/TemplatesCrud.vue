@@ -29,8 +29,27 @@
                 Noch keine Vorlagen vorhanden.
             </div>
         </div>
-        <div class="row mt-4">
+        <div class="row mt-1">
             <div class="col">
+                <div
+                    v-if="!$v.newTemplateName.minLength"
+                    class="text-danger"
+                >
+                    Der Name muss mindestens 6 Zeichen beinhalten.
+                </div>
+                <div
+                    v-else-if="!$v.newTemplateName.isUnique"
+                    class="text-danger"
+                >
+                    Der Name ist bereits vergeben.
+                </div>
+                <div
+                    v-else
+                    class="text-danger"
+                >
+                    <!-- placeholder -->
+                    &nbsp;
+                </div>
                 <div class="form-inline">
                     <div class="form-group mx-sm-1 mb-2">
                         <label class="sr-only">Name</label>
@@ -88,7 +107,11 @@ export default {
     validations: {
         newTemplateName: {
             required,
-            minLength: minLength(6)
+            minLength: minLength(6),
+            isUnique(value) {
+                const foundDuplicates = this.templates.filter((item) => {return item.title === value;});
+                return foundDuplicates.length === 0;
+            }
         }
     },
     methods: {
@@ -108,6 +131,8 @@ export default {
 
             if  (!this.$v.$invalid){
                 this.$emit("createTemplate", this.newTemplateName);
+                //reset input field
+                this.newTemplateName = "";
             }
         }
     }
