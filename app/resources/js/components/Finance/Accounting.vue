@@ -60,6 +60,7 @@
                         @connectPlanning="connectPlanning"
                         @save="savePlanning"
                         @createCostCenter="updateCostCenters"
+                        @importTemplate="importTemplate"
                     />
                 </div>
 
@@ -542,6 +543,26 @@ export default {
                 //toggle
                 this.overviewCollapsed = !this.overviewCollapsed;
             }
+        },
+        importTemplate(template) {
+            this.startProgressBar();
+            window.axios.get("/api/finance/plannings/forTemplate/" + template.id)
+                .then(res => {
+                    for (let i=0; i < res.data.length; i++){
+                        let newPlanningItem = res.data[i];
+                        const dayOfEntry = moment(newPlanningItem.date).format("DD");
+                        const newDate = moment(this.year + "-" + this.month + "-" + dayOfEntry).toDate();
+
+                        newPlanningItem.isNew = true;
+                        newPlanningItem.templates = null;
+                        newPlanningItem.period = this.currentPeriod;
+                        //adjust date of template entry to current month and year
+                        newPlanningItem.date = newDate;
+                        newPlanningItem = this.savePlanning(newPlanningItem);
+                    }
+
+                    this.stopProgressBar();
+                });
         }
     }
 };

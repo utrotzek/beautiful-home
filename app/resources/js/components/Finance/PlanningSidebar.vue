@@ -1,5 +1,10 @@
 <template>
     <div class="planningSidebar">
+        <TemplateSelector
+            :show="showTemplateSelector"
+            @close="toggleTemplateSelector"
+            @templateSelected="importTemplate"
+        />
         <div class="row">
             <div class="col-8">
                 <h2 class="d-none d-md-block">
@@ -11,6 +16,17 @@
                     id="PlanningButtons"
                     class="mb-3"
                 >
+                    <button
+                        class="btn btn-outline-dark"
+                        title="Einträge aus Vorlage übernehmen"
+                        @click="toggleTemplateSelector"
+                    >
+                        <i class="fa fa-share-square"></i>
+                        <span class="d-inline-block d-md-none">
+                            Von Vorlage
+                        </span>
+                    </button>
+
                     <button
                         class="btn btn-outline-dark"
                         title="Neuen Planungs-Eintrag erstellen"
@@ -77,12 +93,14 @@
 import moment from "moment";
 import PlanningElement from "./PlanningElement";
 import Search from "../tools/Search";
+import TemplateSelector from "./Modals/TemplateSelector";
 
 export default {
     name: "PlanningSidebar",
     components: {
         PlanningElement,
-        Search
+        Search,
+        TemplateSelector
     },
     props: {
         headline: {
@@ -122,7 +140,8 @@ export default {
     },
     data () {
         return {
-            planningQuery: ""
+            planningQuery: "",
+            showTemplateSelector: false
         };
     },
     computed: {
@@ -204,6 +223,12 @@ export default {
         },
         createCostCenter(newCostCenter) {
             this.$emit("createCostCenter", newCostCenter);
+        },
+        toggleTemplateSelector() {
+            this.showTemplateSelector = !this.showTemplateSelector;
+        },
+        importTemplate(template) {
+            this.$emit("importTemplate", template);
         }
     }
 };
