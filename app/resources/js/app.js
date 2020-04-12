@@ -21,6 +21,7 @@ import RecipeSearch from "../views/Recipe/Search";
 import RecipeRate from "../views/Recipe/Rate";
 import ShoppingList from "../views/ShoppingList";
 import Accounting from "../js/components/Finance/Accounting";
+import TemplateEditor from "../js/components/Finance/Views/TemplateEditor";
 
 const router = new VueRouter({
     mode: "history",
@@ -55,6 +56,22 @@ const router = new VueRouter({
             meta: {
                 breadcrumb: [
                     { name: "Finanzen / Buchhaltung" }
+                ]
+            }
+        },
+        {
+            path: "/finance/template/:templateId",
+            name: "templateEditor",
+            component: TemplateEditor,
+            //make sure period has correct type after page refresh
+            props(route) {
+                const props = { ...route.params };
+                props.templateId = parseInt(props.templateId);
+                return props;
+            },
+            meta: {
+                breadcrumb: [
+                    { name: "Finanzen / Vorlagen" }
                 ]
             }
         },

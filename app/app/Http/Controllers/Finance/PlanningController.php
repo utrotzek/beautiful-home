@@ -17,6 +17,12 @@ class PlanningController extends Controller
         return response(new PlanningCollection($plannings));
     }
 
+    public function forTemplate($templateId)
+    {
+        $plannings = Planning::where('template_id', '=', (int)$templateId)->get();
+        return response(new PlanningCollection($plannings));
+    }
+
     public function show($id)
     {
         return response()->json(new \App\Http\Resources\Planning(Planning::find($id)));

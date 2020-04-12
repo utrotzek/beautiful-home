@@ -123,7 +123,8 @@
                 >
                     <div class="col-xs-8 col-md-3  mt-4 mb-3">
                         <TemplatesCrud
-                            templates="[]"
+                            :templates="templateData"
+                            @editTemplate="editTemplate"
                         />
                     </div>
                 </div>
@@ -147,6 +148,7 @@ export default {
             year: new Date().getFullYear(),
             allMonths: [],
             periods: [],
+            templateData: [],
             loaded: false,
             errorMessage: "",
             view: "accounting"
@@ -208,6 +210,12 @@ export default {
                     this.allMonths = [];
                 });
 
+            const templatesPromise = window.axios.get("/api/finance/template")
+                .then(res => {
+                    this.templateData = res.data;
+                });
+
+            await templatesPromise;
             await periodPromise;
             await monthPromise;
             this.$refs.topProgress.done();
@@ -218,6 +226,9 @@ export default {
         },
         showTemplates() {
             this.view = "templates";
+        },
+        editTemplate(template){
+            this.$router.push({name: "templateEditor", params: {templateId: template.id}});
         }
     },
 };

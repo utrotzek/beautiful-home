@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-8">
                 <h2 class="d-none d-md-block">
-                    Planung
+                    {{ Headline }}
                 </h2>
             </div>
             <div class="col-12 col-md-4 text-left text-md-right">
@@ -42,8 +42,8 @@
                 :planning-item="item"
                 :click-enabled="planningClickEnabled(item.id)"
                 :edit-mode="item.editMode"
-                :year="period.year"
-                :month="period.month"
+                :year="year"
+                :month="month"
                 :cost-center-data="costCenterData"
                 @connect="connectPlanning(item.id, true)"
                 @delete="deletePlanning(item.id)"
@@ -84,12 +84,20 @@ export default {
         Search
     },
     props: {
-        period: {
-            type: Object,
-            reqiored: true,
-            default() {
-                return null;
-            }
+        headline: {
+            type: String,
+            required: false,
+            default: "Planung"
+        },
+        year: {
+            type: Number,
+            required: true,
+            default: null
+        },
+        month: {
+            type: Number,
+            required: true,
+            default: null
         },
         planningData: {
             type: Array,

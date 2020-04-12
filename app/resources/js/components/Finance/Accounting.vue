@@ -52,7 +52,8 @@
 
                     <PlanningSidebar
                         :planning-data="planningData"
-                        :period="currentPeriod"
+                        :month="currentPeriod.month"
+                        :year="currentPeriod.year"
                         :cost-center-data="costCenterData"
                         @createNewPlanning="createNewPlanning"
                         @deletePlanning="deletePlanning"
@@ -156,7 +157,7 @@ export default {
             },
             costCenterData: [],
             accountingData: [],
-            planningData: [ ],
+            planningData: []
         };
     },
     mounted() {
