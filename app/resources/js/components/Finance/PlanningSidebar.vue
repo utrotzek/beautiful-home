@@ -45,7 +45,7 @@
                 :year="year"
                 :month="month"
                 :cost-center-data="costCenterData"
-                :allowConnection="allowConnection"
+                :allow-connection="allowConnection"
                 @connect="connectPlanning(item.id, true)"
                 @delete="deletePlanning(item.id)"
                 @close="connectPlanning(item.id, false)"
