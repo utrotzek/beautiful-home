@@ -4,11 +4,9 @@
             <span class="label">Kontostand:</span>
             <span class="amount positive">{{ accountingSum | toCurrency }}</span>
         </div>
-        <hr>
-        <h3>Umsätze</h3>
         <table
             id="currentAmountTable"
-            class="table table-sm"
+            class="table table-sm mt-3"
         >
             <thead>
                 <tr>
@@ -27,7 +25,7 @@
             <tbody>
                 <tr>
                     <td class="font-weight-bold">
-                        Aktuell
+                        Umsätze
                     </td>
                     <td class="text-right">
                         {{ accountingIncome | toCurrency }}
@@ -74,7 +72,7 @@
             v-if="topOutgoingCostCenter.length > 0"
             id="top-outgoing"
         >
-            <h3>Top Ausgaben</h3>
+            <h3>Größte Ausgaben</h3>
             <table
                 class="table table-sm"
             >
@@ -104,7 +102,7 @@
             v-if="topIncomeCostCenter.length > 0"
             id="top-income"
         >
-            <h3>Top Einnahmen</h3>
+            <h3>Größte Einnahmen</h3>
             <table
                 class="table table-sm"
             >
