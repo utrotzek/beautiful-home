@@ -1,31 +1,26 @@
 <template>
     <div class="template-crud">
-        <div
-            v-for="template in templates"
-            :key="template.id"
-            class="row mb-2 entry"
-        >
-            <div class="col-6 title">
+        <div class="list-group">
+            <div
+                v-for="template in templates"
+                :key="template.id"
+                class="list-group-item list-group-item-action template-item"
+                @click="editTemplate(template)"
+            >
                 {{ template.title }}
-            </div>
-            <div class="col-6 edit-controls">
-                <button
-                    title="Vorlage bearbeiten"
-                    class="edit"
-                    @click="editTemplate(template)"
-                >
-                    <i class="fa fa-edit"></i>
-                </button>
-                <button
-                    title="Vorlage löschen"
-                    class="delete"
-                    @click="deleteTemplate(template)"
-                >
-                    <i class="fa fa-trash-alt"></i>
-                </button>
+
+                <span class="edit-controls float-right">
+                    <button
+                        title="Vorlage löschen"
+                        class="delete"
+                        @click="deleteTemplate(template)"
+                        @click.stop
+                    >
+                        <i class="fa fa-trash-alt"></i>
+                    </button>
+                </span>
             </div>
         </div>
-
         <div class="row mt-4">
             <div class="col">
                 <div class="form-inline">
@@ -115,5 +110,9 @@ export default {
     .edit-controls button {
         background-color: transparent;
         border:none;
+    }
+
+    .template-item {
+        cursor: pointer;
     }
 </style>
