@@ -58,11 +58,11 @@ class PlanningController extends Controller
 
         $planning->costCenter()->associate(CostCenter::find($request->input('costCenter')['id']));
 
-        if (!empty($request->input('period'))){
+        if (!empty($request->input('period'))) {
             $planning->period()->associate(Period::find($request->input('period')['id']));
         }
 
-        if (!empty($request->input('template'))){
+        if (!empty($request->input('template'))) {
             $planning->template()->associate(Period::find($request->input('template')['id']));
         }
 
