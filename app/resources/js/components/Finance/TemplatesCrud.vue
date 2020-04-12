@@ -1,6 +1,9 @@
 <template>
     <div class="template-crud">
-        <div class="list-group">
+        <div
+            v-if="templates.length > 0"
+            class="list-group"
+        >
             <div
                 v-for="template in templates"
                 :key="template.id"
@@ -21,10 +24,15 @@
                 </span>
             </div>
         </div>
+        <div v-else>
+            <div class="alert alert-info">
+                Noch keine Vorlagen vorhanden.
+            </div>
+        </div>
         <div class="row mt-4">
             <div class="col">
                 <div class="form-inline">
-                    <div class="form-group mx-sm-3 mb-2">
+                    <div class="form-group mx-sm-1 mb-2">
                         <label class="sr-only">Name</label>
                         <input
                             v-model="$v.newTemplateName.$model"
@@ -114,5 +122,10 @@ export default {
 
     .template-item {
         cursor: pointer;
+    }
+
+    .form-inline input:not(.is-invalid),
+    .form-inline input:not(.is-valid) {
+        padding-right: calc(1.5em + 0.75rem);
     }
 </style>
