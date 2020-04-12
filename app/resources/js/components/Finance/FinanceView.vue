@@ -126,6 +126,7 @@
                             :templates="templateData"
                             @editTemplate="editTemplate"
                             @deleteTemplate="deleteTemplate"
+                            @createTemplate="createTemplate"
                         />
                     </div>
                 </div>
@@ -230,6 +231,14 @@ export default {
         },
         editTemplate(template){
             this.$router.push({name: "templateEditor", params: {templateId: template.id}});
+        },
+        createTemplate(newTemplateName){
+            this.$refs.topProgress.start();
+            window.axios.post("/api/finance/template", {title: newTemplateName})
+                .then(res => {
+                    this.templateData.push(res.data);
+                    this.$refs.topProgress.done();
+                });
         },
         deleteTemplate(template){
             this.$refs.topProgress.start();

@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Template extends Model
 {
+    protected $fillable = ['title'];
+
     public function plannings()
     {
         return $this->hasMany('App\Finance\Planning');

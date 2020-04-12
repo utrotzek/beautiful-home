@@ -39,7 +39,10 @@ class TemplateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $template = Template::make(['title' => $request->input('title')]);
+        $template->save();
+        $template->fresh();
+        return response(new TemplateResource($template));
     }
 
     /**
