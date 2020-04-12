@@ -10,26 +10,30 @@
         >
             <Headline :text="completeHeadline" />
             <div
-                class="row"
+                id="main-content"
             >
-                <div class="col-6">
-                    <div id="planning">
-                        <PlanningSidebar
-                            :headline="planningSidebarHeadline"
-                            :year="year"
-                            :month="month"
-                            :planning-data="planningData"
-                            :cost-center-data="costCenterData"
-                            :allow-connection="false"
-                            @createNewPlanning="createNewPlanning"
-                            @save="savePlanning"
-                            @deletePlanning="deletePlanning"
-                        />
+                <div
+                    class="row"
+                >
+                    <div class="col-6">
+                        <div id="planning">
+                            <PlanningSidebar
+                                :headline="planningSidebarHeadline"
+                                :year="year"
+                                :month="month"
+                                :planning-data="planningData"
+                                :cost-center-data="costCenterData"
+                                :allow-connection="false"
+                                @createNewPlanning="createNewPlanning"
+                                @save="savePlanning"
+                                @deletePlanning="deletePlanning"
+                            />
+                        </div>
                     </div>
-                </div>
-                <div class="col-6">
-                    <div id="overview">
-                        <h2>Übersicht</h2>
+                    <div class="col-6">
+                        <div id="overview">
+                            <h2>Übersicht</h2>
+                        </div>
                     </div>
                 </div>
             </div>
