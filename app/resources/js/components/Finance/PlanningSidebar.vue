@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-8">
                 <h2 class="d-none d-md-block">
-                    {{ Headline }}
+                    {{ headline }}
                 </h2>
             </div>
             <div class="col-12 col-md-4 text-left text-md-right">
