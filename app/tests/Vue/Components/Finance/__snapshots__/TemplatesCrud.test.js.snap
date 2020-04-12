@@ -5,69 +5,47 @@ exports[`TemplateCrud renders properly 1`] = `
   class="template-crud"
 >
   <div
-    class="row mb-2 entry"
+    class="list-group"
   >
     <div
-      class="col-6 title"
+      class="list-group-item list-group-item-action template-item entry"
     >
       
             Standard
-        
-    </div>
-     
-    <div
-      class="col-6 edit-controls"
-    >
-      <button
-        class="edit"
-        title="Vorlage bearbeiten"
+
+            
+      <span
+        class="edit-controls float-right"
       >
-        <i
-          class="fa fa-edit"
-        />
-      </button>
-       
-      <button
-        class="delete"
-        title="Vorlage löschen"
-      >
-        <i
-          class="fa fa-trash-alt"
-        />
-      </button>
+        <button
+          class="delete"
+          title="Vorlage löschen"
+        >
+          <i
+            class="fa fa-trash-alt"
+          />
+        </button>
+      </span>
     </div>
-  </div>
-  <div
-    class="row mb-2 entry"
-  >
     <div
-      class="col-6 title"
+      class="list-group-item list-group-item-action template-item entry"
     >
       
             Nicht Standard
-        
-    </div>
-     
-    <div
-      class="col-6 edit-controls"
-    >
-      <button
-        class="edit"
-        title="Vorlage bearbeiten"
+
+            
+      <span
+        class="edit-controls float-right"
       >
-        <i
-          class="fa fa-edit"
-        />
-      </button>
-       
-      <button
-        class="delete"
-        title="Vorlage löschen"
-      >
-        <i
-          class="fa fa-trash-alt"
-        />
-      </button>
+        <button
+          class="delete"
+          title="Vorlage löschen"
+        >
+          <i
+            class="fa fa-trash-alt"
+          />
+        </button>
+      </span>
     </div>
   </div>
    

@@ -31,7 +31,7 @@ describe("TemplateCrud", () => {
     });
 
     it("will fire edit event when edit button was clicked", () => {
-        wrapper.find(".entry:nth-child(1) .edit-controls .edit").trigger("click");
+        wrapper.find(".entry:nth-child(1)").trigger("click");
         expect(wrapper.emitted().editTemplate[0]).toEqual([templates[0]]);
     });
 

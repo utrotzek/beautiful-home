@@ -4,7 +4,7 @@
             <div
                 v-for="template in templates"
                 :key="template.id"
-                class="list-group-item list-group-item-action template-item"
+                class="list-group-item list-group-item-action template-item entry"
                 @click="editTemplate(template)"
             >
                 {{ template.title }}
