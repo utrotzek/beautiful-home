@@ -24,6 +24,7 @@
                                 :planning-data="planningData"
                                 :cost-center-data="costCenterData"
                                 :allow-connection="false"
+                                :allow-template-import="false"
                                 @createNewPlanning="createNewPlanning"
                                 @save="savePlanning"
                                 @deletePlanning="deletePlanning"

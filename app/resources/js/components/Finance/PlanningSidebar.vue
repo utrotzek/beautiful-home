@@ -17,6 +17,7 @@
                     class="mb-3"
                 >
                     <button
+                        v-if="allowTemplateImport"
                         class="btn btn-outline-dark"
                         title="Einträge aus Vorlage übernehmen"
                         @click="toggleTemplateSelector"
@@ -133,6 +134,11 @@ export default {
             }
         },
         allowConnection: {
+            type: Boolean,
+            required: false,
+            default: true
+        },
+        allowTemplateImport: {
             type: Boolean,
             required: false,
             default: true
