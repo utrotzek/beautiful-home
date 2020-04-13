@@ -1,0 +1,299 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Overview renders properly 1`] = `
+<div
+  class="financial-overview"
+>
+  <div
+    class="bank-balance"
+  >
+    <span
+      class="label"
+    >
+      Kontostand:
+    </span>
+     
+    <span
+      class="amount positive"
+    >
+      €950.00
+    </span>
+  </div>
+   
+  <table
+    class="table table-sm mt-3"
+    id="currentAmountTable"
+    topincomecostcenter=""
+  >
+    <thead>
+      <tr>
+        <th
+          class="text-right"
+        />
+         
+        <th
+          class="text-right"
+        >
+          
+                    Einnahmen
+                
+        </th>
+         
+        <th
+          class="text-right"
+        >
+          
+                    Ausgaben
+                
+        </th>
+         
+        <th
+          class="text-right"
+        >
+          
+                    Summe
+                
+        </th>
+      </tr>
+    </thead>
+     
+    <tbody>
+      <tr>
+        <td
+          class="font-weight-bold"
+        >
+          
+                    Umsätze
+                
+        </td>
+         
+        <td
+          class="text-right"
+        >
+          
+                    €1,100.00
+                
+        </td>
+         
+        <td
+          class="text-right"
+        >
+          
+                    -€150.00
+                
+        </td>
+         
+        <td
+          class="text-right"
+        >
+          
+                    €950.00
+                
+        </td>
+      </tr>
+       
+      <tr>
+        <td
+          class="font-weight-bold"
+        >
+          
+                    Planung
+                
+        </td>
+         
+        <td
+          class="text-right"
+        >
+          
+                    €1,100.00
+                
+        </td>
+         
+        <td
+          class="text-right"
+        >
+          
+                    -€250.00
+                
+        </td>
+         
+        <td
+          class="text-right"
+        >
+          
+                    €850.00
+                
+        </td>
+      </tr>
+       
+      <tr>
+        <td
+          class="font-weight-bold"
+        >
+          
+                    Gesamt
+                
+        </td>
+         
+        <td
+          class="text-right"
+        >
+          
+                    €2,200.00
+                
+        </td>
+         
+        <td
+          class="text-right"
+        >
+          
+                    -€400.00
+                
+        </td>
+         
+        <td
+          class="text-right"
+        >
+          
+                    €1,800.00
+                
+        </td>
+      </tr>
+    </tbody>
+  </table>
+   
+  <div
+    id="top-outgoing"
+  >
+    <h3>
+      Ausgaben
+    </h3>
+     
+    <table
+      class="table table-sm"
+    >
+      <thead>
+        <tr>
+          <th>
+            Kostenstelle
+          </th>
+           
+          <th
+            class="text-right"
+          >
+            
+                        Summe
+                    
+          </th>
+        </tr>
+      </thead>
+       
+      <tbody>
+        <tr>
+          <td>
+            <span
+              class="filter fas fa-filter inactive"
+            />
+            
+                        Einkaufen
+                    
+          </td>
+           
+          <td
+            class="text-right"
+          >
+            
+                        -€90.00
+                    
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span
+              class="filter fas fa-filter inactive"
+            />
+            
+                        Sonstiges
+                    
+          </td>
+           
+          <td
+            class="text-right"
+          >
+            
+                        -€60.00
+                    
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+   
+  <div
+    id="top-income"
+  >
+    <h3>
+      Einnahmen
+    </h3>
+     
+    <table
+      class="table table-sm"
+    >
+      <thead>
+        <tr>
+          <th>
+            Kostenstelle
+          </th>
+           
+          <th
+            class="text-right"
+          >
+            
+                        Summe
+                    
+          </th>
+        </tr>
+      </thead>
+       
+      <tbody>
+        <tr>
+          <td>
+            <span
+              class="filter fas fa-filter inactive"
+            />
+            
+                        Gehalt
+                    
+          </td>
+           
+          <td
+            class="text-right"
+          >
+            
+                        €700.00
+                    
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span
+              class="filter fas fa-filter inactive"
+            />
+            
+                        Lotto
+                    
+          </td>
+           
+          <td
+            class="text-right"
+          >
+            
+                        €400.00
+                    
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;

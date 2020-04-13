@@ -146,6 +146,7 @@
 </template>
 
 <script>
+import _ from "lodash/lodash";
 export default {
     name: "OverviewVue",
     props: {
