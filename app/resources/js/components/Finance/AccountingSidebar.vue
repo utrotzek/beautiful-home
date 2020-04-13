@@ -127,8 +127,8 @@
 import moment from "moment";
 import Search from "../tools/Search";
 import AccountingElement from "./AccountingElement";
-import ConnectionModal from "./ConnectionModal";
-import ImporterModal from "./Importer/ImporterModal";
+import ConnectionModal from "./Modals/ConnectionModal";
+import ImporterModal from "./Modals/ImporterModal";
 
 export default {
     name: "AccountingSidebar",

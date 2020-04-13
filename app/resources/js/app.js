@@ -14,7 +14,7 @@ Vue.use(VCalendar);
 
 import App from "../views/App";
 import Home from "../views/Home";
-import FinanceView from "./components/Finance/FinanceView";
+import FinanceView from "./components/Finance/Views/FinanceView";
 import Recipe from "../views/Recipe";
 import RecipeEdit from "../views/Recipe/Edit";
 import RecipeSearch from "../views/Recipe/Search";

@@ -137,8 +137,8 @@
 
 
 <script>
-import YearComponent from "./Year";
-import TemplatesCrud from "./TemplatesCrud";
+import YearComponent from "./../Year";
+import TemplatesCrud from "./../TemplatesCrud";
 
 export default {
     components: {
