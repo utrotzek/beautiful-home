@@ -72,7 +72,7 @@
             v-if="topOutgoingCostCenter.length > 0"
             id="top-outgoing"
         >
-            <h3>Größte Ausgaben</h3>
+            <h3>Ausgaben</h3>
             <table
                 class="table table-sm"
             >
@@ -102,7 +102,7 @@
             v-if="topIncomeCostCenter.length > 0"
             id="top-income"
         >
-            <h3>Größte Einnahmen</h3>
+            <h3>Einnahmen</h3>
             <table
                 class="table table-sm"
             >
