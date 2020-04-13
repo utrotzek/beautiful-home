@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Finance;
 
+use App\Http\Resources\PlanningCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TemplateResource extends JsonResource
@@ -16,7 +17,8 @@ class TemplateResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title
+            'title' => $this->title,
+            'plannings' => new PlanningCollection($this->plannings)
         ];
     }
 }

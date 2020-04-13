@@ -1,48 +1,56 @@
 <template>
-    <transition
-        v-if="show"
-        name="modal"
-    >
-        <div class="modal-mask">
-            <div class="modal-wrapper">
-                <div
-                    class="modal-dialog"
-                    role="document"
-                >
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="modal-title">
-                                Template auswählen
-                            </h3>
-                            <button
-                                type="button"
-                                class="close"
-                                data-dismiss="modal"
-                                aria-label="Close"
-                                @click="close"
-                            >
-                                <span
-                                    aria-hidden="true"
-                                >&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <ul class="list-group">
-                                <li
-                                    v-for="item in templates"
-                                    :key="item.id"
-                                    class="list-group-item template-entry"
-                                    @click="selectTemplate(item)"
+    <div class="modal-wrapper">
+        <Progressbar
+            ref="modalProgress"
+            color="#f8f9fa"
+        />
+        <transition
+            v-if="show"
+            name="modal"
+        >
+            <div class="modal-mask">
+
+                <div class="modal-wrapper">
+                    <div
+                        class="modal-dialog"
+                        role="document"
+                    >
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">
+                                    Template auswählen
+                                </h3>
+                                <button
+                                    type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                    @click="close"
                                 >
-                                    {{ item.title }}
-                                </li>
-                            </ul>
+                                    <span
+                                        aria-hidden="true"
+                                    >&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Wählen Sie eine Vorlage aus. Die Daten werden anschließend in den aktuellen Monat übernommen.</p>
+                                <ul class="list-group">
+                                    <li
+                                        v-for="item in templates"
+                                        :key="item.id"
+                                        class="list-group-item template-entry"
+                                        @click="selectTemplate(item)"
+                                    >
+                                        {{ item.title }} ({{ item.plannings.length }} Einträge)
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </transition>
+        </transition>
+    </div>
 </template>
 
 <script>
@@ -72,9 +80,11 @@ export default {
             this.$emit("close");
         },
         async loadTemplates(){
+            this.$refs.modalProgress.start();
             await window.axios.get("/api/finance/template")
                 .then(res => {
                     this.templates = res.data;
+                    this.$refs.modalProgress.done();
                 });
         },
         selectTemplate(selectedTemplate){
