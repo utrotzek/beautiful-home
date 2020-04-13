@@ -75,6 +75,7 @@
                 >
                     <AccountingSidebar
                         :accounting-data="accountingData"
+                        :cost-center-filter="costCenterFilter"
                         :period="currentPeriod"
                         :create-connection-data="createConnectionData"
                         @createNewAccounting="createNewAccounting"
@@ -108,6 +109,7 @@
                     <Overview
                         :planning-items="planningData"
                         :accounting-items="accountingData"
+                        @filterChanged="updateCostCenterFilter"
                     />
                 </div>
             </div>
@@ -157,6 +159,7 @@ export default {
                 planningData: null
             },
             costCenterData: [],
+            costCenterFilter: [],
             accountingData: [],
             planningData: []
         };
@@ -563,6 +566,9 @@ export default {
 
                     this.stopProgressBar();
                 });
+        },
+        updateCostCenterFilter(newFilter){
+            this.costCenterFilter = newFilter;
         }
     }
 };

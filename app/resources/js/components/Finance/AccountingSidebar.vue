@@ -168,6 +168,13 @@ export default {
                     planningData: null
                 };
             }
+        },
+        costCenterFilter: {
+            type: Array,
+            required: false,
+            default () {
+                return [];
+            }
         }
     },
     data() {
@@ -208,6 +215,25 @@ export default {
                     display = false;
                 }
 
+                //apply cost center filter
+                if (display && this.costCenterFilter.length > 0){
+                    if (accounting.connectedPlanning.length > 0)  {
+                        let hasCostCenter = false;
+                        for (let i=0; i < accounting.connectedPlanning.length; i++){
+                            for (let x=0; x < this.costCenterFilter.length; x++){
+                                if (accounting.connectedPlanning[i].costCenter){
+                                    if (accounting.connectedPlanning[i].costCenter.id === this.costCenterFilter[x].id) {
+                                        hasCostCenter = true;
+                                    }
+                                }
+                            }
+                        }
+                        display = hasCostCenter;
+                    }else{
+                        //hide if filter was applied but no elements are connected
+                        display = false;
+                    }
+                }
                 return display;
             });
         }

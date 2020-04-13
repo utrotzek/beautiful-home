@@ -89,7 +89,14 @@
                         v-for="(item, key) in topOutgoingCostCenter"
                         :key="key"
                     >
-                        <td>{{ item.title }}</td>
+                        <td>
+                            <span
+                                class="filter fas fa-filter"
+                                :class="isActive(item)"
+                                @click="toggleFilter(item)"
+                            ></span>
+                            {{ item.title }}
+                        </td>
                         <td class="text-right">
                             {{ item.amount | toCurrency }}
                         </td>
@@ -119,7 +126,15 @@
                         v-for="(item, key) in topIncomeCostCenter"
                         :key="key"
                     >
-                        <td>{{ item.title }}</td>
+                        <td>
+                            <span
+                                class="filter fas fa-filter"
+                                :class="isActive(item)"
+                                @click="toggleFilter(item)"
+                            ></span>
+                            {{ item.title }}
+                        </td>
+
                         <td class="text-right">
                             {{ item.amount | toCurrency }}
                         </td>
@@ -179,6 +194,11 @@ export default {
                 ];
             }
         }
+    },
+    data() {
+        return {
+            costCenterFilter: []
+        };
     },
     computed: {
         accountingIncome() {
@@ -285,11 +305,43 @@ export default {
 
             topCostCenters = _.sortBy(topCostCenters, "value").reverse();
             return topCostCenters;
+        },
+        toggleFilter(toggleItem){
+            const index = this.costCenterFilter.findIndex((item) => { return toggleItem.id === item.id; });
+            if (index > -1){
+                this.costCenterFilter.splice(index, 1);
+            }else{
+                const newFilterItem = {
+                    id: toggleItem.id,
+                    title: toggleItem.title
+                };
+                this.costCenterFilter.push(newFilterItem);
+            }
+
+            this.$emit("filterChanged", this.costCenterFilter);
+        },
+        isActive(checkItem){
+            const index = this.costCenterFilter.findIndex((item) => { return checkItem.id === item.id; });
+            if (index > -1){
+                return "active";
+            }else{
+                return "inactive";
+            }
         }
     }
 };
 </script>
 
 <style scoped>
+    .filter {
+        cursor: pointer;
+        margin-right: 1em;
+    }
+    .inactive {
+        color: #E9ECEF;
+    }
 
+    .inactive:hover {
+        color: #212529;
+    }
 </style>
