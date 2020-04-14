@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Overview renders properly 1`] = `
+<div
+  class="search-wrapper"
+>
+  <form
+    class="search-form form-inline md-form form-sm mt-0"
+  >
+    <span
+      aria-hidden="true"
+      class="search-icon fas fa-search"
+    />
+     
+    <input
+      aria-label="Search"
+      class="search-control form-control form-control-sm w-100"
+      placeholder="Suche"
+      type="text"
+    />
+     
+    <!---->
+  </form>
+</div>
+`;
