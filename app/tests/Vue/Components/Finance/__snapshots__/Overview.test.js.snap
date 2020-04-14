@@ -23,7 +23,6 @@ exports[`Overview renders properly 1`] = `
   <table
     class="table table-sm mt-3"
     id="currentAmountTable"
-    topincomecostcenter=""
   >
     <thead>
       <tr>
