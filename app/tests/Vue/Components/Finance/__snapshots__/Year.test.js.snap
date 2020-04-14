@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`year renders properly 1`] = `
+<div>
+  <button
+    class="btn btn-default text-left decrease-year"
+  >
+    <span
+      class="fa fa-minus-circle"
+    />
+  </button>
+   
+  <span
+    class="year-label"
+  >
+    2019
+  </span>
+   
+  <button
+    class="btn btn-default text-left increase-year"
+  >
+    <span
+      class="fa fa-plus-circle"
+    />
+  </button>
+</div>
+`;

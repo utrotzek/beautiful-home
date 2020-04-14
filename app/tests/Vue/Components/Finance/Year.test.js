@@ -15,6 +15,10 @@ describe("year", () => {
         );
     });
 
+    it ("renders properly", () => {
+        expect(wrapper.element).toMatchSnapshot();
+    });
+
     it("can display the default year", () => {
         expect(wrapper.find(".year-label").text()).toEqual("2019");
     });
@@ -31,7 +35,4 @@ describe("year", () => {
         expect(wrapper.emitted("update-year")[3]).toEqual([2019]);
 
     });
-
-    function expectUpdatedValue(value){
-    }
 });
