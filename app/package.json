@@ -59,6 +59,7 @@
         },
         "collectCoverageFrom": [
             "**/js/components/tools/*.vue",
+            "**/js/components/Finance/**/*.vue",
             "!**/node_modules/**",
             "!**/vendor/**"
         ],
