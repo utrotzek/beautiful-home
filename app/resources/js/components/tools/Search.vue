@@ -37,6 +37,7 @@ export default {
     },
     methods: {
         onSubmit(e) {
+            /* istanbul ignore next */
             // To prevent the form from submitting
             e.preventDefault();
         },
