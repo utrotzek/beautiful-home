@@ -23,10 +23,11 @@ describe("Overview", () => {
         expect(wrapper.emitted().searched[0]).toEqual([expectedTerm]);
     });
 
-    it ("can clear the search term", () =>{
+    it ("can clear the search term", async () =>{
         const expectedSearchTerm = "";
 
         enterSearchTerm();
+        await Vue.nextTick();
         wrapper.find(".search-clear").trigger("click");
 
         expect(wrapper.emitted().searched[1]).toEqual([expectedSearchTerm]);
