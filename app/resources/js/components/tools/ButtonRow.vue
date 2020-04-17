@@ -7,7 +7,7 @@
         <button
             v-if="showSave"
             type="button"
-            class="btn btn-light"
+            class="save btn btn-light"
             :disabled="disabled"
             @click.stop
             @click="save"
@@ -18,7 +18,7 @@
         <button
             v-if="showCancel"
             type="button"
-            class="btn btn-light"
+            class="cancel btn btn-light"
             @click.stop
             @click="cancel"
         >
@@ -28,7 +28,7 @@
         <button
             v-if="showConnect"
             type="button"
-            class="btn btn-light"
+            class="connect btn btn-light"
             :disabled="disabled"
             @click.stop
             @click="connect"
@@ -39,7 +39,7 @@
         <button
             v-if="showEdit"
             type="button"
-            class="btn btn-light"
+            class="edit btn btn-light"
             :disabled="disabled"
             @click.stop
             @click="edit"
@@ -50,7 +50,7 @@
         <button
             v-if="showDelete"
             type="button"
-            class="btn btn-light"
+            class="delete btn btn-light"
             :disabled="disabled"
             @click.stop
             @click="deleteClick"
@@ -61,7 +61,7 @@
         <button
             v-if="showClose"
             type="button"
-            class="btn btn-light"
+            class="close btn btn-light"
             :disabled="disabled"
             @click.stop
             @click="close"

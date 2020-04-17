@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Overview renders properly 1`] = `
+<div
+  aria-label="Basic example"
+  class="btn-group d-flex"
+  role="group"
+>
+  <button
+    class="save btn btn-light"
+    type="button"
+  >
+    <i
+      class="fas fa-save"
+    />
+     
+    <span
+      class="d-none d-sm-inline"
+    >
+      Speichern
+    </span>
+  </button>
+   
+  <button
+    class="cancel btn btn-light"
+    type="button"
+  >
+    <i
+      class="fas fa-ban"
+    />
+     
+    <span
+      class="d-none d-sm-inline"
+    >
+      Abbrechen
+    </span>
+  </button>
+   
+  <button
+    class="connect btn btn-light"
+    type="button"
+  >
+    <i
+      class="fas fa-link"
+    />
+     
+    <span
+      class="d-none d-sm-inline"
+    >
+      Zuordnen
+    </span>
+  </button>
+   
+  <button
+    class="edit btn btn-light"
+    type="button"
+  >
+    <i
+      class="fas fa-edit"
+    />
+     
+    <span
+      class="d-none d-sm-inline"
+    >
+      Bearbeiten
+    </span>
+  </button>
+   
+  <button
+    class="delete btn btn-light"
+    type="button"
+  >
+    <i
+      class="fas fa-trash"
+    />
+     
+    <span
+      class="d-none d-sm-inline"
+    >
+      Löschen
+    </span>
+  </button>
+   
+  <button
+    class="close btn btn-light"
+    type="button"
+  >
+    <i
+      class="fas fa-ban"
+    />
+     
+    <span
+      class="d-none d-sm-inline"
+    >
+      Schließen
+    </span>
+  </button>
+</div>
+`;
