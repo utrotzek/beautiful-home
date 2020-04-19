@@ -1,7 +1,7 @@
 <template>
     <div
         ref="planningElement"
-        class="planningElement form-group"
+        class="planningElement form-group show-overlay-button"
         @click="showOverlay"
     >
         <Progressbar
@@ -22,11 +22,12 @@
                 :attributes="vCalendarAttributes"
             />
         </div>
-        <div class="title">
+        <div class="title cost-center">
             <div class="float-left">
                 <span v-if="!localEditMode">{{ localPlanningItem.costCenter.title }}</span>
                 <AutoCompleter
                     v-else
+                    ref="costCenterSelector"
                     :items="costCenterData"
                     :enable-inline-creation="true"
                     :show-all-items-on-empty-query="true"
@@ -128,18 +129,7 @@ export default {
         planningItem: {
             type: Object,
             required: true,
-            default() {
-                return {
-                    id: 1,
-                    costCenter: {
-                        id: 100,
-                        title: "MyPlanning Item"
-                    },
-                    description: "My description",
-                    totalAmount: 100,
-                    date: "01.01.1970"
-                };
-            }
+            default: null
         },
         isConnected: {
             type: Boolean,
@@ -160,9 +150,7 @@ export default {
         costCenterData: {
             type: Array,
             required: false,
-            default() {
-                return [];
-            }
+            default: []
         },
         allowConnection: {
             type: Boolean,
@@ -209,10 +197,10 @@ export default {
             };
         },
         startDate() {
-            return moment(this.year + "-" + this.month + "-1").toDate();
+            return moment(this.year + "-" + this.month + "-1", "YYYY-MM-DD").toDate();
         },
         endDate() {
-            return moment(this.year + "-" + this.month + "-1").endOf("month").toDate();
+            return moment(this.year + "-" + this.month + "-1", "YYYY-MM-DD").endOf("month").toDate();
         }
     },
     watch: {
@@ -274,7 +262,7 @@ export default {
                 this.localPlanningItem.isNew = this.planningItem.isNew;
                 this.localEditMode = false;
                 this.displayOverlay = false;
-                this.$emit("save", this.localPlanningItem, true);
+                this.$emit("save", this.localPlanningItem);
             }
         },
         costCenterUpdate(item){
@@ -282,8 +270,10 @@ export default {
             this.localPlanningItem.costCenter = item;
         },
         createCostCenter(newCostCenterName){
+            /* istanbul ignore next */
             this.$refs.topProgress.start();
 
+            /* istanbul ignore next */
             window.axios.post("/api/finance/costCenter", {title: newCostCenterName})
                 .then(res => {
                     this.$emit("createCostCenter", res.data);

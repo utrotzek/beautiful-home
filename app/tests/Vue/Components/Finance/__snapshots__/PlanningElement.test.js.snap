@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlanningElement renders properly 1`] = `
+<div
+  class="planningElement form-group show-overlay-button"
+>
+  <!---->
+   
+  <div
+    class="date"
+  >
+    <span>
+      
+    </span>
+  </div>
+   
+  <div
+    class="title cost-center"
+  >
+    <div
+      class="float-left"
+    >
+      <span>
+        Einkaufen
+      </span>
+    </div>
+     
+    <div
+      class="float-right text-right negative"
+    >
+      <span>
+        -€100.00
+      </span>
+    </div>
+  </div>
+   
+  <div
+    class="clearfix"
+  />
+   
+  <div
+    class="description"
+  >
+    <span
+      class="pre-formatted"
+    >
+      Eintrag 1
+    </span>
+  </div>
+   
+  <!---->
+</div>
+`;
