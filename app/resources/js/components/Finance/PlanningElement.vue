@@ -150,7 +150,7 @@ export default {
         costCenterData: {
             type: Array,
             required: false,
-            default: []
+            default: null
         },
         allowConnection: {
             type: Boolean,

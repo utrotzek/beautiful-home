@@ -1,0 +1,288 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Accounting element renders properly 1`] = `
+<div
+  class="accounting-element row mb-3"
+>
+  <div
+    class="col accounting-element-inner"
+  >
+    <div
+      class="action-buttons"
+    >
+      <button
+        class="edit"
+        title="Bearbeiten"
+      >
+        <i
+          class="fa fa-edit"
+        />
+      </button>
+       
+      <button
+        class="delete"
+        title="Löschen"
+      >
+        <i
+          class="fa fa-trash-alt"
+        />
+      </button>
+    </div>
+     
+    <div
+      class="row"
+    >
+      <div
+        class="date col-9"
+      >
+        <span>
+          
+        </span>
+      </div>
+    </div>
+     
+    <div
+      class="row"
+    >
+      <div
+        class="accounting-title col-9"
+      >
+        <span
+          class="fa fa-check-circle check"
+        />
+         
+        <span
+          class="pre-formatted"
+        >
+          Rewe
+        </span>
+      </div>
+       
+      <div
+        class="amount remaining-amount col-3 positive"
+      >
+        <!---->
+      </div>
+    </div>
+     
+    <div
+      class="row relatedElements"
+    >
+      <div
+        class="col-12 col-md-6"
+      >
+        <div
+          class="planningElement form-group show-overlay-button"
+        >
+          <!---->
+           
+          <!---->
+           
+          <div
+            class="title cost-center"
+          >
+            <div
+              class="float-left"
+            >
+              <span>
+                Einkaufen
+              </span>
+            </div>
+             
+            <div
+              class="float-right text-right negative"
+            >
+              <span>
+                -€40.00
+              </span>
+            </div>
+          </div>
+           
+          <div
+            class="clearfix"
+          />
+           
+          <div
+            class="description"
+          >
+            <span
+              class="pre-formatted"
+            >
+              
+            </span>
+          </div>
+           
+          <!---->
+        </div>
+      </div>
+      <div
+        class="col-12 col-md-6"
+      >
+        <div
+          class="planningElement form-group show-overlay-button"
+        >
+          <!---->
+           
+          <!---->
+           
+          <div
+            class="title cost-center"
+          >
+            <div
+              class="float-left"
+            >
+              <span>
+                Sonstiges
+              </span>
+            </div>
+             
+            <div
+              class="float-right text-right negative"
+            >
+              <span>
+                -€60.00
+              </span>
+            </div>
+          </div>
+           
+          <div
+            class="clearfix"
+          />
+           
+          <div
+            class="description"
+          >
+            <span
+              class="pre-formatted"
+            >
+              
+            </span>
+          </div>
+           
+          <!---->
+        </div>
+      </div>
+       
+      <div
+        class="col-12 col-md-6"
+      >
+        <div
+          class="connectPlaceholder"
+        >
+          <span
+            class="fa align-middle"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Accounting element renders properly in edit mode 1`] = `
+<div
+  class="accounting-element row mb-3"
+>
+  <div
+    class="col accounting-element-inner"
+  >
+    <!---->
+     
+    <div
+      class="row"
+    >
+      <div
+        class="date col-9"
+      >
+        <span
+          data-v-64ee1ddd=""
+        >
+          <input
+            class="vc-appearance-none vc-text-base vc-text-gray-800 vc-bg-white vc-border vc-border-gray-400 vc-rounded vc-w-full vc-py-2 vc-px-3 vc-leading-tight focus:vc-outline-none focus:vc-shadow"
+            data-v-64ee1ddd=""
+            type="input"
+            value="04/22/2020"
+          />
+          <div
+            class="vc-popover-content-wrapper"
+            data-v-64ee1ddd=""
+            data-v-88de91da=""
+          >
+            <!---->
+          </div>
+        </span>
+      </div>
+    </div>
+     
+    <div
+      class="row"
+    >
+      <div
+        class="accounting-title col-9"
+      >
+        <!---->
+         
+        <textarea
+          class="form-control"
+          type="text"
+        />
+      </div>
+       
+      <div
+        class="amount remaining-amount col-3 positive"
+      >
+        <input
+          class="form-control text-right"
+          type="text"
+        />
+      </div>
+    </div>
+     
+    <div>
+      <div
+        aria-label="Basic example"
+        class="btn-group d-flex"
+        role="group"
+      >
+        <button
+          class="save btn btn-light"
+          type="button"
+        >
+          <i
+            class="fas fa-save"
+          />
+           
+          <span
+            class="d-none d-sm-inline"
+          >
+            Speichern
+          </span>
+        </button>
+         
+        <button
+          class="cancel btn btn-light"
+          type="button"
+        >
+          <i
+            class="fas fa-ban"
+          />
+           
+          <span
+            class="d-none d-sm-inline"
+          >
+            Abbrechen
+          </span>
+        </button>
+         
+        <!---->
+         
+        <!---->
+         
+        <!---->
+         
+        <!---->
+      </div>
+    </div>
+  </div>
+</div>
+`;

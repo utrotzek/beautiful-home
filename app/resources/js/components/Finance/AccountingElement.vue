@@ -3,16 +3,18 @@
         <div class="col accounting-element-inner">
             <div
                 v-if="!localAccountingData.editMode"
-                class="delete-element"
+                class="action-buttons"
             >
                 <button
                     title="Bearbeiten"
+                    class="edit"
                     @click="startEditing"
                 >
                     <i class="fa fa-edit"></i>
                 </button>
                 <button
-                    title="Bearbeiten"
+                    title="Löschen"
+                    class="delete"
                     @click="deleteAccounting"
                 >
                     <i class="fa fa-trash-alt"></i>
@@ -56,7 +58,7 @@
                     </textarea>
                 </div>
                 <div
-                    class="remaining-amount col-3"
+                    class="amount remaining-amount col-3"
                     :class="classObject"
                 >
                     <span v-if="!showCheck && !localAccountingData.editMode">{{ localAccountingData.remainingAmount | toCurrency }} €</span>
@@ -165,9 +167,7 @@ export default {
         accountingData: {
             type: Object,
             require: true,
-            default() {
-                return null;
-            }
+            default: null
         }
     },
     data() {
@@ -195,10 +195,10 @@ export default {
             };
         },
         startDate() {
-            return moment(this.year + "-" + this.month + "-1").toDate();
+            return moment(this.year + "-" + this.month + "-01", "YYYY-MM-DD").toDate();
         },
         endDate() {
-            return moment(this.year + "-" + this.month + "-1").endOf("month").toDate();
+            return moment(this.year + "-" + this.month + "-01", "YYYY-MM-DD").endOf("month").toDate();
         }
     },
     mounted(){
@@ -242,11 +242,6 @@ export default {
         doConnection(){
             this.$emit("doConnection", this.localAccountingData.id);
         },
-        removeFromArray(arrayList, id){
-            return arrayList.filter(function(ele){
-                return ele.id !== id;
-            });
-        },
         deletePlanning(id) {
             this.$emit("deleteConnection", this.localAccountingData.id, this.getPlanningById(id));
         },
@@ -256,15 +251,16 @@ export default {
         getPlanningById(id){
             let i=0;
             for(i=0; i < this.localAccountingData.connectedPlanning.length;i++){
+                /* istanbul ignore next */
                 if (id === this.localAccountingData.connectedPlanning[i].id)  {
                     return this.localAccountingData.connectedPlanning[i];
                 }
             }
         },
-        saveEditPlanning(newPlanningItem){
-            newPlanningItem.editMode = false;
-            this.setPlanningById(newPlanningItem.id, newPlanningItem);
-            this.$emit("updateConnectedPlanning", newPlanningItem, this.localAccountingData.id);
+        saveEditPlanning(planningItem){
+            planningItem.editMode = false;
+            this.setPlanningById(planningItem.id, planningItem);
+            this.$emit("updateConnectedPlanning", planningItem, this.localAccountingData.id);
         },
         setPlanningById(id, item){
             let i=0;
@@ -328,14 +324,14 @@ export default {
         padding: 10px 15px 10px 10px;
     }
 
-    .delete-element{
+    .action-buttons{
         position: absolute;
         right: 8px;
         top: 2px;
         z-index: 100;
     }
 
-    .delete-element button {
+    .action-buttons button {
         background-color: transparent;
         border:none;
     }
