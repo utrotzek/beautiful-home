@@ -55,9 +55,7 @@
         >
             <PlanningElement
                 v-if="item.display && (item.totalAmount !== 0 || item.isNew)"
-                :class="planningClass(item.id)"
                 :planning-item="item"
-                :click-enabled="planningClickEnabled(item.id)"
                 :edit-mode="item.editMode"
                 :year="year"
                 :month="month"
@@ -66,9 +64,7 @@
                 @connect="connectPlanning(item.id, true)"
                 @delete="deletePlanning(item.id)"
                 @close="connectPlanning(item.id, false)"
-                @edit="editPlanning"
-                @cancel="editPlanning"
-                @save="saveEditPlanning"
+                @save="savePlanning"
                 @createCostCenter="createCostCenter"
             />
         </div>
@@ -91,6 +87,7 @@
 </template>
 
 <script>
+import _ from "lodash";
 import moment from "moment";
 import PlanningElement from "./PlanningElement";
 import Search from "../tools/Search";
@@ -122,16 +119,12 @@ export default {
         planningData: {
             type: Array,
             required: true,
-            default() {
-                return [];
-            }
+            default: null
         },
         costCenterData: {
             type: Array,
             required: true,
-            default() {
-                return [];
-            }
+            default: null
         },
         allowConnection: {
             type: Boolean,
@@ -181,39 +174,8 @@ export default {
         },
     },
     methods: {
-        planningClickEnabled(id) {
-            return !(this.connectPlanningMode && this.connectPlanningId !== id);
-        },
-        planningClass(id) {
-            if (this.connectPlanningMode && this.connectPlanningId !== id){
-                return { "deactivated": true };
-            }else {
-                return { "activated": true };
-            }
-        },
-        editPlanning(planning) {
-            planning.editMode = !planning.editMode;
-            this.savePlanningById(planning);
-        },
-        savePlanningById(updatedPlanning){
-            let i=0;
-            for(i=0; i < this.planningData.length;i++){
-                if (updatedPlanning.id === this.planningData[i].id)  {
-                    this.planningData[i] = updatedPlanning;
-                }
-            }
-        },
-        getPlanningById(id){
-            let i=0;
-            for(i=0; i < this.planningData.length;i++){
-                if (id === this.planningData[i].id)  {
-                    return this.planningData[i];
-                }
-            }
-        },
-        saveEditPlanning(newPlanningItem){
-            this.getPlanningById(newPlanningItem.id).editMode = false;
-            this.$emit("save", newPlanningItem);
+        savePlanning(planningItemToUpdate){
+            this.$emit("save", planningItemToUpdate);
         },
         planningSearched(query) {
             this.planningQuery = query;

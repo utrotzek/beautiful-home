@@ -7,6 +7,7 @@ export default [
         },
         description: "Eintrag 1",
         totalAmount: -100,
+        isNew: false,
     },
     {
         id: 2,
@@ -16,6 +17,7 @@ export default [
         },
         description: "Eintrag 2",
         totalAmount: -150,
+        isNew: false,
     },
     {
         id: 3,
@@ -25,6 +27,7 @@ export default [
         },
         description: "Person 1",
         totalAmount: 1000,
+        isNew: false,
     },
     {
         id: 4,
@@ -34,5 +37,6 @@ export default [
         },
         description: "Person 1",
         totalAmount: 100,
+        isNew: false,
     }
 ];
