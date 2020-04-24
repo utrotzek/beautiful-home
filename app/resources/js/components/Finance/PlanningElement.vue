@@ -139,10 +139,6 @@ export default {
             type: Boolean,
             default: true
         },
-        clickEnabled: {
-            type: Boolean,
-            default: true
-        },
         editMode: {
             type: Boolean,
             default: false
@@ -160,7 +156,7 @@ export default {
     },
     data() {
         return {
-            localEditMode: this.editMode,
+            localEditMode: this.planningItem.isNew,
             displayOverlay: false,
             localPlanningItem: this.planningItem,
             originalPlanningItem: _.clone(this.planningItem),
@@ -226,9 +222,7 @@ export default {
             };
         },
         showOverlay() {
-            if (this.clickEnabled){
-                this.displayOverlay = true;
-            }
+            this.displayOverlay = true;
         },
         closeOverlay() {
             this.displayOverlay = false;
