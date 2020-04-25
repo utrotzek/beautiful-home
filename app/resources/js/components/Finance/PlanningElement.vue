@@ -156,7 +156,7 @@ export default {
             displayOverlay: false,
             localPlanningItem: this.planningItem,
             originalPlanningItem: _.clone(this.planningItem),
-            date: moment(this.planningItem.date).toDate(),
+            date: moment(this.planningItem.date, "DD.MM.YYYY").toDate(),
             vCalendarAttributes: [
                 {
                     key: "today",
