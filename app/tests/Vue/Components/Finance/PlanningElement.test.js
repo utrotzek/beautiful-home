@@ -17,9 +17,10 @@ Vue.use(VCalendar);
 
 describe("PlanningElement", () => {
     let wrapper = null;
-    let planningData = PlanningDataFixtures[0];
+    let planningData = null;
 
     beforeEach(() => {
+        planningData = _.clone(PlanningDataFixtures[0]);
         wrapper = mount(PlanningElement,{
             propsData: {
                 year: 3000,
@@ -149,8 +150,9 @@ describe("PlanningElement", () => {
         wrapper.vm.displayOverlay = true;
         await Vue.nextTick();
 
-        //click an "cancel" and expect values have been restored to original values
+        //click on "cancel" and expect values have been restored to original values
         wrapper.find(".overlay .cancel").trigger("click");
+        await Vue.nextTick();
         expect(wrapper.vm.localPlanningItem).toStrictEqual(originalPlanningData);
     });
 

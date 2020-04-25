@@ -36,7 +36,7 @@ exports[`Accounting element renders properly 1`] = `
         class="date col-9"
       >
         <span>
-          
+          01.01.3000
         </span>
       </div>
     </div>
@@ -201,7 +201,7 @@ exports[`Accounting element renders properly in edit mode 1`] = `
             class="vc-appearance-none vc-text-base vc-text-gray-800 vc-bg-white vc-border vc-border-gray-400 vc-rounded vc-w-full vc-py-2 vc-px-3 vc-leading-tight focus:vc-outline-none focus:vc-shadow"
             data-v-64ee1ddd=""
             type="input"
-            value="04/22/2020"
+            value="01/01/3000"
           />
           <div
             class="vc-popover-content-wrapper"

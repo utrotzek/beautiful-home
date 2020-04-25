@@ -5,6 +5,7 @@ export default [
         totalAmount: -100,
         remainingAmount: 0,
         editMode: false,
+        date: "01.01.3000",
         connectedPlanning: [
             {
                 id: 100,
@@ -32,6 +33,7 @@ export default [
         totalAmount: -50,
         remainingAmount: 0,
         editMode: false,
+        date: "02.01.3000",
         connectedPlanning: [
             {
                 id: 101,
@@ -59,6 +61,7 @@ export default [
         totalAmount: 1000,
         remainingAmount: 0,
         editMode: false,
+        date: "03.01.3000",
         connectedPlanning: [
             {
                 id: 110,
@@ -86,6 +89,7 @@ export default [
         totalAmount: 100,
         remainingAmount: 0,
         editMode: false,
+        date: "04.01.3000",
         connectedPlanning: [
             {
                 id: 110,
