@@ -28,7 +28,6 @@ describe("PlanningElement", () => {
                 planningItem: planningData,
                 isConnected: false,
                 hasDate: true,
-                clickEnabled: true,
                 editMode: false,
                 costCenterData: CostCenterFixtures,
                 allowConnection: true

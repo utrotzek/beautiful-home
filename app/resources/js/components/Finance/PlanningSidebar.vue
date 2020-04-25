@@ -56,7 +56,6 @@
             <PlanningElement
                 v-if="item.display && (item.totalAmount !== 0 || item.isNew)"
                 :planning-item="item"
-                :edit-mode="item.editMode"
                 :year="year"
                 :month="month"
                 :cost-center-data="costCenterData"

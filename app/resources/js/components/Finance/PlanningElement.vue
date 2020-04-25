@@ -139,10 +139,6 @@ export default {
             type: Boolean,
             default: true
         },
-        editMode: {
-            type: Boolean,
-            default: false
-        },
         costCenterData: {
             type: Array,
             required: false,
