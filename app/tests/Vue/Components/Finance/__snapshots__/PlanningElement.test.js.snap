@@ -29,7 +29,7 @@ exports[`PlanningElement renders properly 1`] = `
       class="float-right text-right negative"
     >
       <span>
-        -€100.00
+        -100,00 €
       </span>
     </div>
   </div>

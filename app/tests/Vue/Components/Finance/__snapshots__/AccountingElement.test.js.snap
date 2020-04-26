@@ -93,7 +93,7 @@ exports[`Accounting element renders properly 1`] = `
               class="float-right text-right negative"
             >
               <span>
-                -€40.00
+                -40,00 €
               </span>
             </div>
           </div>
@@ -140,7 +140,7 @@ exports[`Accounting element renders properly 1`] = `
               class="float-right text-right negative"
             >
               <span>
-                -€60.00
+                -60,00 €
               </span>
             </div>
           </div>
