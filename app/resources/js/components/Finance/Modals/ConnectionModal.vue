@@ -27,7 +27,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p><strong>{{ accounting.title }}</strong> mit Kostenstelle <strong>{{ planning.title }}</strong> verknüpfen.</p>
+                            <p><strong>{{ accounting.title }}</strong> mit Kostenstelle <strong>{{ planning.costCenter.title }}</strong> verknüpfen.</p>
                             <div class="form-group row">
                                 <label
                                     for="desiredAmount"
@@ -44,7 +44,7 @@
                                 <div class="col-4">
                                     <button
                                         v-if="remainingAmountAfterConnection !== 0"
-                                        class="btn btn-secondary"
+                                        class="btn btn-secondary use-full-amount"
                                         @click="useFullAmountForConnection"
                                     >
                                         <span class="fa fa-hand-holding-usd"></span>
@@ -69,7 +69,7 @@
                             </button>
                             <button
                                 type="button"
-                                class="btn btn-primary"
+                                class="btn btn-primary do-connection"
                                 @click="doAccountingPlanningConnection"
                             >
                                 <i class="fas fa-link"></i>
@@ -90,16 +90,12 @@ export default {
         accounting: {
             type: Object,
             required: false,
-            default() {
-                return null;
-            }
+            default: null
         },
         planning: {
             type: Object,
             required: false,
-            default() {
-                return null;
-            }
+            default: null
         },
         show: {
             type: Boolean,

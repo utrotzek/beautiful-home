@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`accounting and planning connection modal renders properly 1`] = `
+<div
+  class="modal-mask"
+>
+  <div
+    class="modal-wrapper"
+  >
+    <div
+      class="modal-dialog"
+      role="document"
+    >
+      <div
+        class="modal-content"
+      >
+        <div
+          class="modal-header"
+        >
+          <h5
+            class="modal-title"
+          >
+            
+                            Zuordnen
+                        
+          </h5>
+           
+          <button
+            aria-label="Close"
+            class="close"
+            data-dismiss="modal"
+            type="button"
+          >
+            <span
+              aria-hidden="true"
+            >
+              ×
+            </span>
+          </button>
+        </div>
+         
+        <div
+          class="modal-body"
+        >
+          <p>
+            <strong>
+              Rewe
+            </strong>
+             mit Kostenstelle 
+            <strong>
+              Einkaufen
+            </strong>
+             verknüpfen.
+          </p>
+           
+          <div
+            class="form-group row"
+          >
+            <label
+              class="col-2 col-form-label"
+              for="desiredAmount"
+            >
+              Betrag
+            </label>
+             
+            <div
+              class="col-6"
+            >
+              <input
+                class="form-control"
+                id="desiredAmount"
+                type="text"
+              />
+            </div>
+             
+            <div
+              class="col-4"
+            >
+              <button
+                class="btn btn-secondary use-full-amount"
+              >
+                <span
+                  class="fa fa-hand-holding-usd"
+                />
+              </button>
+            </div>
+          </div>
+           
+          <div>
+            <div>
+              
+                                Es bleibt dann ein Restbetrag von 0.00 €
+                            
+            </div>
+          </div>
+        </div>
+         
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="btn btn-secondary"
+            type="button"
+          >
+            <i
+              class="fas fa-ban"
+            />
+            
+                            Abbrechen
+                        
+          </button>
+           
+          <button
+            class="btn btn-primary do-connection"
+            type="button"
+          >
+            <i
+              class="fas fa-link"
+            />
+            
+                            Zuordnen
+                        
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
