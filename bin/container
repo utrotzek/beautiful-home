@@ -65,11 +65,7 @@ function startContainer {
 
 function start {
     startContainer
-
     copyEnvExample
-    installPackages
-    generateIDEHelper
-    compileTemplates
 }
 
 function stop {
