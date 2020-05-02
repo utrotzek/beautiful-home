@@ -68,8 +68,11 @@ export default {
         };
     },
     watch: {
+        /* istanbul ignore next */
         show(value) {
+            /* istanbul ignore next */
             if (value){
+                /* istanbul ignore next */
                 this.loadTemplates();
             }
         }

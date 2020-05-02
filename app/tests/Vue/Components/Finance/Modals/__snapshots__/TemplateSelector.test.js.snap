@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`accounting and planning connection modal renders properly 1`] = `
+<div
+  class="modal-wrapper"
+>
+  <progressbar-stub
+    color="#f8f9fa"
+    easing="linear"
+    errorcolor="#f44336"
+    height="3"
+    maximum="97.5"
+    minimum="0.8"
+    speed="350"
+    trickle="true"
+    tricklespeed="250"
+    zindex="9999"
+  />
+   
+  <transition-stub
+    name="modal"
+  >
+    <div
+      class="modal-mask"
+    >
+      <div
+        class="modal-wrapper"
+      >
+        <div
+          class="modal-dialog"
+          role="document"
+        >
+          <div
+            class="modal-content"
+          >
+            <div
+              class="modal-header"
+            >
+              <h3
+                class="modal-title"
+              >
+                
+                                Template auswählen
+                            
+              </h3>
+               
+              <button
+                aria-label="Close"
+                class="close"
+                data-dismiss="modal"
+                type="button"
+              >
+                <span
+                  aria-hidden="true"
+                >
+                  ×
+                </span>
+              </button>
+            </div>
+             
+            <div
+              class="modal-body"
+            >
+              <p>
+                Wählen Sie eine Vorlage aus. Die Daten werden anschließend in den aktuellen Monat übernommen.
+              </p>
+               
+              <ul
+                class="list-group"
+              >
+                <li
+                  class="list-group-item template-entry"
+                >
+                  
+                                    Default template (2 Einträge)
+                                
+                </li>
+                <li
+                  class="list-group-item template-entry"
+                >
+                  
+                                    Another template (2 Einträge)
+                                
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition-stub>
+</div>
+`;
