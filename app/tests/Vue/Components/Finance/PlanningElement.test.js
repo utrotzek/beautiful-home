@@ -5,12 +5,10 @@ import PlanningElement from "../../../../resources/js/components/Finance/Plannin
 import Vue from "vue";
 import Vuelidate from "vuelidate";
 import filters from "../../../../resources/js/filters";
-import { vueTopprogress } from "vue-top-progress";
 import VCalendar from "v-calendar";
 import PlanningDataFixtures from "./Fixtures/PlanningFixtures";
 import CostCenterFixtures from "./Fixtures/CostCenterFixtures";
 
-Vue.component("Progressbar", vueTopprogress);
 Vue.use(filters);
 Vue.use(Vuelidate);
 Vue.use(VCalendar);

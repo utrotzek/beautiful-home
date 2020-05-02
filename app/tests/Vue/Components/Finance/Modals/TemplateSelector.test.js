@@ -1,15 +1,9 @@
 import {shallowMount} from "@vue/test-utils";
 import templateSelector from "../../../../../resources/js/components/Finance/Modals/TemplateSelector";
-import Vue from "vue";
-import { vueTopprogress } from "vue-top-progress";
 import moxios from "moxios";
 import _ from "lodash";
 
-Vue.component("Progressbar", vueTopprogress);
-
 import TemplateDataFixtures from "../Fixtures/TemplateFixtures";
-window.axios = require("axios");
-
 describe("accounting and planning connection modal", () => {
     let wrapper = null;
 

@@ -5,12 +5,10 @@ import AccountingElement from "../../../../resources/js/components/Finance/Accou
 import Vue from "vue";
 import Vuelidate from "vuelidate";
 import filters from "../../../../resources/js/filters";
-import { vueTopprogress } from "vue-top-progress";
 import VCalendar from "v-calendar";
 import AccountingFixtures from "./Fixtures/AccountingFixtures";
 import moment from "moment";
 
-Vue.component("Progressbar", vueTopprogress);
 Vue.use(filters);
 Vue.use(Vuelidate);
 Vue.use(VCalendar);

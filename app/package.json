@@ -53,6 +53,9 @@
         "vuelidate": "^0.7.5"
     },
     "jest": {
+        "setupFilesAfterEnv": [
+            "./tests/Vue/setup.js"
+        ],
         "moduleFileExtensions": [
             "js",
             "vue"
