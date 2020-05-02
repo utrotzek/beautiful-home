@@ -127,7 +127,7 @@
                             <button
                                 v-if="step===2"
                                 type="button"
-                                class="btn btn-light"
+                                class="btn btn-light back"
                                 @click="back"
                             >
                                 <i class="fas fa-arrow-alt-circle-left"></i>
@@ -136,7 +136,7 @@
                             <button
                                 v-if="step===1"
                                 type="button"
-                                class="btn btn-primary"
+                                class="btn btn-primary upload"
                                 :disabled="file.data === ''"
                                 @click="upload"
                             >
@@ -146,7 +146,7 @@
                             <button
                                 v-if="step===2"
                                 type="button"
-                                class="btn btn-primary"
+                                class="btn btn-primary start-import"
                                 :disabled="accountingImport.length === 0"
                                 @click="startImport"
                             >
@@ -188,20 +188,7 @@ export default {
             accountingImport: null
         };
     },
-    computed: {
-        accountingPreview () {
-            if (this.accountingImport){
-                return this.accountingImport.slice(0, 4);
-            }
-            return [];
-        }
-    },
     methods: {
-        validateClass(){
-            return {
-                "is-invalid": this.file.data === ""
-            };
-        },
         close () {
             this.step = 1;
             this.accountingImport = null;
@@ -217,6 +204,7 @@ export default {
             this.step--;
         },
         upload() {
+            /* istanbul ignore next */
             if (this.file.data !== ""){
                 const data = {
                     period: this.period,
@@ -233,7 +221,9 @@ export default {
             }
         },
         onFileSelect(e) {
+            /* istanbul ignore next */
             let files = e.target.files || e.dataTransfer.files;
+            /* istanbul ignore next */
             if (!files.length)
                 return;
             this.chooseFile(files[0]);
@@ -241,6 +231,7 @@ export default {
         chooseFile(file) {
             let reader = new FileReader();
             let vm = this;
+            /* istanbul ignore next */
             reader.onload = (e) => {
                 vm.file.data = e.target.result;
                 vm.file.name = e.target.name;
@@ -252,6 +243,7 @@ export default {
             reader.readAsDataURL(file);
         },
         startImport() {
+            /* istanbul ignore next */
             if (this.file.data !== "") {
                 const data = {
                     period: this.period,
@@ -263,7 +255,7 @@ export default {
                     .then(() => {
                         this.$emit("dataImported");
                         this.$emit("loadingCompleted");
-                        this.$emit("close");
+                        this.close();
                     });
             }
         },

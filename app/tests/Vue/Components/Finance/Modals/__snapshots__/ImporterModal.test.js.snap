@@ -1,0 +1,148 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`accounting and planning connection modal renders properly 1`] = `
+<transition-stub
+  name="modal"
+>
+  <div
+    class="modal-mask"
+  >
+    <div
+      class="modal-wrapper"
+    >
+      <div
+        class="modal-dialog"
+        role="document"
+      >
+        <div
+          class="modal-content"
+        >
+          <div
+            class="modal-header"
+          >
+            <h3
+              class="modal-title"
+            >
+              
+                            Sparkassen Datei importieren
+                        
+            </h3>
+             
+            <button
+              aria-label="Close"
+              class="close"
+              data-dismiss="modal"
+              type="button"
+            >
+              <span
+                aria-hidden="true"
+              >
+                ×
+              </span>
+            </button>
+          </div>
+           
+          <div
+            class="modal-body"
+          >
+            <div
+              class="step1"
+            >
+              <h4>
+                Datei auswählen
+              </h4>
+               
+              <p>
+                
+                                Hier können Sie eine Datei .cvs Datei importieren. Bitte beachten Sie, dass die Datei folgenden Aufbau haben muss.
+                            
+              </p>
+               
+              <ul>
+                <li>
+                  Mit Semikolon getrennt
+                </li>
+                 
+                <li>
+                  
+                                    Muss folgende Felder enthalten
+                                    
+                  <ul>
+                    <li>
+                      Buchungstag
+                    </li>
+                     
+                    <li>
+                      Buchungstext
+                    </li>
+                     
+                    <li>
+                      Beguenstigter/Zahlungspflichtiger
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+               
+              <form>
+                <div
+                  class="custom-file"
+                >
+                  <input
+                    class="custom-file-input"
+                    id="customFile"
+                    type="file"
+                  />
+                   
+                  <label
+                    class="custom-file-label"
+                    for="customFile"
+                  >
+                    
+                                        Wählen Sie die gewünschte Datei
+                                    
+                  </label>
+                </div>
+              </form>
+            </div>
+             
+            <!---->
+          </div>
+           
+          <div
+            class="modal-footer"
+          >
+            <button
+              class="btn btn-danger abort-button"
+              type="button"
+            >
+              <i
+                class="fas fa-ban"
+              />
+              
+                            Abbrechen
+                        
+            </button>
+             
+            <!---->
+             
+            <button
+              class="btn btn-primary upload"
+              disabled="disabled"
+              type="button"
+            >
+              <i
+                class="fas fa-eye"
+              />
+              
+                            Vorschau anzeigen
+                        
+            </button>
+             
+            <!---->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</transition-stub>
+`;
