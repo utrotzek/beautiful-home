@@ -35,7 +35,7 @@
                     class="mb-3"
                 >
                     <button
-                        class="btn btn-outline-dark"
+                        class="btn btn-outline-dark new-accounting"
                         title="Neuen Umsatz-Eintrag erstellen"
                         @click="createNewAccounting"
                     >
@@ -46,7 +46,7 @@
                     </button>
 
                     <button
-                        class="btn btn-outline-dark"
+                        class="btn btn-outline-dark toggle-importer"
                         title="csv einlesen"
                         @click="toggleImporter"
                     >
@@ -124,6 +124,7 @@
 </template>
 
 <script>
+import _ from "lodash";
 import moment from "moment";
 import Search from "../tools/Search";
 import AccountingElement from "./AccountingElement";
@@ -142,21 +143,18 @@ export default {
         period: {
             type: Object,
             required: true,
-            default() {
-                return null;
-            }
+            default: null
         },
         accountingData: {
             type: Array,
             required: true,
-            default() {
-                return [];
-            }
+            default: null
         },
         createConnectionData: {
             type: Object,
             required: true,
             default() {
+                /* istanbul ignore next */
                 return {
                     enabled: false,
                     planningId: 0,
@@ -172,12 +170,11 @@ export default {
         costCenterFilter: {
             type: Array,
             required: false,
-            default () {
-                return [];
-            }
+            default: null
         }
     },
     data() {
+        /* istanbul ignore next */
         return {
             searchQuery: "",
             showModal: false,
@@ -203,10 +200,14 @@ export default {
                 let display = (accounting.title.toLowerCase().search(this.searchQuery.toLowerCase()) > -1);
 
                 if (!display){
-                    let formattedDate = moment(accounting.date).format("DD.MM.YYYY");
+                    let formattedDate = "";
+                    if (accounting.date instanceof Date) {
+                        formattedDate = moment(accounting.date).format("DD.MM.YYYY");
+                    }else {
+                        formattedDate = moment(accounting.date, "DD.MM.YYYY").format("DD.MM.YYYY");
+                    }
                     display = (formattedDate.search(this.searchQuery.toLowerCase()) > -1);
                 }
-
                 if (!this.showFinishedAccountings && accounting.remainingAmount === 0.0){
                     display = false;
                 }
@@ -314,10 +315,10 @@ export default {
             }
 
             if (this.createConnectionData.accountingData.remainingAmount > 0){
-                if (this.createConnectionData.accountingData.remainingAmount - this.createConnectionData.planningTotalAmount > 0) {
-                    this.createConnectionData.desiredAmount = this.createConnectionData.planningTotalAmount;
+                if (this.createConnectionData.accountingData.remainingAmount - planningData.totalAmount > 0) {
+                    this.createConnectionData.desiredAmount = planningData.totalAmount;
                 }else{
-                    this.createConnectionData.desiredAmount = this.createConnectionData.accountingData.remainingAmount;
+                    this.createConnectionData.desiredAmount = acounntingData.remainingAmount;
                 }
             }
             this.showModal = true;

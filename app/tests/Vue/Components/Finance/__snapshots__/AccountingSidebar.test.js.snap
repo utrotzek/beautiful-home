@@ -1,0 +1,145 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Planning sidebar renders properly 1`] = `
+<div
+  class="accountingSidebar"
+>
+  <importermodal-stub
+    period="[object Object]"
+  />
+   
+  <connectionmodal-stub
+    desiredamount="0"
+  />
+   
+  <div
+    class="row"
+  >
+    <div
+      class="col-8"
+    >
+      <h2>
+        
+                Umsätze 
+        <span
+          class="fa fa-check-circle"
+        />
+      </h2>
+    </div>
+     
+    <div
+      class="col-12 col-md-4 text-left text-md-right"
+    >
+      <div
+        class="mb-3"
+        id="accountingButtons"
+      >
+        <button
+          class="btn btn-outline-dark new-accounting"
+          title="Neuen Umsatz-Eintrag erstellen"
+        >
+          <i
+            class="fa fa-plus-circle"
+          />
+           
+          <span
+            class="d-inline-block d-md-none"
+          >
+            
+                        Neuer Eintrag
+                    
+          </span>
+        </button>
+         
+        <button
+          class="btn btn-outline-dark toggle-importer"
+          title="csv einlesen"
+        >
+          <i
+            class="fa fa-arrow-circle-up"
+          />
+           
+          <span
+            class="d-inline-block d-md-none"
+          >
+            
+                        Datei hochladen
+                    
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+   
+  <div
+    class="mb-1"
+    id="accountingSearch"
+  >
+    <search-stub />
+  </div>
+   
+  <div
+    class="filter mb-2 text-right"
+  >
+    
+        Erledigte:
+        
+    <toggle-button-stub
+      color="[object Object]"
+      height="16"
+      margin="3"
+      speed="300"
+      value="true"
+      width="30"
+    />
+    
+        Unerledigte:
+        
+    <toggle-button-stub
+      color="[object Object]"
+      height="16"
+      margin="3"
+      speed="300"
+      value="true"
+      width="30"
+    />
+  </div>
+   
+  <div
+    class="accounting-elements"
+  >
+    <div>
+      <accountingelement-stub
+        accountingdata="[object Object]"
+        class="activated"
+        month="1"
+        year="3000"
+      />
+    </div>
+    <div>
+      <accountingelement-stub
+        accountingdata="[object Object]"
+        class="activated"
+        month="1"
+        year="3000"
+      />
+    </div>
+    <div>
+      <accountingelement-stub
+        accountingdata="[object Object]"
+        class="activated"
+        month="1"
+        year="3000"
+      />
+    </div>
+    <div>
+      <accountingelement-stub
+        accountingdata="[object Object]"
+        class="activated"
+        month="1"
+        year="3000"
+      />
+    </div>
+  </div>
+</div>
+`;
