@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Accounting element renders properly 1`] = `
+<div>
+  <headline-stub
+    text="January 3000"
+  />
+   
+  <progressbar-stub
+    color="#f8f9fa"
+    easing="linear"
+    errorcolor="#f44336"
+    height="3"
+    maximum="97.5"
+    minimum="0.8"
+    speed="350"
+    trickle="true"
+    tricklespeed="250"
+    zindex="9999"
+  />
+   
+  <div
+    id="main-content"
+  >
+    <div
+      class="row"
+      id="accounting-container"
+    >
+      <button
+        class="planningCollapsed"
+        id="planningCollapseButton"
+      >
+        <span
+          class="fa fa-chevron-left"
+        />
+      </button>
+       
+      <button
+        class="overviewCollapsed"
+        id="overviewCollapseButton"
+      >
+        <span
+          class="fa fa-info-circle"
+        />
+      </button>
+       
+      <div
+        class="col-sm-4 col-lg-4 col-12 planningCollapsed"
+        id="planning"
+        style="max-height: 0px;"
+      >
+        <button
+          aria-label="Close"
+          class="close"
+          data-dismiss="modal"
+          id="planningCloseButton"
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+          >
+            ×
+          </span>
+        </button>
+         
+        <planningsidebar-stub
+          allowconnection="true"
+          allowtemplateimport="true"
+          costcenterdata="[object Object],[object Object],[object Object]"
+          headline="Planung"
+          month="1"
+          planningdata=""
+          year="3000"
+        />
+      </div>
+       
+      <div
+        class="col-sm-8 col-lg-5"
+        id="accounting"
+        style="max-height: 0px;"
+      >
+        <accountingsidebar-stub
+          accountingdata="[object Object],[object Object],[object Object],[object Object]"
+          costcenterfilter=""
+          createconnectiondata="[object Object]"
+          period="[object Object]"
+        />
+      </div>
+       
+      <div
+        class="col-sm-8 col-lg-3 overviewCollapsed"
+        id="overview"
+      >
+        <button
+          aria-label="Close"
+          class="close"
+          data-dismiss="modal"
+          id="overviewCloseButton"
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+          >
+            ×
+          </span>
+        </button>
+         
+        <overview-stub
+          accountingitems="[object Object],[object Object],[object Object],[object Object]"
+          planningitems=""
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -57,7 +57,7 @@
                         :cost-center-data="costCenterData"
                         @createNewPlanning="createNewPlanning"
                         @deletePlanning="deletePlanning"
-                        @connectPlanning="connectPlanning"
+                        @connectPlanning="triggerConnectionMode"
                         @save="savePlanning"
                         @createCostCenter="updateCostCenters"
                         @importTemplate="importTemplate"
@@ -123,12 +123,14 @@ import moment from "moment";
 import PlanningSidebar from "./PlanningSidebar";
 import AccountingSidebar from "./AccountingSidebar";
 import Overview from "./Overview";
+import Headline from "../Headline";
 
 export default {
     components: {
         PlanningSidebar,
         AccountingSidebar,
-        Overview
+        Overview,
+        Headline
     },
     props: {
         periodId: {
@@ -168,9 +170,11 @@ export default {
         this.loadData();
     },
     created() {
+        /* istanbul ignore next */
         window.addEventListener("resize", this.handleResize);
     },
     destroyed() {
+        /* istanbul ignore next */
         window.removeEventListener("resize", this.handleResize);
     },
     methods: {
@@ -213,16 +217,23 @@ export default {
                     this.costCenterData = res.data;
                 });
         },
+        /* istanbul ignore next */
         refreshData() {
+            /* istanbul ignore next */
             this.loadData();
         },
+        /* istanbul ignore next */
         startProgressBar() {
+            /* istanbul ignore next */
             if (this.progressBarCount === 0){
                 this.$refs.topProgress.start();
             }
+            /* istanbul ignore next */
             this.progressBarCount++;
         },
+        /* istanbul ignore next */
         stopProgressBar() {
+            /* istanbul ignore next */
             if (this.progressBarCount > 0){
                 this.progressBarCount--;
                 if (this.progressBarCount === 0){
@@ -230,7 +241,9 @@ export default {
                 }
             }
         },
+        /* istanbul ignore next */
         updateCostCenters(){
+            /* istanbul ignore next */
             this.fetchCostCenters();
         },
         saveAccounting(accounting) {
@@ -238,7 +251,7 @@ export default {
 
             //axios will convert the date to UTC (which is wrong) so we have to convert the date
             //to string before transferring
-            accounting.date = moment(accounting.date).format("YYYY-MM-DD");
+            accounting.date = moment(accounting.date, "DD.MM.YYYY").format("YYYY-MM-DD");
             this.updateRemainingAccountingAmount(accounting);
 
             if (accounting.isNew) {
@@ -307,8 +320,10 @@ export default {
                     });
             }
         },
+        /* istanbul ignore next */
         triggerResize () {
             //handle resize on initial loading
+            /* istanbul ignore next */
             this.$nextTick(() => this.handleResize());
         },
 
@@ -323,16 +338,9 @@ export default {
             }
             return newArrayList;
         },
-        getArrayElementById(id, array){
-            let i = 0;
-            for (i = 0; i < array.length; i++){
-                if (array[i].id === id){
-                    return array[i];
-                }
-            }
-        },
         deleteConnection(accountId, costCenterAccountingToRemove){
             this.startProgressBar();
+            console.log("/api/finance/costCenterAccounting/" + costCenterAccountingToRemove.id);
             window.axios.delete("/api/finance/costCenterAccounting/" + costCenterAccountingToRemove.id)
                 .then(() =>{
                     const accounting = this.getAccountingById(accountId);
@@ -341,11 +349,13 @@ export default {
                 })
             ;
         },
-
+        /* istanbul ignore next */
         handleResize() {
+            /* istanbul ignore next */
             let element = document.getElementById("accounting-container");
+            /* istanbul ignore next */
             let boundaries = element.getBoundingClientRect();
-
+            /* istanbul ignore next */
             this.accountingContainerHeight = window.innerHeight - (boundaries.top) ;
         },
         doAccountingPlanningConnection(planning, accounting, desiredAmount){
@@ -438,14 +448,6 @@ export default {
                 }
             }
         },
-        setPlanningById(id, item){
-            let i=0;
-            for(i=0; i < this.planningData.length;i++){
-                if (id === this.planningData[i].id)  {
-                    this.planningData[i] = item;
-                }
-            }
-        },
         getAccountingById(id){
             let i=0;
             for(i=0; i < this.accountingData.length;i++){
@@ -454,15 +456,6 @@ export default {
                 }
             }
         },
-        setAccountingById(id, item){
-            let i=0;
-            for(i=0; i < this.accountingData.length;i++){
-                if (id === this.accountingData[i].id)  {
-                    this.accountingData[i] = item;
-                }
-            }
-        },
-
         createNewAccounting() {
             if (!this.hasUnsavedNewAccountings()){
                 let newAccountingElement = {
@@ -470,7 +463,7 @@ export default {
                     title: "",
                     totalAmount: "",
                     remainingAmount: -20,
-                    date: moment(this.year + "-" + this.month + "-1").toDate(),
+                    date: moment(this.year + "-" + this.month + "-1", "YYYY-MM-DD").toDate(),
                     display: true,
                     isNew: true,
                     editMode: true,
@@ -490,7 +483,7 @@ export default {
                     },
                     description: "",
                     totalAmount: "",
-                    date: moment(this.year + "-" + this.month + "-1").toDate(),
+                    date: moment(this.year + "-" + this.month + "-1", "YYYY-MM-DD").toDate(),
                     display: true,
                     editMode:  true,
                     isNew: true,
@@ -526,7 +519,7 @@ export default {
             }
             return maxId + 1;
         },
-        connectPlanning(id, enabled) {
+        triggerConnectionMode(id, enabled) {
             this.createConnectionData.enabled = enabled;
             this.createConnectionData.planningId = id;
             this.createConnectionData.planningData = this.getPlanningById(id);
@@ -553,7 +546,7 @@ export default {
                 .then(res => {
                     for (let i=0; i < res.data.length; i++){
                         let newPlanningItem = res.data[i];
-                        const dayOfEntry = moment(newPlanningItem.date).format("DD");
+                        const dayOfEntry = moment(newPlanningItem.date, "YYYY-MM-DD").format("DD");
                         const newDate = moment(this.year + "-" + this.month + "-" + dayOfEntry).toDate();
 
                         newPlanningItem.isNew = true;
