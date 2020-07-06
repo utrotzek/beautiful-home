@@ -547,7 +547,7 @@ export default {
                     for (let i=0; i < res.data.length; i++){
                         let newPlanningItem = res.data[i];
                         const dayOfEntry = moment(newPlanningItem.date, "YYYY-MM-DD").format("DD");
-                        const newDate = moment(this.year + "-" + this.month + "-" + dayOfEntry).toDate();
+                        const newDate = moment(this.year + "-" + this.month + "-" + dayOfEntry, "YYYY-MM-DD").toDate();
 
                         newPlanningItem.isNew = true;
                         newPlanningItem.templates = null;

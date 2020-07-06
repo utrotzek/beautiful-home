@@ -184,6 +184,7 @@ describe("Accounting element", () => {
             title: "Rewe",
             totalAmount: -100,
             remainingAmount: 0,
+            isNew: false,
             editMode: false,
             date: expectedDate,
             connectedPlanning: [
