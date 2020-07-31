@@ -12,15 +12,19 @@ const mix = require("laravel-mix");
  */
 
 mix.webpackConfig({
+    //accelerate watch by ignoring node_modules:
+    //https://laracasts.com/discuss/channels/elixir/laravel-mix-extremly-slow?page=0#
     watchOptions: {
         ignored: /node_modules/
     }
 });
 
+//disable this to improve compiling performance
+mix.options({ processCssUrls: false });
+
 mix.js("resources/js/app.js", "public/js")
     .js("resources/js/bootstrap.js", "public/js")
-    .sourceMaps(false, "source-map")
+    //enable source maps only if needed to increase performance even more
+    // .sourceMaps(false, "source-map")
     .sass("resources/sass/app.scss", "public/css")
-    //accelerate watch by ignoring node_modules:
-    //https://laracasts.com/discuss/channels/elixir/laravel-mix-extremly-slow?page=0#
 ;
